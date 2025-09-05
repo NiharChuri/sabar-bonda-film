@@ -1,98 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Sabar Bonda Film Site Design System */
+/* Earth-tone palette with artistic flair */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Film Site Earth Tone Palette */
+    /* Primary - Deep Umber (Ink) */
+    --ink-900: 23 11% 15%;     /* #272320 */
+    --ink-700: 23 11% 21%;     /* #3A332D */
+    --ink-600: 23 11% 26%;     /* #4A4037 */
+    --ink-400: 23 11% 36%;     /* #6B5A4C */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Background - Paper */
+    --paper-50: 40 25% 96%;    /* #F5F3EE */
+    --paper-100: 40 13% 93%;   /* #ECECEA */
+    --paper-200: 0 0% 100%;    /* #FFFFFF */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    /* Secondary - Ochre Sand */
+    --sand-400: 40 17% 49%;    /* #8E876A */
+    --sand-500: 40 17% 44%;    /* #7E775E */
+    --sand-100: 40 17% 81%;    /* #D9D4C4 */
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Tertiary - Moss */
+    --moss-500: 64 12% 32%;    /* #5C5E47 */
+    --moss-600: 64 12% 28%;    /* #50523E */
+    --moss-200: 64 12% 68%;    /* #B9BEA3 */
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Accent A - Copper */
+    --copper-500: 30 59% 46%;  /* #B87333 */
+    --copper-600: 30 59% 40%;  /* #9E632C */
+    --copper-700: 30 59% 35%;  /* #8B5726 */
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Accent B - Leather */
+    --leather-500: 30 39% 30%; /* #6B4A2F */
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Neutral Text Tones */
+    --body: 30 13% 31%;        /* #514A40 */
+    --muted: 30 13% 52%;       /* #8A8378 */
+    --border: 40 17% 84%;      /* #D8D6CD */
 
+    /* Legacy Variables for Components */
+    --background: 40 25% 96%;  /* Paper 50 */
+    --foreground: 23 11% 15%;  /* Ink 900 */
+    --card: 0 0% 100%;         /* Paper 200 */
+    --card-foreground: 23 11% 15%;
+    --primary: 30 59% 46%;     /* Copper 500 */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 40 17% 81%;   /* Sand 100 */
+    --secondary-foreground: 23 11% 15%;
+    --accent: 64 12% 32%;      /* Moss 500 */
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --destructive-foreground: 0 0% 100%;
+    --input: 40 17% 84%;
+    --ring: 30 59% 46%;
+    --radius: 0.75rem;
+    
+    /* Focus States */
+    --focus-ring: 30 59% 46%;
+    --focus-offset: 3px;
+    
+    /* Selection */
+    --selection-bg: 40 17% 81%;
+    --selection-text: 23 11% 15%;
   }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-}
 
 @layer base {
   * {
@@ -100,6 +76,74 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+  }
+
+  /* Typography */
+  .font-serif {
+    font-family: 'Crimson Pro', serif;
+  }
+
+  .font-sans {
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Selection styles */
+  ::selection {
+    background-color: hsl(var(--selection-bg));
+    color: hsl(var(--selection-text));
+  }
+
+  /* Focus styles */
+  :focus-visible {
+    outline: 2px solid hsl(var(--focus-ring));
+    outline-offset: var(--focus-offset);
+  }
+}
+
+@layer components {
+  /* Film site animations */
+  .reveal {
+    @apply opacity-100 translate-y-0 transition-all duration-300 ease-out;
+  }
+
+  .reveal-hidden {
+    @apply opacity-0 translate-y-4;
+  }
+
+  /* Soft shadows using ink color */
+  .shadow-film {
+    box-shadow: 0 4px 6px -1px rgba(39, 35, 32, 0.08), 0 2px 4px -1px rgba(39, 35, 32, 0.04);
+  }
+
+  .shadow-film-lg {
+    box-shadow: 0 10px 15px -3px rgba(39, 35, 32, 0.08), 0 4px 6px -2px rgba(39, 35, 32, 0.04);
+  }
+
+  /* Link animations */
+  .link-underline {
+    @apply relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-moss-500 after:transition-all after:duration-200 hover:after:w-full;
+  }
+
+  /* Card hover effects */
+  .card-hover {
+    @apply transition-all duration-200 ease-out hover:shadow-film-lg hover:-translate-y-0.5;
+  }
+}
+
+@layer utilities {
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .card-hover,
+    .link-underline::after {
+      @apply transition-none;
+    }
+    
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }

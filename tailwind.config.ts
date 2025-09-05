@@ -52,6 +52,39 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				
+				/* Film Site Earth Tone Palette */
+				ink: {
+					900: 'hsl(var(--ink-900))',
+					700: 'hsl(var(--ink-700))',
+					600: 'hsl(var(--ink-600))',
+					400: 'hsl(var(--ink-400))'
+				},
+				paper: {
+					50: 'hsl(var(--paper-50))',
+					100: 'hsl(var(--paper-100))',
+					200: 'hsl(var(--paper-200))'
+				},
+				sand: {
+					400: 'hsl(var(--sand-400))',
+					500: 'hsl(var(--sand-500))',
+					100: 'hsl(var(--sand-100))'
+				},
+				moss: {
+					500: 'hsl(var(--moss-500))',
+					600: 'hsl(var(--moss-600))',
+					200: 'hsl(var(--moss-200))'
+				},
+				copper: {
+					500: 'hsl(var(--copper-500))',
+					600: 'hsl(var(--copper-600))',
+					700: 'hsl(var(--copper-700))'
+				},
+				leather: {
+					500: 'hsl(var(--leather-500))'
+				},
+				body: 'hsl(var(--body))',
+				
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -62,6 +95,10 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				}
+			},
+			fontFamily: {
+				serif: ['Crimson Pro', 'serif'],
+				sans: ['Inter', 'sans-serif']
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
