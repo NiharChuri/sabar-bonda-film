@@ -64,7 +64,7 @@
     --destructive-foreground: 0 0% 100%;
     --input: 40 17% 84%;
     --ring: 30 59% 46%;
-    --radius: 0.75rem;
+    --radius: 2px;
     
     /* Focus States */
     --focus-ring: 30 59% 46%;

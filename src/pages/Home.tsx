@@ -4,7 +4,6 @@ import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
 import StatBadge from '@/components/ui/StatBadge';
 import LinkPill from '@/components/ui/LinkPill';
-import heroImage from '@/assets/hero-poster.jpg';
 
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -16,45 +15,32 @@ const Home = () => {
   return (
     <>
       {/* Hero Section */}
-      <Section className="relative overflow-hidden bg-gradient-to-br from-paper-50 to-sand-100/30">
-        <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center transition-all duration-700 ${isVisible ? 'reveal' : 'reveal-hidden'}`}>
+      <Section className="relative overflow-hidden bg-gradient-to-br from-paper-50 to-sand-100/30 min-h-[70vh] flex items-center">
+        <div className={`w-full text-center transition-all duration-700 ${isVisible ? 'reveal' : 'reveal-hidden'}`}>
           {/* Hero Content */}
-          <div className="space-y-8">
+          <div className="space-y-12 max-w-5xl mx-auto">
             <div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold tracking-tight text-ink-900 mb-4">
+              <h1 className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-serif font-bold tracking-tighter text-ink-900 mb-8 leading-none">
                 Sabar Bonda
               </h1>
-              <h2 className="text-2xl sm:text-3xl font-serif text-ink-700 mb-6">
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-serif text-ink-700 mb-12 tracking-tight">
                 Cactus Pears
               </h2>
-              <p className="text-xl leading-relaxed text-body max-w-2xl">
+              <p className="text-2xl sm:text-3xl leading-relaxed text-body max-w-4xl mx-auto font-light">
                 A powerful exploration of family bonds, cultural heritage, and the transformative power of tradition in modern times.
               </p>
             </div>
             
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button className="inline-flex items-center justify-center rounded-xl px-6 py-3 font-medium shadow-sm bg-copper-500 text-white hover:bg-copper-600 focus-visible:ring-2 focus-visible:ring-copper-500 focus-visible:ring-offset-2 transition-all duration-200">
-                <Play size={20} className="mr-2" />
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <button className="inline-flex items-center justify-center px-8 py-4 font-medium shadow-lg bg-copper-500 text-white hover:bg-copper-600 focus-visible:ring-2 focus-visible:ring-copper-500 focus-visible:ring-offset-2 transition-all duration-200 text-lg">
+                <Play size={24} className="mr-3" />
                 Watch Trailer
               </button>
-              <button className="inline-flex items-center justify-center rounded-xl px-6 py-3 font-medium shadow-sm bg-leather-500 text-white hover:bg-[#5D412B] focus-visible:ring-2 focus-visible:ring-copper-500 focus-visible:ring-offset-2 transition-all duration-200">
-                <Mail size={20} className="mr-2" />
+              <button className="inline-flex items-center justify-center px-8 py-4 font-medium shadow-lg bg-leather-500 text-white hover:bg-[#5D412B] focus-visible:ring-2 focus-visible:ring-copper-500 focus-visible:ring-offset-2 transition-all duration-200 text-lg">
+                <Mail size={24} className="mr-3" />
                 Contact Sales/Press
               </button>
-            </div>
-          </div>
-
-          {/* Hero Image */}
-          <div className="relative">
-            <div className="aspect-[3/4] rounded-2xl shadow-film-lg overflow-hidden">
-              <img 
-                src={heroImage} 
-                alt="Sabar Bonda / Cactus Pears film poster featuring silhouettes against a desert landscape with cactus pears"
-                className="w-full h-full object-cover"
-                loading="eager"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
             </div>
           </div>
         </div>

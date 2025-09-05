@@ -103,9 +103,9 @@ export default {
 				sans: ['Inter', 'sans-serif']
 			},
 			borderRadius: {
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				lg: '2px',
+				md: '1px', 
+				sm: '1px'
 			},
 			keyframes: {
 				'accordion-down': {
