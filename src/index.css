@@ -1,5 +1,78 @@
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;500;600&display=swap');
 
+/* NOHEMI Font Family */
+@font-face {
+  font-family: 'NOHEMI';
+  src: url('/fonts/Nohemi/Nohemi-Thin.woff2') format('woff2');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NOHEMI';
+  src: url('/fonts/Nohemi/Nohemi-ExtraLight.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NOHEMI';
+  src: url('/fonts/Nohemi/Nohemi-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NOHEMI';
+  src: url('/fonts/Nohemi/Nohemi-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NOHEMI';
+  src: url('/fonts/Nohemi/Nohemi-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NOHEMI';
+  src: url('/fonts/Nohemi/Nohemi-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NOHEMI';
+  src: url('/fonts/Nohemi/Nohemi-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NOHEMI';
+  src: url('/fonts/Nohemi/Nohemi-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NOHEMI';
+  src: url('/fonts/Nohemi/Nohemi-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -92,6 +165,16 @@
 
   .font-sans {
     font-family: 'Inter', sans-serif;
+  }
+
+  .font-nohemi {
+    font-family: 'NOHEMI', sans-serif;
+  }
+
+  /* Content text using NOHEMI Medium */
+  .text-content {
+    font-family: 'NOHEMI', sans-serif;
+    font-weight: 500;
   }
 
   /* Selection styles */

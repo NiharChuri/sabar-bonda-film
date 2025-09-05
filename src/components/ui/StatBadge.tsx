@@ -19,8 +19,8 @@ const StatBadge = ({ title, subtitle, variant = 'default' }: StatBadgeProps) => 
     >
       {variant === 'laurel' && <Award size={16} className="mr-2 text-copper-500" />}
       <div>
-        <div className="text-sm font-semibold">{title}</div>
-        {subtitle && <div className="text-xs text-muted">{subtitle}</div>}
+        <div className="text-sm font-semibold font-nohemi">{title}</div>
+        {subtitle && <div className="text-xs text-muted font-nohemi">{subtitle}</div>}
       </div>
     </div>
   );

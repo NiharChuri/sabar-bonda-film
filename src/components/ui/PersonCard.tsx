@@ -26,7 +26,7 @@ const PersonCard = ({ name, role, bio, fullBio, avatar }: PersonCardProps) => {
       )}
       <h3 className="font-serif font-semibold text-lg text-ink-900 mb-1">{name}</h3>
       <p className="text-copper-500 font-medium text-sm mb-3">{role}</p>
-      <p className="text-body leading-relaxed">
+      <p className="text-body leading-relaxed font-nohemi font-medium">
         {isExpanded && fullBio ? fullBio : bio}
       </p>
       

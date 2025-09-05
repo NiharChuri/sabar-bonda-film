@@ -100,7 +100,8 @@ export default {
 			},
 			fontFamily: {
 				serif: ['Crimson Pro', 'serif'],
-				sans: ['Inter', 'sans-serif']
+				sans: ['Inter', 'sans-serif'],
+				nohemi: ['NOHEMI', 'sans-serif']
 			},
 			borderRadius: {
 				lg: '2px',
