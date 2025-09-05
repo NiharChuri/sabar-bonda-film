@@ -71,9 +71,11 @@ export default {
 					100: 'hsl(var(--sand-100))'
 				},
 				moss: {
+					50: 'hsl(var(--moss-50))',
+					200: 'hsl(var(--moss-200))',
+					300: 'hsl(var(--moss-300))',
 					500: 'hsl(var(--moss-500))',
-					600: 'hsl(var(--moss-600))',
-					200: 'hsl(var(--moss-200))'
+					600: 'hsl(var(--moss-600))'
 				},
 				copper: {
 					500: 'hsl(var(--copper-500))',

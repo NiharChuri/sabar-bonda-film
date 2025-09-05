@@ -27,9 +27,11 @@
     --sand-100: 40 17% 81%;    /* #D9D4C4 */
 
     /* Tertiary - Moss */
+    --moss-50: 64 12% 95%;     /* #F8F9F5 */
+    --moss-200: 64 12% 68%;    /* #B9BEA3 */
+    --moss-300: 64 12% 55%;    /* #A0A687 */
     --moss-500: 64 12% 32%;    /* #5C5E47 */
     --moss-600: 64 12% 28%;    /* #50523E */
-    --moss-200: 64 12% 68%;    /* #B9BEA3 */
 
     /* Accent A - Copper */
     --copper-500: 30 59% 46%;  /* #B87333 */
@@ -49,10 +51,13 @@
     --foreground: 23 11% 15%;  /* Ink 900 */
     --card: 0 0% 100%;         /* Paper 200 */
     --card-foreground: 23 11% 15%;
+    --popover: 0 0% 100%;      /* Paper 200 */
+    --popover-foreground: 23 11% 15%;
     --primary: 30 59% 46%;     /* Copper 500 */
     --primary-foreground: 0 0% 100%;
     --secondary: 40 17% 81%;   /* Sand 100 */
     --secondary-foreground: 23 11% 15%;
+    --muted-foreground: 30 13% 52%;    /* Same as muted */
     --accent: 64 12% 32%;      /* Moss 500 */
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
