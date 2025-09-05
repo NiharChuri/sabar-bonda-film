@@ -69,6 +69,7 @@
     --selection-bg: 40 17% 81%;
     --selection-text: 23 11% 15%;
   }
+}
 
 @layer base {
   * {
