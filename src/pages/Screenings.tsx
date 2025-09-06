@@ -55,17 +55,17 @@ const Screenings = () => {
       {/* Hero Section */}
       <Section>
         <div className="text-center mb-16">
-          <h1 className="text-4xl sm:text-5xl font-serif font-bold tracking-tight text-ink-900 mb-6">
+          <h1 className="text-4xl sm:text-5xl font-cabinet font-bold tracking-tight text-white mb-6">
             Screenings & Festivals
           </h1>
-          <p className="text-xl leading-relaxed text-muted max-w-3xl mx-auto">
+          <p className="text-xl leading-relaxed text-muted max-w-3xl mx-auto font-nohemi font-medium">
             Catch Sabar Bonda at these prestigious festivals and upcoming theatrical releases
           </p>
         </div>
       </Section>
 
       {/* Festival Timeline */}
-      <Section className="bg-white">
+      <Section className="glass">
         <SectionHeader 
           title="Festival Circuit"
           subtitle="Premiere screenings and festival appearances"
@@ -85,7 +85,7 @@ const Screenings = () => {
                 
                 {/* Content */}
                 <div className="flex-1 pb-12">
-                  <div className="bg-white rounded-2xl p-8 shadow-film border border-border">
+                  <div className="glass rounded-lg p-8 shadow-film border border-border">
                     <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-3">
@@ -94,7 +94,7 @@ const Screenings = () => {
                           </span>
                         </div>
                         
-                        <h3 className="text-xl font-serif font-semibold text-ink-900 mb-2">
+                        <h3 className="text-xl font-cabinet font-semibold text-white mb-2">
                           {screening.festival}
                         </h3>
                         
@@ -103,19 +103,19 @@ const Screenings = () => {
                         </p>
                         
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                          <div className="flex items-center gap-2 text-body">
+                          <div className="flex items-center gap-2 text-white">
                             <MapPin size={16} className="text-moss-500" />
                             <span>{screening.location}</span>
                           </div>
-                          <div className="flex items-center gap-2 text-body">
+                          <div className="flex items-center gap-2 text-white">
                             <Calendar size={16} className="text-moss-500" />
                             <span>{screening.dates}</span>
                           </div>
-                          <div className="flex items-center gap-2 text-body">
+                          <div className="flex items-center gap-2 text-white">
                             <Clock size={16} className="text-moss-500" />
                             <span>{screening.time}</span>
                           </div>
-                          <div className="flex items-center gap-2 text-body">
+                          <div className="flex items-center gap-2 text-white">
                             <span className="font-medium">Venue:</span>
                             <span>{screening.venue}</span>
                           </div>
@@ -131,7 +131,7 @@ const Screenings = () => {
       </Section>
 
       {/* Upcoming Releases */}
-      <Section className="bg-sand-100/30">
+      <Section className="glass">
         <SectionHeader 
           title="Upcoming Releases"
           subtitle="Theatrical and distribution announcements"
@@ -139,12 +139,12 @@ const Screenings = () => {
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {upcomingScreenings.map((release, index) => (
-            <div key={index} className="bg-white rounded-2xl p-8 shadow-film">
+            <div key={index} className="glass rounded-lg p-8 shadow-film">
               <div className="flex items-start justify-between mb-4">
-                <h3 className="text-xl font-serif font-semibold text-ink-900">
+                <h3 className="text-xl font-cabinet font-semibold text-white">
                   {release.type}
                 </h3>
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-sand-100 text-ink-900">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium glass text-white border border-white/20">
                   {release.status}
                 </span>
               </div>
@@ -152,15 +152,15 @@ const Screenings = () => {
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
                   <span className="text-muted">Region</span>
-                  <span className="text-ink-900 font-medium">{release.region}</span>
+                  <span className="text-white font-medium">{release.region}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-muted">Date</span>
-                  <span className="text-ink-900 font-medium">{release.date}</span>
+                  <span className="text-white font-medium">{release.date}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-muted">Distributor</span>
-                  <span className="text-ink-900 font-medium">{release.distributor}</span>
+                  <span className="text-white font-medium">{release.distributor}</span>
                 </div>
               </div>
             </div>
@@ -176,8 +176,8 @@ const Screenings = () => {
           centered
         />
         
-        <div className="max-w-2xl mx-auto bg-white rounded-2xl p-8 shadow-film text-center">
-          <p className="text-body leading-relaxed mb-6">
+        <div className="max-w-2xl mx-auto glass rounded-lg p-8 shadow-film text-center">
+          <p className="text-white leading-relaxed mb-6">
             Interested in hosting a screening of Sabar Bonda for your film society, university, or cultural organization? We'd love to work with you to bring this powerful story to your audience.
           </p>
           

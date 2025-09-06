@@ -33,7 +33,7 @@ const Navigation = () => {
           <a 
             href="#home"
             onClick={(e) => handleNavClick(e, '#home')}
-            className="font-serif font-bold text-4xl text-white hover:text-white/80 transition-colors duration-200"
+            className="font-cabinet font-bold text-4xl text-white hover:text-white/80 transition-colors duration-200"
           >
             Sabar Bonda
           </a>
@@ -45,7 +45,7 @@ const Navigation = () => {
                 key={item.path}
                 href={item.path}
                 onClick={(e) => handleNavClick(e, item.path)}
-                className="relative px-3 py-2 text-sm font-medium transition-colors duration-200 text-white/80 hover:text-white"
+                className="relative px-3 py-2 text-sm font-medium transition-colors duration-200 text-white/80 hover:text-white font-nohemi"
               >
                 {item.label}
               </a>
@@ -71,7 +71,7 @@ const Navigation = () => {
                   key={item.path}
                   href={item.path}
                   onClick={(e) => handleNavClick(e, item.path)}
-                  className="px-3 py-2 text-base font-medium transition-colors duration-200 text-white/80 hover:text-white"
+                  className="px-3 py-2 text-base font-medium transition-colors duration-200 text-white/80 hover:text-white font-nohemi"
                 >
                   {item.label}
                 </a>

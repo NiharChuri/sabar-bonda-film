@@ -50,17 +50,17 @@ const BTS = () => {
       {/* Hero Section */}
       <Section>
         <div className="text-center mb-16">
-          <h1 className="text-4xl sm:text-5xl font-serif font-bold tracking-tight text-ink-900 mb-6">
+          <h1 className="text-4xl sm:text-5xl font-cabinet font-bold tracking-tight text-white mb-6">
             Behind the Scenes
           </h1>
-          <p className="text-xl leading-relaxed text-muted max-w-3xl mx-auto">
+          <p className="text-xl leading-relaxed text-muted max-w-3xl mx-auto font-nohemi font-medium">
             An intimate look at the making of Sabar Bonda, capturing the creative process and collaborative spirit behind the film
           </p>
         </div>
       </Section>
 
       {/* BTS Gallery */}
-      <Section className="bg-white">
+      <Section className="glass">
         <SectionHeader 
           title="Production Gallery"
           subtitle="Moments from the creation of Sabar Bonda"
@@ -68,7 +68,7 @@ const BTS = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {btsImages.map((image) => (
-            <div key={image.id} className="bg-white rounded-2xl shadow-film overflow-hidden card-hover">
+            <div key={image.id} className="glass rounded-lg shadow-film overflow-hidden card-hover">
               {/* Image Placeholder - Black and White */}
               <div className="aspect-[4/3] bg-gradient-to-br from-ink-400 to-ink-600 relative overflow-hidden">
                 <div className="absolute inset-0 flex items-center justify-center text-white/70">
@@ -88,7 +88,7 @@ const BTS = () => {
                     <label className="block text-sm font-medium text-muted mb-1">
                       BTS Info
                     </label>
-                    <p className="text-body leading-relaxed">
+                    <p className="text-white leading-relaxed">
                       {image.caption}
                     </p>
                   </div>
@@ -109,32 +109,32 @@ const BTS = () => {
       </Section>
 
       {/* Production Notes */}
-      <Section className="bg-sand-100/30">
+      <Section className="glass">
         <SectionHeader 
           title="Production Notes"
           subtitle="Insights into the filmmaking process"
         />
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="bg-white rounded-2xl p-8 shadow-film">
-            <h3 className="text-xl font-serif font-semibold text-ink-900 mb-4">
+          <div className="glass rounded-lg p-8 shadow-film">
+            <h3 className="text-xl font-cabinet font-semibold text-white mb-4">
               Filming Locations
             </h3>
-            <p className="text-body leading-relaxed mb-4">
+            <p className="text-white leading-relaxed mb-4 font-nohemi font-medium">
               [Location details will be added here - describing the key filming locations and their significance to the story of Sabar Bonda]
             </p>
-            <ul className="space-y-2 text-body">
+            <ul className="space-y-2 text-white font-nohemi font-medium">
               <li>• [Primary Location]</li>
               <li>• [Secondary Location]</li>
               <li>• [Additional Location]</li>
             </ul>
           </div>
           
-          <div className="bg-white rounded-2xl p-8 shadow-film">
-            <h3 className="text-xl font-serif font-semibold text-ink-900 mb-4">
+          <div className="glass rounded-lg p-8 shadow-film">
+            <h3 className="text-xl font-cabinet font-semibold text-white mb-4">
               Production Timeline
             </h3>
-            <p className="text-body leading-relaxed mb-4">
+            <p className="text-white leading-relaxed mb-4 font-nohemi font-medium">
               [Timeline details will be added here - key dates and milestones in the production of Sabar Bonda]
             </p>
             <div className="space-y-3">

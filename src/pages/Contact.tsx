@@ -91,17 +91,17 @@ const Contact = () => {
       {/* Hero Section */}
       <Section>
         <div className="text-center mb-16">
-          <h1 className="text-4xl sm:text-5xl font-serif font-bold tracking-tight text-ink-900 mb-6">
+          <h1 className="text-4xl sm:text-5xl font-cabinet font-bold tracking-tight text-white mb-6">
             Contact Us
           </h1>
-          <p className="text-xl leading-relaxed text-muted max-w-3xl mx-auto">
+          <p className="text-xl leading-relaxed text-muted max-w-3xl mx-auto font-nohemi font-medium">
             Get in touch with the Sabar Bonda team for distribution, press, and partnership opportunities
           </p>
         </div>
       </Section>
 
       {/* Contact Panels */}
-      <Section className="bg-white">
+      <Section className="glass">
         <SectionHeader 
           title="Get In Touch"
           subtitle="Choose the appropriate contact for your inquiry"
@@ -109,11 +109,11 @@ const Contact = () => {
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {contactPanels.map((panel, index) => (
-            <div key={index} className="bg-sand-100/30 rounded-2xl p-8 shadow-film">
-              <h3 className="text-xl font-serif font-semibold text-ink-900 mb-4">
+            <div key={index} className="glass rounded-lg p-8 shadow-film">
+              <h3 className="text-xl font-cabinet font-semibold text-white mb-4">
                 {panel.title}
               </h3>
-              <p className="text-body leading-relaxed mb-6">
+              <p className="text-white leading-relaxed mb-6 font-nohemi font-medium">
                 {panel.description}
               </p>
               
@@ -122,7 +122,7 @@ const Contact = () => {
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3 flex-1 min-w-0">
                     <Mail size={18} className="text-moss-500 flex-shrink-0" />
-                    <span className="text-sm text-ink-900 font-mono truncate">
+                    <span className="text-sm text-white font-mono truncate">
                       {panel.email}
                     </span>
                   </div>
@@ -143,7 +143,7 @@ const Contact = () => {
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3 flex-1 min-w-0">
                     <Phone size={18} className="text-moss-500 flex-shrink-0" />
-                    <span className="text-sm text-ink-900 font-mono">
+                    <span className="text-sm text-white font-mono">
                       {panel.phone}
                     </span>
                   </div>
@@ -166,18 +166,18 @@ const Contact = () => {
       </Section>
 
       {/* Contact Form */}
-      <Section className="bg-sand-100/30">
+      <Section className="glass">
         <SectionHeader 
           title="Send Us a Message"
           subtitle="Have a specific inquiry? Send us a message and we'll get back to you promptly"
         />
         
         <div className="max-w-2xl mx-auto">
-          <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-8 shadow-film">
+          <form onSubmit={handleSubmit} className="glass rounded-lg p-8 shadow-film">
             <div className="space-y-6">
               {/* Name Field */}
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-ink-900 mb-2">
+                <label htmlFor="name" className="block text-sm font-medium text-white mb-2 font-cabinet">
                   Name *
                 </label>
                 <input
@@ -198,7 +198,7 @@ const Contact = () => {
 
               {/* Email Field */}
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-ink-900 mb-2">
+                <label htmlFor="email" className="block text-sm font-medium text-white mb-2 font-cabinet">
                   Email *
                 </label>
                 <input
@@ -219,7 +219,7 @@ const Contact = () => {
 
               {/* Message Field */}
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-ink-900 mb-2">
+                <label htmlFor="message" className="block text-sm font-medium text-white mb-2 font-cabinet">
                   Message *
                 </label>
                 <textarea
@@ -241,7 +241,7 @@ const Contact = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full rounded-xl px-6 py-3 font-medium shadow-sm bg-copper-500 text-white hover:bg-copper-600 focus-visible:ring-2 focus-visible:ring-copper-500 focus-visible:ring-offset-2 transition-all duration-200"
+                className="w-full rounded-xl px-6 py-3 font-medium shadow-sm bg-copper-500 text-white hover:bg-copper-600 focus-visible:ring-2 focus-visible:ring-copper-500 focus-visible:ring-offset-2 transition-all duration-200 font-cabinet"
               >
                 Send Message
               </button>

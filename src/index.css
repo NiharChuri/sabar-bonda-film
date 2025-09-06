@@ -73,6 +73,71 @@
   font-display: swap;
 }
 
+/* CABINET GROTESK Font Family */
+@font-face {
+  font-family: 'Cabinet Grotesk';
+  src: url('/fonts/CabinetGrotesk/CabinetGrotesk-Thin.woff2') format('woff2');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cabinet Grotesk';
+  src: url('/fonts/CabinetGrotesk/CabinetGrotesk-Extralight.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cabinet Grotesk';
+  src: url('/fonts/CabinetGrotesk/CabinetGrotesk-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cabinet Grotesk';
+  src: url('/fonts/CabinetGrotesk/CabinetGrotesk-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cabinet Grotesk';
+  src: url('/fonts/CabinetGrotesk/CabinetGrotesk-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cabinet Grotesk';
+  src: url('/fonts/CabinetGrotesk/CabinetGrotesk-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cabinet Grotesk';
+  src: url('/fonts/CabinetGrotesk/CabinetGrotesk-Extrabold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cabinet Grotesk';
+  src: url('/fonts/CabinetGrotesk/CabinetGrotesk-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -167,6 +232,10 @@
     font-family: 'Inter', sans-serif;
   }
 
+  .font-cabinet {
+    font-family: 'Cabinet Grotesk', sans-serif;
+  }
+
   .font-nohemi {
     font-family: 'NOHEMI', sans-serif;
   }
@@ -217,6 +286,19 @@
   /* Card hover effects */
   .card-hover {
     @apply transition-all duration-200 ease-out hover:shadow-film-lg hover:-translate-y-0.5;
+  }
+
+  /* Glassmorphism effect */
+  .glass {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-white {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
   }
 }
 

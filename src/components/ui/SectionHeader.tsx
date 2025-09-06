@@ -11,11 +11,11 @@ interface SectionHeaderProps {
 const SectionHeader = ({ title, subtitle, children, centered = false, variant = 'light' }: SectionHeaderProps) => {
   let titleClass;
   if (variant === 'bold') {
-    titleClass = 'text-4xl sm:text-5xl lg:text-6xl font-serif font-black tracking-tight text-white mb-6';
+    titleClass = 'text-4xl sm:text-5xl lg:text-6xl font-cabinet font-black tracking-tight text-white mb-6';
   } else if (variant === 'dark') {
-    titleClass = 'text-3xl sm:text-4xl font-serif font-bold tracking-tight text-white mb-4';
+    titleClass = 'text-3xl sm:text-4xl font-cabinet font-bold tracking-tight text-white mb-4';
   } else {
-    titleClass = 'text-3xl sm:text-4xl font-serif font-bold tracking-tight text-ink-900 mb-4';
+    titleClass = 'text-3xl sm:text-4xl font-cabinet font-bold tracking-tight text-ink-900 mb-4';
   }
     
   const subtitleClass = variant === 'dark' || variant === 'bold'

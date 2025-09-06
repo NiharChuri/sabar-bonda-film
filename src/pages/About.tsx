@@ -58,12 +58,12 @@ const About = () => {
         <SectionHeader 
           title="Director's Statement"
         />
-        <div className="bg-white rounded-2xl p-8 shadow-film">
+        <div className="glass rounded-lg p-8 shadow-film">
           <button
             onClick={() => setShowDirectorStatement(!showDirectorStatement)}
             className="w-full flex justify-between items-center text-left"
           >
-            <h3 className="text-xl font-serif font-semibold text-ink-900">
+            <h3 className="text-xl font-cabinet font-semibold text-white">
               Artist's Vision
             </h3>
             {showDirectorStatement ? (
@@ -74,8 +74,8 @@ const About = () => {
           </button>
           
           {showDirectorStatement && (
-            <div className="mt-6 prose prose-lg max-w-none text-body leading-relaxed">
-              <p>
+            <div className="mt-6 prose prose-lg max-w-none text-white leading-relaxed">
+              <p className="font-nohemi font-medium">
                 [Director's statement content will be added here. This will include the filmmaker's personal vision, inspiration behind Sabar Bonda, artistic approach, and deeper exploration of the themes and messages within the film.]
               </p>
             </div>
@@ -84,16 +84,16 @@ const About = () => {
       </Section>
 
       {/* Film Information */}
-      <Section className="bg-sand-100/30">
+      <Section className="glass">
         <SectionHeader 
           title="Film Information"
         />
-        <div className="bg-white rounded-2xl p-8 shadow-film">
+        <div className="glass rounded-lg p-8 shadow-film">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {filmInfo.map((info, index) => (
               <div key={index}>
-                <dt className="text-sm font-medium text-muted mb-1">{info.label}</dt>
-                <dd className="text-base font-medium text-ink-900">{info.value}</dd>
+                <dt className="text-sm font-medium text-muted mb-1 font-cabinet">{info.label}</dt>
+                <dd className="text-base font-medium text-white font-nohemi">{info.value}</dd>
               </div>
             ))}
           </div>
@@ -120,7 +120,7 @@ const About = () => {
       </Section>
 
       {/* Crew */}
-      <Section className="bg-white">
+      <Section className="glass">
         <SectionHeader 
           title="Crew"
           subtitle="The creative team behind Sabar Bonda"

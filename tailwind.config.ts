@@ -101,7 +101,8 @@ export default {
 			fontFamily: {
 				serif: ['Crimson Pro', 'serif'],
 				sans: ['Inter', 'sans-serif'],
-				nohemi: ['NOHEMI', 'sans-serif']
+				nohemi: ['NOHEMI', 'sans-serif'],
+				cabinet: ['Cabinet Grotesk', 'sans-serif']
 			},
 			borderRadius: {
 				lg: '2px',

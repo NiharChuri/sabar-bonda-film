@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Calendar, MapPin, Clock, Mail, Phone, Copy, Check, ChevronLeft, ChevronRight } from 'lucide-react';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
@@ -9,6 +9,11 @@ const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState('');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [currentPosterIndex, setCurrentPosterIndex] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [currentX, setCurrentX] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -19,6 +24,90 @@ const Home = () => {
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
+  // Simple drag functionality
+  const handleStart = (clientX: number) => {
+    setIsDragging(true);
+    setStartX(clientX);
+    setCurrentX(clientX);
+    
+    if (carouselRef.current) {
+      carouselRef.current.style.animationPlayState = 'paused';
+    }
+  };
+
+  const handleMove = (clientX: number) => {
+    if (!isDragging || !carouselRef.current) return;
+    
+    setCurrentX(clientX);
+    const diff = clientX - startX;
+    carouselRef.current.style.transform = `translateX(${diff}px)`;
+  };
+
+  const handleEnd = () => {
+    if (!carouselRef.current) return;
+    
+    setIsDragging(false);
+    carouselRef.current.style.transform = '';
+    carouselRef.current.style.animationPlayState = 'running';
+  };
+
+  // Mouse events
+  const handleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    handleStart(e.clientX);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    e.preventDefault();
+    handleMove(e.clientX);
+  };
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    e.preventDefault();
+    handleEnd();
+  };
+
+  // Touch events
+  const handleTouchStart = (e: React.TouchEvent) => {
+    e.preventDefault();
+    handleStart(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    e.preventDefault();
+    handleMove(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    e.preventDefault();
+    handleEnd();
+  };
+
+  // Global mouse events for dragging outside element
+  useEffect(() => {
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      if (isDragging) {
+        handleMove(e.clientX);
+      }
+    };
+
+    const handleGlobalMouseUp = () => {
+      if (isDragging) {
+        handleEnd();
+      }
+    };
+
+    if (isDragging) {
+      document.addEventListener('mousemove', handleGlobalMouseMove);
+      document.addEventListener('mouseup', handleGlobalMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleGlobalMouseMove);
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+  }, [isDragging, startX]);
 
   // Data
   const filmInfo = [
@@ -142,6 +231,17 @@ const Home = () => {
     }
   ];
 
+  const posterImages = [
+    {
+      src: '/images/posters/postermain.jpg',
+      alt: 'Sabar Bonda Main Poster'
+    },
+    {
+      src: '/images/posters/vertical_poster.jpg',
+      alt: 'Sabar Bonda Vertical Poster'
+    }
+  ];
+
   // Functions
   const copyToClipboard = async (text: string, type: string) => {
     try {
@@ -163,6 +263,14 @@ const Home = () => {
 
   const goToImage = (index: number) => {
     setCurrentImageIndex(index);
+  };
+
+  const nextPoster = () => {
+    setCurrentPosterIndex((prev) => (prev + 1) % posterImages.length);
+  };
+
+  const prevPoster = () => {
+    setCurrentPosterIndex((prev) => (prev - 1 + posterImages.length) % posterImages.length);
   };
 
   const validateForm = () => {
@@ -224,7 +332,7 @@ const Home = () => {
             <div className="flex justify-between items-center w-full">
               {/* Left side - Title */}
               <div className="text-left">
-                <h1 className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tight text-white mb-6 leading-none font-serif">
+                <h1 className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tight text-white mb-6 leading-none font-cabinet">
                   Sabar Bonda
                 </h1>
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-nohemi font-light text-white/90 tracking-wide">
@@ -232,30 +340,37 @@ const Home = () => {
                 </h2>
               </div>
               
-              {/* Right side - Award Badge */}
+              {/* Right side - Award Laurels Grid */}
               <div className="hidden lg:flex flex-col items-center">
-                <div className="bg-white/10 backdrop-blur-sm p-6 border border-white/20">
-                  {/* Laurel Wreath SVG */}
-                  <div className="w-24 h-24 mb-4 mx-auto">
-                    <svg viewBox="0 0 100 100" className="w-full h-full text-yellow-400 fill-current">
-                      {/* Left laurel branch */}
-                      <path d="M20 50c0-8 6-15 14-17-8-2-14-9-14-17 0 8-6 15-14 17 8 2 14 9 14 17z"/>
-                      <path d="M30 40c0-6 4-11 10-13-6-2-10-7-10-13 0 6-4 11-10 13 6 2 10 7 10 13z"/>
-                      <path d="M25 60c0-6 4-11 10-13-6-2-10-7-10-13 0 6-4 11-10 13 6 2 10 7 10 13z"/>
-                      
-                      {/* Right laurel branch */}
-                      <path d="M80 50c0-8-6-15-14-17 8-2 14-9 14-17 0 8 6 15 14 17-8 2-14 9-14 17z"/>
-                      <path d="M70 40c0-6-4-11-10-13 6-2 10-7 10-13 0 6 4 11 10 13-6 2-10 7-10 13z"/>
-                      <path d="M75 60c0-6-4-11-10-13 6-2 10-7 10-13 0 6 4 11 10 13-6 2-10 7-10 13z"/>
-                    </svg>
+                {/* 2x2 Grid of Award Laurels - Large and Prominent */}
+                <div className="grid grid-cols-2 gap-8">
+                  <div className="w-36 h-36">
+                    <img 
+                      src="/images/award_laurels/Sundance Winner_World Cinema Grand Jury Prize-Dramatic_white.png" 
+                      alt="Sundance World Cinema Grand Jury Prize" 
+                      className="w-full h-full object-contain drop-shadow-xl"
+                    />
                   </div>
-                  
-                  {/* Award Text */}
-                  <div className="text-center">
-                    <div className="text-white font-bold text-sm mb-1 font-nohemi">SUNDANCE 2025</div>
-                    <div className="text-white/90 text-xs leading-tight font-nohemi font-medium">World Cinema</div>
-                    <div className="text-white/90 text-xs leading-tight font-nohemi font-medium">Grand Jury Prize</div>
-                    <div className="text-white/90 text-xs leading-tight font-nohemi font-medium">Dramatic</div>
+                  <div className="w-36 h-36">
+                    <img 
+                      src="/images/award_laurels/SXSW winner laurel.png" 
+                      alt="SXSW Winner Laurel" 
+                      className="w-full h-full object-contain drop-shadow-xl"
+                    />
+                  </div>
+                  <div className="w-36 h-36">
+                    <img 
+                      src="/images/award_laurels/Audience - Best Feature IFFLA 2025 black (1).png" 
+                      alt="IFFLA 2025 Audience Best Feature" 
+                      className="w-full h-full object-contain drop-shadow-xl"
+                    />
+                  </div>
+                  <div className="w-36 h-36">
+                    <img 
+                      src="/images/award_laurels/IO-Audience-Award-Best-Narrative-Feature (1).png" 
+                      alt="IO Audience Award Best Narrative Feature" 
+                      className="w-full h-full object-contain drop-shadow-xl"
+                    />
                   </div>
                 </div>
               </div>
@@ -352,7 +467,7 @@ const Home = () => {
                       meaningful for me.
                     </p>
                     <div className="mt-8 pt-4 border-t border-white/30">
-                      <p className="font-serif font-semibold text-white text-right text-2xl">
+                      <p className="font-cabinet font-semibold text-white text-right text-2xl">
                         - Rohan Parashuram Kanawade, Director
                       </p>
                     </div>
@@ -372,7 +487,7 @@ const Home = () => {
                 {filmInfo.map((info, index) => (
                   <div key={index}>
                     <dt className="text-sm font-medium text-muted mb-1 font-nohemi">{info.label}</dt>
-                    <dd className="text-base font-medium text-ink-900 font-nohemi">{info.value}</dd>
+                    <dd className="text-base font-medium text-white font-nohemi">{info.value}</dd>
                   </div>
                 ))}
               </div>
@@ -386,25 +501,65 @@ const Home = () => {
             />
             
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-              {/* Left Side - Movie Poster */}
+              {/* Left Side - Movie Poster Carousel */}
               <div className="lg:col-span-4">
                 <div className="w-full max-w-md mx-auto lg:mx-0">
-                  <img 
-                    src="/images/vertical_poster.jpg"
-                    alt="Sabar Bonda Movie Poster"
-                    className="w-full h-auto shadow-film object-cover"
-                    loading="lazy"
-                  />
+                  <div className="relative">
+                    <img 
+                      src={posterImages[currentPosterIndex].src}
+                      alt={posterImages[currentPosterIndex].alt}
+                      className="w-full h-auto shadow-film object-cover transition-all duration-500 ease-in-out"
+                      loading="lazy"
+                    />
+                    
+                    {/* Navigation Arrows */}
+                    <button
+                      onClick={prevPoster}
+                      className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full glass text-white hover:bg-white/20 transition-all duration-200"
+                      aria-label="Previous poster"
+                    >
+                      <ChevronLeft size={20} />
+                    </button>
+                    
+                    <button
+                      onClick={nextPoster}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full glass text-white hover:bg-white/20 transition-all duration-200"
+                      aria-label="Next poster"
+                    >
+                      <ChevronRight size={20} />
+                    </button>
+
+                    {/* Poster Counter */}
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full glass text-white text-sm font-nohemi">
+                      {currentPosterIndex + 1} / {posterImages.length}
+                    </div>
+                  </div>
+                  
+                  {/* Poster Indicators */}
+                  <div className="mt-4 flex justify-center space-x-2">
+                    {posterImages.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentPosterIndex(index)}
+                        className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                          index === currentPosterIndex 
+                            ? 'bg-copper-500 scale-125' 
+                            : 'bg-white/40 hover:bg-white/60'
+                        }`}
+                        aria-label={`Go to poster ${index + 1}`}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
 
               {/* Middle - Synopsis */}
               <div className="lg:col-span-5">
-                <div className="bg-white/95 backdrop-blur-sm p-8 shadow-film">
-                  <h3 className="text-2xl font-serif font-bold text-ink-900 mb-6">
+                <div className="glass p-8 shadow-film rounded-lg">
+                  <h3 className="text-2xl font-cabinet font-bold text-white mb-6">
                     Synopsis
                   </h3>
-                  <div className="prose prose-sm max-w-none text-body leading-relaxed space-y-4 text-sm font-nohemi font-medium">
+                  <div className="prose prose-sm max-w-none text-white leading-relaxed space-y-4 text-sm font-nohemi font-medium">
                     <p>
                       Anand, a 30-something city dweller compelled to spend a 10-day mourning period for his father in the rugged countryside of western India, tenderly bonds with a local farmer who is struggling to stay unmarried. As the mourning ends, forcing his return, Anand must decide the fate of his relationship born under duress.
                     </p>
@@ -414,41 +569,41 @@ const Home = () => {
 
               {/* Right Side - Cast & Crew List */}
               <div className="lg:col-span-3">
-                <div className="bg-white/95 backdrop-blur-sm p-6 shadow-film">
+                <div className="glass p-6 shadow-film rounded-lg">
                   <div className="space-y-6">
                     
                     {/* Written and Directed */}
                     <div>
-                      <h4 className="text-sm font-semibold text-copper-500 uppercase tracking-wide mb-2 font-nohemi">
+                      <h4 className="text-sm font-semibold text-copper-500 uppercase tracking-wide mb-2 font-cabinet">
                         Written & Directed
                       </h4>
-                      <p className="text-base font-medium text-ink-900 font-nohemi">
+                      <p className="text-base font-medium text-white font-nohemi">
                         Rohan Parashuram Kanawade
                       </p>
                     </div>
 
                     {/* Producers */}
                     <div>
-                      <h4 className="text-sm font-semibold text-copper-500 uppercase tracking-wide mb-2 font-nohemi">
+                      <h4 className="text-sm font-semibold text-copper-500 uppercase tracking-wide mb-2 font-cabinet">
                         Producers
                       </h4>
                       <div className="space-y-1">
-                        <p className="text-base font-medium text-ink-900 font-nohemi">
+                        <p className="text-base font-medium text-white font-nohemi">
                           Lotus Visual Productions (Neeraj Churi)
                         </p>
-                        <p className="text-base font-medium text-ink-900 font-nohemi">
+                        <p className="text-base font-medium text-white font-nohemi">
                           Kaushik Ray
                         </p>
-                        <p className="text-base font-medium text-ink-900 font-nohemi">
+                        <p className="text-base font-medium text-white font-nohemi">
                           Naren Chandavarkar
                         </p>
-                        <p className="text-base font-medium text-ink-900 font-nohemi">
+                        <p className="text-base font-medium text-white font-nohemi">
                           Sidharth Meer
                         </p>
-                        <p className="text-base font-medium text-ink-900 font-nohemi">
+                        <p className="text-base font-medium text-white font-nohemi">
                           Hareesh Reddypalli
                         </p>
-                        <p className="text-base font-medium text-ink-900 font-nohemi">
+                        <p className="text-base font-medium text-white font-nohemi">
                           Rohan Parashuram Kanawade
                         </p>
                       </div>
@@ -456,14 +611,14 @@ const Home = () => {
 
                     {/* Executive Producers */}
                     <div>
-                      <h4 className="text-sm font-semibold text-copper-500 uppercase tracking-wide mb-2 font-nohemi">
+                      <h4 className="text-sm font-semibold text-copper-500 uppercase tracking-wide mb-2 font-cabinet">
                         Executive Producers
                       </h4>
                       <div className="space-y-1">
-                        <p className="text-base font-medium text-ink-900 font-nohemi">
+                        <p className="text-base font-medium text-white font-nohemi">
                           Ilann Girard
                         </p>
-                        <p className="text-base font-medium text-ink-900 font-nohemi">
+                        <p className="text-base font-medium text-white font-nohemi">
                           Kishor Vasant Sawant
                         </p>
                       </div>
@@ -471,17 +626,17 @@ const Home = () => {
 
                     {/* Cast */}
                     <div>
-                      <h4 className="text-sm font-semibold text-copper-500 uppercase tracking-wide mb-2 font-nohemi">
+                      <h4 className="text-sm font-semibold text-copper-500 uppercase tracking-wide mb-2 font-cabinet">
                         Cast
                       </h4>
                       <div className="space-y-1 font-medium">
-                        <p className="text-md font-medium text-ink-900 font-nohemi">
+                        <p className="text-md font-medium text-white font-nohemi">
                           Bhushaan Manoj
                         </p>
-                        <p className="text-md font-medium text-ink-900 font-nohemi">
+                        <p className="text-md font-medium text-white font-nohemi">
                           Suraaj Suman
                         </p>
-                        <p className="text-md font-medium text-ink-900 font-nohemi">
+                        <p className="text-md font-medium text-white font-nohemi">
                           Jayshri Jagtap
                         </p>
                       </div>
@@ -517,9 +672,18 @@ const Home = () => {
             
             {/* Auto-scrolling Carousel */}
             <div className="relative overflow-hidden">
-              <div className="flex animate-scroll-infinite space-x-8 pb-4">
+              <div 
+                ref={carouselRef}
+                className={`flex animate-scroll-infinite space-x-8 pb-4 ${isDragging ? 'dragging' : ''}`}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+              >
                 {/* Awards */}
-                <div className="flex-shrink-0 w-96 bg-white/95 backdrop-blur-sm p-6 shadow-film border-l-4 border-yellow-500">
+                <div className="flex-shrink-0 w-96 glass p-6 shadow-film border-l-4 border-yellow-500 rounded-lg">
                   <div className="flex items-center gap-3 mb-4">
                     <StatBadge 
                       title="Sundance Film Festival"
@@ -527,67 +691,67 @@ const Home = () => {
                       variant="laurel"
                     />
                   </div>
-                  <h3 className="text-lg font-serif font-semibold text-ink-900 mb-3 line-clamp-2">
+                  <h3 className="text-lg font-cabinet font-semibold text-white mb-3 line-clamp-2">
                     World Cinema Grand Jury Prize: Dramatic
                   </h3>
-                  <p className="text-sm text-body leading-relaxed font-nohemi font-medium line-clamp-3">
+                  <p className="text-sm text-white leading-relaxed font-nohemi font-medium line-clamp-3">
                     Prestigious recognition for outstanding dramatic filmmaking in world cinema competition.
                   </p>
                 </div>
 
                 {/* Critical Praise Items */}
-                <div className="flex-shrink-0 w-96 bg-white/95 backdrop-blur-sm p-6 shadow-film border-l-4 border-copper-500">
+                <div className="flex-shrink-0 w-96 glass p-6 shadow-film border-l-4 border-copper-500 rounded-lg">
                   <div className="mb-3">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-nohemi">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-cabinet">
                       Critical Praise
                     </span>
                   </div>
-                  <blockquote className="text-sm italic text-ink-900 leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
+                  <blockquote className="text-sm italic text-white leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
                     "A tender and authentic portrayal of queer love in rural India, beautifully crafted with emotional depth and cultural sensitivity."
                   </blockquote>
                   <cite className="text-xs text-muted font-medium font-nohemi">— Variety</cite>
                 </div>
 
-                <div className="flex-shrink-0 w-96 bg-white/95 backdrop-blur-sm p-6 shadow-film border-l-4 border-copper-500">
+                <div className="flex-shrink-0 w-96 glass p-6 shadow-film border-l-4 border-copper-500 rounded-lg">
                   <div className="mb-3">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-nohemi">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-cabinet">
                       Critical Praise
                     </span>
                   </div>
-                  <blockquote className="text-sm italic text-ink-900 leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
+                  <blockquote className="text-sm italic text-white leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
                     "Kanawade's direction brings remarkable intimacy to this story of connection amidst grief and societal pressure."
                   </blockquote>
                   <cite className="text-xs text-muted font-medium font-nohemi">— The Hollywood Reporter</cite>
                 </div>
 
-                <div className="flex-shrink-0 w-96 bg-white/95 backdrop-blur-sm p-6 shadow-film border-l-4 border-copper-500">
+                <div className="flex-shrink-0 w-96 glass p-6 shadow-film border-l-4 border-copper-500 rounded-lg">
                   <div className="mb-3">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-nohemi">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-cabinet">
                     Critical Praise
                     </span>
                   </div>
-                  <blockquote className="text-sm italic text-ink-900 leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
+                  <blockquote className="text-sm italic text-white leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
                     "A powerful debut that challenges stereotypes while celebrating the universality of human connection."
                   </blockquote>
                   <cite className="text-xs text-muted font-medium font-nohemi">— IndieWire</cite>
                 </div>
 
-                <div className="flex-shrink-0 w-96 bg-white/95 backdrop-blur-sm p-6 shadow-film border-l-4 border-green-500">
+                <div className="flex-shrink-0 w-96 glass p-6 shadow-film border-l-4 border-green-500 rounded-lg">
                   <div className="mb-3">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700 font-nohemi">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700 font-cabinet">
                       Industry Recognition
                     </span>
                   </div>
-                  <h3 className="text-lg font-serif font-semibold text-ink-900 mb-3 line-clamp-2">
+                  <h3 className="text-lg font-cabinet font-semibold text-white mb-3 line-clamp-2">
                     Official Selection - Mumbai Film Festival
                   </h3>
-                  <p className="text-sm text-body leading-relaxed font-nohemi font-medium line-clamp-3">
+                  <p className="text-sm text-white leading-relaxed font-nohemi font-medium line-clamp-3">
                     Selected for the prestigious competition category celebrating innovative Indian cinema.
                   </p>
                 </div>
 
                 {/* Duplicate items for seamless loop */}
-                <div className="flex-shrink-0 w-96 bg-white/95 backdrop-blur-sm p-6 shadow-film border-l-4 border-yellow-500">
+                <div className="flex-shrink-0 w-96 glass p-6 shadow-film border-l-4 border-yellow-500 rounded-lg">
                   <div className="flex items-center gap-3 mb-4">
                     <StatBadge 
                       title="Sundance Film Festival"
@@ -595,21 +759,21 @@ const Home = () => {
                       variant="laurel"
                     />
                   </div>
-                  <h3 className="text-lg font-serif font-semibold text-ink-900 mb-3 line-clamp-2">
+                  <h3 className="text-lg font-cabinet font-semibold text-white mb-3 line-clamp-2">
                     World Cinema Grand Jury Prize: Dramatic
                   </h3>
-                  <p className="text-sm text-body leading-relaxed font-nohemi font-medium line-clamp-3">
+                  <p className="text-sm text-white leading-relaxed font-nohemi font-medium line-clamp-3">
                     Prestigious recognition for outstanding dramatic filmmaking in world cinema competition.
                   </p>
                 </div>
 
-                <div className="flex-shrink-0 w-96 bg-white/95 backdrop-blur-sm p-6 shadow-film border-l-4 border-copper-500">
+                <div className="flex-shrink-0 w-96 glass p-6 shadow-film border-l-4 border-copper-500 rounded-lg">
                   <div className="mb-3">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-nohemi">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-cabinet">
                       Critical Praise
                     </span>
                   </div>
-                  <blockquote className="text-sm italic text-ink-900 leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
+                  <blockquote className="text-sm italic text-white leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
                     "A tender and authentic portrayal of queer love in rural India, beautifully crafted with emotional depth and cultural sensitivity."
                   </blockquote>
                   <cite className="text-xs text-muted font-medium font-nohemi">— Variety</cite>
@@ -643,7 +807,7 @@ const Home = () => {
             {/* Image Carousel */}
             <div className="relative max-w-4xl mx-auto">
               {/* Main Image Display */}
-              <div className="relative aspect-video bg-black/50 backdrop-blur-sm shadow-film overflow-hidden">
+              <div className="relative aspect-video glass shadow-film overflow-hidden rounded-lg">
                 <img 
                   src={galleryImages[currentImageIndex].src}
                   alt={galleryImages[currentImageIndex].alt}
@@ -654,7 +818,7 @@ const Home = () => {
                 {/* Navigation Arrows */}
                 <button
                   onClick={prevImage}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 text-white hover:bg-black/70 transition-all duration-200 backdrop-blur-sm"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full glass text-white hover:bg-white/30 transition-all duration-200"
                   aria-label="Previous image"
                 >
                   <ChevronLeft size={24} />
@@ -662,21 +826,21 @@ const Home = () => {
                 
                 <button
                   onClick={nextImage}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 text-white hover:bg-black/70 transition-all duration-200 backdrop-blur-sm"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full glass text-white hover:bg-white/30 transition-all duration-200"
                   aria-label="Next image"
                 >
                   <ChevronRight size={24} />
                 </button>
 
                 {/* Image Counter */}
-                <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-black/50 text-white text-sm font-nohemi backdrop-blur-sm">
+                <div className="absolute top-4 right-4 px-3 py-1 rounded-full glass text-white text-sm font-nohemi">
                   {currentImageIndex + 1} / {galleryImages.length}
                 </div>
               </div>
 
               {/* Image Caption */}
-              <div className="mt-4 bg-white/95 backdrop-blur-sm p-4 shadow-film text-center">
-                <p className="text-body font-nohemi font-medium leading-relaxed">
+              <div className="mt-4 glass p-4 shadow-film text-center rounded-lg">
+                <p className="text-white font-nohemi font-medium leading-relaxed">
                   {galleryImages[currentImageIndex].caption}
                 </p>
               </div>
@@ -755,7 +919,7 @@ const Home = () => {
                     </div>
                     
                     <div className="flex-1 pb-12">
-                      <div className="bg-white/95 backdrop-blur-sm p-8 shadow-film border border-white/20">
+                      <div className="glass p-8 shadow-film border border-white/20 rounded-lg">
                         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
                           <div className="flex-1">
                             <div className="flex items-center gap-3 mb-3">
@@ -764,7 +928,7 @@ const Home = () => {
                               </span>
                             </div>
                             
-                            <h3 className="text-xl font-serif font-semibold text-ink-900 mb-2">
+                            <h3 className="text-xl font-cabinet font-semibold text-white mb-2">
                               {screening.festival}
                             </h3>
                             
@@ -773,19 +937,19 @@ const Home = () => {
                             </p>
                             
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                              <div className="flex items-center gap-2 text-body font-nohemi font-medium">
+                              <div className="flex items-center gap-2 text-white font-nohemi font-medium">
                                 <MapPin size={16} className="text-moss-500" />
                                 <span>{screening.location}</span>
                               </div>
-                              <div className="flex items-center gap-2 text-body font-nohemi font-medium">
+                              <div className="flex items-center gap-2 text-white font-nohemi font-medium">
                                 <Calendar size={16} className="text-moss-500" />
                                 <span>{screening.dates}</span>
                               </div>
-                              <div className="flex items-center gap-2 text-body font-nohemi font-medium">
+                              <div className="flex items-center gap-2 text-white font-nohemi font-medium">
                                 <Clock size={16} className="text-moss-500" />
                                 <span>{screening.time}</span>
                               </div>
-                              <div className="flex items-center gap-2 text-body font-nohemi font-medium">
+                              <div className="flex items-center gap-2 text-white font-nohemi font-medium">
                                 <span className="font-medium">Venue:</span>
                                 <span>{screening.venue}</span>
                               </div>
@@ -824,11 +988,11 @@ const Home = () => {
             
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {contactPanels.map((panel, index) => (
-                <div key={index} className="bg-white/95 backdrop-blur-sm p-8 shadow-film">
-                  <h3 className="text-xl font-serif font-semibold text-ink-900 mb-4">
+                <div key={index} className="glass p-8 shadow-film rounded-lg">
+                  <h3 className="text-xl font-cabinet font-semibold text-white mb-4">
                     {panel.title}
                   </h3>
-                  <p className="text-body leading-relaxed mb-6 font-nohemi font-medium">
+                  <p className="text-white leading-relaxed mb-6 font-nohemi font-medium">
                     {panel.description}
                   </p>
                   
@@ -836,7 +1000,7 @@ const Home = () => {
                     <div className="flex items-center justify-between gap-3">
                       <div className="flex items-center gap-3 flex-1 min-w-0">
                         <Mail size={18} className="text-moss-500 flex-shrink-0" />
-                        <span className="text-sm text-ink-900 font-mono truncate">
+                        <span className="text-sm text-white font-mono truncate">
                           {panel.email}
                         </span>
                       </div>
@@ -856,7 +1020,7 @@ const Home = () => {
                     <div className="flex items-center justify-between gap-3">
                       <div className="flex items-center gap-3 flex-1 min-w-0">
                         <Phone size={18} className="text-moss-500 flex-shrink-0" />
-                        <span className="text-sm text-ink-900 font-mono">
+                        <span className="text-sm text-white font-mono">
                           {panel.phone}
                         </span>
                       </div>
@@ -886,10 +1050,10 @@ const Home = () => {
             />
             
             <div className="max-w-2xl mx-auto">
-              <form onSubmit={handleSubmit} className="bg-white/95 backdrop-blur-sm p-8 shadow-film">
+              <form onSubmit={handleSubmit} className="glass p-8 shadow-film rounded-lg">
                 <div className="space-y-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-ink-900 mb-2 font-nohemi">
+                    <label htmlFor="name" className="block text-sm font-medium text-white mb-2 font-cabinet">
                       Name *
                     </label>
                     <input
@@ -909,7 +1073,7 @@ const Home = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-ink-900 mb-2 font-nohemi">
+                    <label htmlFor="email" className="block text-sm font-medium text-white mb-2 font-cabinet">
                       Email *
                     </label>
                     <input
@@ -929,7 +1093,7 @@ const Home = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-ink-900 mb-2 font-nohemi">
+                    <label htmlFor="message" className="block text-sm font-medium text-white mb-2 font-cabinet">
                       Message *
                     </label>
                     <textarea
@@ -950,7 +1114,7 @@ const Home = () => {
 
                   <button
                     type="submit"
-                    className="w-full rounded-full px-6 py-3 font-medium shadow-sm bg-copper-500 text-white hover:bg-copper-600 focus-visible:ring-2 focus-visible:ring-copper-500 focus-visible:ring-offset-2 transition-all duration-200"
+                    className="w-full rounded-full px-6 py-3 font-medium shadow-sm bg-copper-500 text-white hover:bg-copper-600 focus-visible:ring-2 focus-visible:ring-copper-500 focus-visible:ring-offset-2 transition-all duration-200 font-cabinet"
                   >
                     Send Message
                   </button>
