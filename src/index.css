@@ -221,12 +221,58 @@
 }
 
 @layer utilities {
+  /* Auto-scrolling carousel animation */
+  @keyframes scroll-infinite {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-scroll-infinite {
+    animation: scroll-infinite 30s linear infinite;
+    width: max-content;
+  }
+
+  .animate-scroll-infinite:hover {
+    animation-play-state: paused;
+  }
+
+  /* Line clamp utilities for text truncation */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
   /* Reduced motion support */
   @media (prefers-reduced-motion: reduce) {
     .reveal,
     .card-hover,
-    .link-underline::after {
+    .link-underline::after,
+    .animate-scroll-infinite {
       @apply transition-none;
+    }
+    
+    .animate-scroll-infinite {
+      animation: none !important;
     }
     
     * {

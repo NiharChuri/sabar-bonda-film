@@ -10,7 +10,7 @@ const StatBadge = ({ title, subtitle, variant = 'default' }: StatBadgeProps) => 
   return (
     <div 
       className={`
-        inline-flex items-center px-4 py-3 rounded-xl font-medium shadow-sm
+        inline-flex items-center px-4 py-3 rounded-full font-medium shadow-sm
         ${variant === 'laurel' 
           ? 'bg-sand-100 text-ink-900 border border-sand-400/30' 
           : 'bg-white text-ink-900 border border-border'

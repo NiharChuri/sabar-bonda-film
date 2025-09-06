@@ -55,7 +55,7 @@ const Navigation = () => {
           {/* Mobile menu button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-white hover:text-white/80 transition-colors duration-200"
+            className="md:hidden p-2 rounded-full text-white hover:text-white/80 hover:bg-white/10 transition-all duration-200"
             aria-label="Toggle navigation menu"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}

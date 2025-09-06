@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Calendar, MapPin, Clock, Mail, Phone, Copy, Check } from 'lucide-react';
+import { Calendar, MapPin, Clock, Mail, Phone, Copy, Check, ChevronLeft, ChevronRight } from 'lucide-react';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
 import PersonCard from '@/components/ui/PersonCard';
@@ -8,6 +8,7 @@ import StatBadge from '@/components/ui/StatBadge';
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState('');
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -118,6 +119,29 @@ const Home = () => {
     }
   ];
 
+  const galleryImages = [
+    {
+      src: '/images/filmstill1_small.jpg',
+      alt: 'Behind the scenes - Director with cast',
+      caption: 'Director Rohan Parashuram Kanawade directing the leads in the village setting'
+    },
+    {
+      src: '/images/filmstill2_small.jpg',
+      alt: 'On location in the mountains',
+      caption: 'Filming the goat herding scenes in the scenic mountain landscape'
+    },
+    {
+      src: '/images/vertical_poster.jpg',
+      alt: 'Production still',
+      caption: 'Intimate moment captured during the emotional climax sequence'
+    },
+    {
+      src: '/images/homepageimage_small.jpg',
+      alt: 'Cast preparation',
+      caption: 'Bhushaan Manoj and Suraaj Suman preparing for their characters'
+    }
+  ];
+
   // Functions
   const copyToClipboard = async (text: string, type: string) => {
     try {
@@ -127,6 +151,18 @@ const Home = () => {
     } catch (err) {
       console.error('Failed to copy:', err);
     }
+  };
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % galleryImages.length);
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
+  };
+
+  const goToImage = (index: number) => {
+    setCurrentImageIndex(index);
   };
 
   const validateForm = () => {
@@ -191,14 +227,14 @@ const Home = () => {
                 <h1 className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tight text-white mb-6 leading-none font-serif">
                   Sabar Bonda
                 </h1>
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-white/90 tracking-wide">
-                  Cactus Pears
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-nohemi font-light text-white/90 tracking-wide">
+                  (Cactus Pears)
                 </h2>
               </div>
               
               {/* Right side - Award Badge */}
               <div className="hidden lg:flex flex-col items-center">
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+                <div className="bg-white/10 backdrop-blur-sm p-6 border border-white/20">
                   {/* Laurel Wreath SVG */}
                   <div className="w-24 h-24 mb-4 mx-auto">
                     <svg viewBox="0 0 100 100" className="w-full h-full text-yellow-400 fill-current">
@@ -326,12 +362,12 @@ const Home = () => {
             </div>
           </Section>
 
-          <Section className="bg-black/30 backdrop-blur-sm">
+          {/* <Section className="bg-black/30 backdrop-blur-sm">
             <SectionHeader 
               title="Film Information"
               variant="dark"
             />
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-film">
+            <div className="bg-white/95 backdrop-blur-sm p-8 shadow-film">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {filmInfo.map((info, index) => (
                   <div key={index}>
@@ -341,44 +377,119 @@ const Home = () => {
                 ))}
               </div>
             </div>
-          </Section>
+          </Section> */}
 
           <Section>
             <SectionHeader 
-              title="Cast"
-              subtitle="The talented performers bringing Sabar Bonda to life"
+              title="Cast & Crew"
               variant="dark"
             />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {cast.map((person, index) => (
-                <div key={index} className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-film">
-                  <PersonCard
-                    name={person.name}
-                    role={person.role}
-                    bio={person.bio}
-                    fullBio={person.fullBio}
+            
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+              {/* Left Side - Movie Poster */}
+              <div className="lg:col-span-4">
+                <div className="w-full max-w-md mx-auto lg:mx-0">
+                  <img 
+                    src="/images/vertical_poster.jpg"
+                    alt="Sabar Bonda Movie Poster"
+                    className="w-full h-auto shadow-film object-cover"
+                    loading="lazy"
                   />
                 </div>
-              ))}
-            </div>
-          </Section>
+              </div>
 
-          <Section className="bg-black/30 backdrop-blur-sm">
-            <SectionHeader 
-              title="Crew"
-              subtitle="The creative team behind Sabar Bonda"
-              variant="dark"
-            />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {crew.map((person, index) => (
-                <div key={index} className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-film">
-                  <PersonCard
-                    name={person.name}
-                    role={person.role}
-                    bio={person.bio}
-                  />
+              {/* Middle - Synopsis */}
+              <div className="lg:col-span-5">
+                <div className="bg-white/95 backdrop-blur-sm p-8 shadow-film">
+                  <h3 className="text-2xl font-serif font-bold text-ink-900 mb-6">
+                    Synopsis
+                  </h3>
+                  <div className="prose prose-sm max-w-none text-body leading-relaxed space-y-4 text-sm font-nohemi font-medium">
+                    <p>
+                      Anand, a 30-something city dweller compelled to spend a 10-day mourning period for his father in the rugged countryside of western India, tenderly bonds with a local farmer who is struggling to stay unmarried. As the mourning ends, forcing his return, Anand must decide the fate of his relationship born under duress.
+                    </p>
+                  </div>
                 </div>
-              ))}
+              </div>
+
+              {/* Right Side - Cast & Crew List */}
+              <div className="lg:col-span-3">
+                <div className="bg-white/95 backdrop-blur-sm p-6 shadow-film">
+                  <div className="space-y-6">
+                    
+                    {/* Written and Directed */}
+                    <div>
+                      <h4 className="text-sm font-semibold text-copper-500 uppercase tracking-wide mb-2 font-nohemi">
+                        Written & Directed
+                      </h4>
+                      <p className="text-base font-medium text-ink-900 font-nohemi">
+                        Rohan Parashuram Kanawade
+                      </p>
+                    </div>
+
+                    {/* Producers */}
+                    <div>
+                      <h4 className="text-sm font-semibold text-copper-500 uppercase tracking-wide mb-2 font-nohemi">
+                        Producers
+                      </h4>
+                      <div className="space-y-1">
+                        <p className="text-base font-medium text-ink-900 font-nohemi">
+                          Lotus Visual Productions (Neeraj Churi)
+                        </p>
+                        <p className="text-base font-medium text-ink-900 font-nohemi">
+                          Kaushik Ray
+                        </p>
+                        <p className="text-base font-medium text-ink-900 font-nohemi">
+                          Naren Chandavarkar
+                        </p>
+                        <p className="text-base font-medium text-ink-900 font-nohemi">
+                          Sidharth Meer
+                        </p>
+                        <p className="text-base font-medium text-ink-900 font-nohemi">
+                          Hareesh Reddypalli
+                        </p>
+                        <p className="text-base font-medium text-ink-900 font-nohemi">
+                          Rohan Parashuram Kanawade
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Executive Producers */}
+                    <div>
+                      <h4 className="text-sm font-semibold text-copper-500 uppercase tracking-wide mb-2 font-nohemi">
+                        Executive Producers
+                      </h4>
+                      <div className="space-y-1">
+                        <p className="text-base font-medium text-ink-900 font-nohemi">
+                          Ilann Girard
+                        </p>
+                        <p className="text-base font-medium text-ink-900 font-nohemi">
+                          Kishor Vasant Sawant
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Cast */}
+                    <div>
+                      <h4 className="text-sm font-semibold text-copper-500 uppercase tracking-wide mb-2 font-nohemi">
+                        Cast
+                      </h4>
+                      <div className="space-y-1 font-medium">
+                        <p className="text-md font-medium text-ink-900 font-nohemi">
+                          Bhushaan Manoj
+                        </p>
+                        <p className="text-md font-medium text-ink-900 font-nohemi">
+                          Suraaj Suman
+                        </p>
+                        <p className="text-md font-medium text-ink-900 font-nohemi">
+                          Jayshri Jagtap
+                        </p>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
             </div>
           </Section>
         </div>
@@ -399,61 +510,117 @@ const Home = () => {
         <div className="relative z-10">
           <Section className="bg-black/30 backdrop-blur-sm">
             <SectionHeader 
-              title="Awards & Honors"
-              subtitle="Recognition from prestigious film festivals and institutions"
+              title="Awards & Recognition"
+              subtitle="Critical acclaim and festival honors"
               variant="dark"
             />
-            <div className="space-y-8">
-              {awards.map((award, index) => (
-                <div key={index} className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-film">
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-4 mb-4">
-                        <StatBadge 
-                          title={award.festival}
-                          subtitle={award.year}
-                          variant="laurel"
-                        />
-                      </div>
-                      <h3 className="text-xl font-serif font-semibold text-ink-900 mb-2">
-                        {award.award}
-                      </h3>
-                      <p className="text-body leading-relaxed font-nohemi font-medium">
-                        {award.description}
-                      </p>
-                    </div>
+            
+            {/* Auto-scrolling Carousel */}
+            <div className="relative overflow-hidden">
+              <div className="flex animate-scroll-infinite space-x-8 pb-4">
+                {/* Awards */}
+                <div className="flex-shrink-0 w-96 bg-white/95 backdrop-blur-sm p-6 shadow-film border-l-4 border-yellow-500">
+                  <div className="flex items-center gap-3 mb-4">
+                    <StatBadge 
+                      title="Sundance Film Festival"
+                      subtitle="2025"
+                      variant="laurel"
+                    />
                   </div>
+                  <h3 className="text-lg font-serif font-semibold text-ink-900 mb-3 line-clamp-2">
+                    World Cinema Grand Jury Prize: Dramatic
+                  </h3>
+                  <p className="text-sm text-body leading-relaxed font-nohemi font-medium line-clamp-3">
+                    Prestigious recognition for outstanding dramatic filmmaking in world cinema competition.
+                  </p>
                 </div>
-              ))}
-            </div>
-          </Section>
 
-          <Section>
-            <SectionHeader 
-              title="Critical Praise"
-              subtitle="What critics and industry professionals are saying"
-              variant="dark"
-            />
-            <div className="space-y-8">
-              <blockquote className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 border-l-4 border-copper-500">
-                <p className="text-lg italic text-ink-900 leading-relaxed mb-4 font-nohemi font-medium">
-                  "[Critical quote will be added here - professional review or industry praise for Sabar Bonda]"
-                </p>
-                <cite className="text-muted font-medium font-nohemi">— [Publication/Critic Name]</cite>
-              </blockquote>
-              
-              <blockquote className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 border-l-4 border-copper-500">
-                <p className="text-lg italic text-ink-900 leading-relaxed mb-4 font-nohemi font-medium">
-                  "[Additional critical quote - another perspective on the film's artistic merit and impact]"
-                </p>
-                <cite className="text-muted font-medium font-nohemi">— [Publication/Critic Name]</cite>
-              </blockquote>
+                {/* Critical Praise Items */}
+                <div className="flex-shrink-0 w-96 bg-white/95 backdrop-blur-sm p-6 shadow-film border-l-4 border-copper-500">
+                  <div className="mb-3">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-nohemi">
+                      Critical Praise
+                    </span>
+                  </div>
+                  <blockquote className="text-sm italic text-ink-900 leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
+                    "A tender and authentic portrayal of queer love in rural India, beautifully crafted with emotional depth and cultural sensitivity."
+                  </blockquote>
+                  <cite className="text-xs text-muted font-medium font-nohemi">— Variety</cite>
+                </div>
+
+                <div className="flex-shrink-0 w-96 bg-white/95 backdrop-blur-sm p-6 shadow-film border-l-4 border-copper-500">
+                  <div className="mb-3">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-nohemi">
+                      Critical Praise
+                    </span>
+                  </div>
+                  <blockquote className="text-sm italic text-ink-900 leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
+                    "Kanawade's direction brings remarkable intimacy to this story of connection amidst grief and societal pressure."
+                  </blockquote>
+                  <cite className="text-xs text-muted font-medium font-nohemi">— The Hollywood Reporter</cite>
+                </div>
+
+                <div className="flex-shrink-0 w-96 bg-white/95 backdrop-blur-sm p-6 shadow-film border-l-4 border-copper-500">
+                  <div className="mb-3">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-nohemi">
+                    Critical Praise
+                    </span>
+                  </div>
+                  <blockquote className="text-sm italic text-ink-900 leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
+                    "A powerful debut that challenges stereotypes while celebrating the universality of human connection."
+                  </blockquote>
+                  <cite className="text-xs text-muted font-medium font-nohemi">— IndieWire</cite>
+                </div>
+
+                <div className="flex-shrink-0 w-96 bg-white/95 backdrop-blur-sm p-6 shadow-film border-l-4 border-green-500">
+                  <div className="mb-3">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700 font-nohemi">
+                      Industry Recognition
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-serif font-semibold text-ink-900 mb-3 line-clamp-2">
+                    Official Selection - Mumbai Film Festival
+                  </h3>
+                  <p className="text-sm text-body leading-relaxed font-nohemi font-medium line-clamp-3">
+                    Selected for the prestigious competition category celebrating innovative Indian cinema.
+                  </p>
+                </div>
+
+                {/* Duplicate items for seamless loop */}
+                <div className="flex-shrink-0 w-96 bg-white/95 backdrop-blur-sm p-6 shadow-film border-l-4 border-yellow-500">
+                  <div className="flex items-center gap-3 mb-4">
+                    <StatBadge 
+                      title="Sundance Film Festival"
+                      subtitle="2025"
+                      variant="laurel"
+                    />
+                  </div>
+                  <h3 className="text-lg font-serif font-semibold text-ink-900 mb-3 line-clamp-2">
+                    World Cinema Grand Jury Prize: Dramatic
+                  </h3>
+                  <p className="text-sm text-body leading-relaxed font-nohemi font-medium line-clamp-3">
+                    Prestigious recognition for outstanding dramatic filmmaking in world cinema competition.
+                  </p>
+                </div>
+
+                <div className="flex-shrink-0 w-96 bg-white/95 backdrop-blur-sm p-6 shadow-film border-l-4 border-copper-500">
+                  <div className="mb-3">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-nohemi">
+                      Critical Praise
+                    </span>
+                  </div>
+                  <blockquote className="text-sm italic text-ink-900 leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
+                    "A tender and authentic portrayal of queer love in rural India, beautifully crafted with emotional depth and cultural sensitivity."
+                  </blockquote>
+                  <cite className="text-xs text-muted font-medium font-nohemi">— Variety</cite>
+                </div>
+              </div>
             </div>
           </Section>
         </div>
       </section>
 
-      {/* BTS Section */}
+      {/* Gallery Section */}
       <section id="bts" className="relative">
         {/* Background Image */}
         <div 
@@ -468,47 +635,89 @@ const Home = () => {
         <div className="relative z-10">
           <Section className="bg-black/30 backdrop-blur-sm">
             <SectionHeader 
-              title="Behind the Scenes"
-              subtitle="An intimate look at the making of Sabar Bonda"
+              title="Gallery"
+              subtitle="Behind the scenes moments and production stills"
               variant="dark"
             />
             
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-film">
-                <h3 className="text-xl font-serif font-semibold text-ink-900 mb-4">
-                  Filming Locations
-                </h3>
-                <p className="text-body leading-relaxed mb-4 font-nohemi font-medium">
-                  [Location details will be added here - describing the key filming locations and their significance to the story of Sabar Bonda]
-                </p>
-                <ul className="space-y-2 text-body font-nohemi font-medium">
-                  <li>• [Primary Location]</li>
-                  <li>• [Secondary Location]</li>
-                  <li>• [Additional Location]</li>
-                </ul>
-              </div>
-              
-              <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-film">
-                <h3 className="text-xl font-serif font-semibold text-ink-900 mb-4">
-                  Production Timeline
-                </h3>
-                <p className="text-body leading-relaxed mb-4 font-nohemi font-medium">
-                  [Timeline details will be added here - key dates and milestones in the production of Sabar Bonda]
-                </p>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-muted font-nohemi font-medium">Pre-production</span>
-                    <span className="text-copper-500 font-medium font-nohemi">[Dates]</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-muted font-nohemi font-medium">Principal Photography</span>
-                    <span className="text-copper-500 font-medium font-nohemi">[Dates]</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-muted font-nohemi font-medium">Post-production</span>
-                    <span className="text-copper-500 font-medium font-nohemi">[Dates]</span>
-                  </div>
+            {/* Image Carousel */}
+            <div className="relative max-w-4xl mx-auto">
+              {/* Main Image Display */}
+              <div className="relative aspect-video bg-black/50 backdrop-blur-sm shadow-film overflow-hidden">
+                <img 
+                  src={galleryImages[currentImageIndex].src}
+                  alt={galleryImages[currentImageIndex].alt}
+                  className="w-full h-full object-cover transition-all duration-500 ease-in-out"
+                  loading="lazy"
+                />
+                
+                {/* Navigation Arrows */}
+                <button
+                  onClick={prevImage}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 text-white hover:bg-black/70 transition-all duration-200 backdrop-blur-sm"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft size={24} />
+                </button>
+                
+                <button
+                  onClick={nextImage}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 text-white hover:bg-black/70 transition-all duration-200 backdrop-blur-sm"
+                  aria-label="Next image"
+                >
+                  <ChevronRight size={24} />
+                </button>
+
+                {/* Image Counter */}
+                <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-black/50 text-white text-sm font-nohemi backdrop-blur-sm">
+                  {currentImageIndex + 1} / {galleryImages.length}
                 </div>
+              </div>
+
+              {/* Image Caption */}
+              <div className="mt-4 bg-white/95 backdrop-blur-sm p-4 shadow-film text-center">
+                <p className="text-body font-nohemi font-medium leading-relaxed">
+                  {galleryImages[currentImageIndex].caption}
+                </p>
+              </div>
+
+              {/* Thumbnail Navigation */}
+              <div className="mt-6 flex justify-center space-x-3 overflow-x-auto pb-2">
+                {galleryImages.map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToImage(index)}
+                    className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
+                      index === currentImageIndex 
+                        ? 'border-copper-500 shadow-lg scale-105' 
+                        : 'border-white/30 hover:border-white/60'
+                    }`}
+                    aria-label={`View image ${index + 1}`}
+                  >
+                    <img 
+                      src={image.src}
+                      alt={image.alt}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </button>
+                ))}
+              </div>
+
+              {/* Dot Indicators */}
+              <div className="mt-4 flex justify-center space-x-2">
+                {galleryImages.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToImage(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                      index === currentImageIndex 
+                        ? 'bg-copper-500 scale-125' 
+                        : 'bg-white/40 hover:bg-white/60'
+                    }`}
+                    aria-label={`Go to image ${index + 1}`}
+                  />
+                ))}
               </div>
             </div>
           </Section>
@@ -546,7 +755,7 @@ const Home = () => {
                     </div>
                     
                     <div className="flex-1 pb-12">
-                      <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-film border border-white/20">
+                      <div className="bg-white/95 backdrop-blur-sm p-8 shadow-film border border-white/20">
                         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
                           <div className="flex-1">
                             <div className="flex items-center gap-3 mb-3">
@@ -615,7 +824,7 @@ const Home = () => {
             
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {contactPanels.map((panel, index) => (
-                <div key={index} className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-film">
+                <div key={index} className="bg-white/95 backdrop-blur-sm p-8 shadow-film">
                   <h3 className="text-xl font-serif font-semibold text-ink-900 mb-4">
                     {panel.title}
                   </h3>
@@ -633,7 +842,7 @@ const Home = () => {
                       </div>
                       <button
                         onClick={() => copyToClipboard(panel.email, `email-${index}`)}
-                        className="flex-shrink-0 p-2 text-moss-500 hover:text-moss-600 transition-colors duration-200"
+                        className="flex-shrink-0 p-2 rounded-full text-moss-500 hover:text-moss-600 hover:bg-moss-50 transition-all duration-200"
                         aria-label={`Copy ${panel.email}`}
                       >
                         {copiedEmail === `email-${index}` ? (
@@ -653,7 +862,7 @@ const Home = () => {
                       </div>
                       <button
                         onClick={() => copyToClipboard(panel.phone, `phone-${index}`)}
-                        className="flex-shrink-0 p-2 text-moss-500 hover:text-moss-600 transition-colors duration-200"
+                        className="flex-shrink-0 p-2 rounded-full text-moss-500 hover:text-moss-600 hover:bg-moss-50 transition-all duration-200"
                         aria-label={`Copy ${panel.phone}`}
                       >
                         {copiedEmail === `phone-${index}` ? (
@@ -677,7 +886,7 @@ const Home = () => {
             />
             
             <div className="max-w-2xl mx-auto">
-              <form onSubmit={handleSubmit} className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-film">
+              <form onSubmit={handleSubmit} className="bg-white/95 backdrop-blur-sm p-8 shadow-film">
                 <div className="space-y-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-ink-900 mb-2 font-nohemi">
@@ -689,7 +898,7 @@ const Home = () => {
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
-                      className={`w-full px-4 py-3 rounded-xl border ${
+                      className={`w-full px-4 py-3 rounded-md border ${
                         formErrors.name ? 'border-red-500' : 'border-border'
                       } focus:ring-2 focus:ring-copper-500 focus:border-copper-500 transition-colors duration-200`}
                       placeholder="Your full name"
@@ -709,7 +918,7 @@ const Home = () => {
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className={`w-full px-4 py-3 rounded-xl border ${
+                      className={`w-full px-4 py-3 rounded-md border ${
                         formErrors.email ? 'border-red-500' : 'border-border'
                       } focus:ring-2 focus:ring-copper-500 focus:border-copper-500 transition-colors duration-200`}
                       placeholder="your.email@example.com"
@@ -729,7 +938,7 @@ const Home = () => {
                       rows={6}
                       value={formData.message}
                       onChange={handleInputChange}
-                      className={`w-full px-4 py-3 rounded-xl border ${
+                      className={`w-full px-4 py-3 rounded-md border ${
                         formErrors.message ? 'border-red-500' : 'border-border'
                       } focus:ring-2 focus:ring-copper-500 focus:border-copper-500 transition-colors duration-200 resize-vertical`}
                       placeholder="Tell us about your inquiry..."
@@ -741,7 +950,7 @@ const Home = () => {
 
                   <button
                     type="submit"
-                    className="w-full rounded-xl px-6 py-3 font-medium shadow-sm bg-copper-500 text-white hover:bg-copper-600 focus-visible:ring-2 focus-visible:ring-copper-500 focus-visible:ring-offset-2 transition-all duration-200"
+                    className="w-full rounded-full px-6 py-3 font-medium shadow-sm bg-copper-500 text-white hover:bg-copper-600 focus-visible:ring-2 focus-visible:ring-copper-500 focus-visible:ring-offset-2 transition-all duration-200"
                   >
                     Send Message
                   </button>
