@@ -322,6 +322,30 @@
     animation-play-state: paused;
   }
 
+  /* Carousel drag states */
+  .dragging {
+    animation-play-state: paused !important;
+    transition: none !important;
+  }
+
+  .dragging * {
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* Improve drag experience */
+  .carousel-container {
+    cursor: grab;
+  }
+
+  .carousel-container:active {
+    cursor: grabbing;
+  }
+
+  .carousel-container.dragging {
+    cursor: grabbing;
+  }
+
   /* Line clamp utilities for text truncation */
   .line-clamp-2 {
     display: -webkit-box;

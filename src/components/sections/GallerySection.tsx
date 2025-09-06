@@ -64,7 +64,7 @@ const GallerySection = () => {
           {/* Image Carousel */}
           <div className="relative max-w-4xl mx-auto">
             {/* Main Image Display */}
-            <div className="relative aspect-video glass shadow-film overflow-hidden rounded-lg">
+            <div className="relative aspect-video overflow-hidden">
               <img 
                 src={galleryImages[currentImageIndex].src}
                 alt={galleryImages[currentImageIndex].alt}
@@ -90,7 +90,7 @@ const GallerySection = () => {
               </button>
 
               {/* Image Counter */}
-              <div className="absolute top-4 right-4 px-3 py-1 rounded-full glass text-white text-sm font-nohemi">
+              <div className="absolute top-4 right-4 px-3 py-1 bg-black/60 text-white text-sm font-nohemi">
                 {currentImageIndex + 1} / {galleryImages.length}
               </div>
             </div>

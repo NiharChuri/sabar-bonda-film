@@ -13,7 +13,7 @@ const PersonCard = ({ name, role, bio, fullBio, avatar }: PersonCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="glass p-6 shadow-film hover:shadow-film-lg transition-all duration-200 card-hover rounded-lg">
+    <div className="p-6 transition-all duration-200">
       {avatar && (
         <div className="w-16 h-16 rounded-full bg-sand-100 mb-4 overflow-hidden">
           <img 

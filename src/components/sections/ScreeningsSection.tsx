@@ -55,7 +55,7 @@ const ScreeningsSection = () => {
                   </div>
                   
                   <div className="flex-1 pb-12">
-                    <div className="glass p-8 shadow-film border border-white/20 rounded-lg">
+                    <div className="p-8 border border-white/20">
                       <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-3">

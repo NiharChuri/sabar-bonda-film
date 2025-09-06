@@ -47,7 +47,7 @@ const AboutSection = () => {
               {/* Left Column */}
               <div className="lg:w-1/2">
                 <div className="prose prose-sm max-w-none text-white leading-relaxed space-y-4">
-                  <p className="font-nohemi font-light">
+                  <p className="font-nohemi font-light tracking-wide">
                     Sabar Bonda (Cactus Pears) is my deeply personal reimagining of the
                     grieving period I experienced in my ancestral village in 2016. Born
                     and raised in a Mumbai slum by a chauffeur father and a homemaker
@@ -57,14 +57,14 @@ const AboutSection = () => {
                     pressure overshadowed my grief, leaving me longing for an escape I
                     couldn't find at the time.
                   </p>
-                  <p className="font-nohemi font-light">
+                  <p className="font-nohemi font-light tracking-wide">
                     Through this film, I explore the possibility of solace and freedom by
                     allowing my protagonist to experience moments of connection and
                     respite with an estranged childhood friend. These moments gradually
                     blossom into a tender bond, making this film a journey that begins
                     with tragedy and moves toward hope and positivity.
                   </p>
-                  <p className="font-nohemi font-light">
+                  <p className="font-nohemi font-light tracking-wide">
                     To ensure authenticity, I cast actors from the region where the film
                     was shot, despite the challenges of finding local talent willing to
                     portray queer characters due to cultural stigma. After three years of
@@ -81,28 +81,28 @@ const AboutSection = () => {
               {/* Right Column */}
               <div className="lg:w-1/2">
                 <div className="prose prose-sm max-w-none text-white leading-relaxed space-y-4">
-                  <p className="font-nohemi font-light">
+                  <p className="font-nohemi font-light tracking-wide">
                     My personal experiences shaped Sabar Bonda to reflect the realities
                     of lower-class queer life in India, challenging the misconception that
                     queer experiences are limited to the upper class. By weaving together
                     urban and rural experiences, the film aims to normalize queerness and
                     celebrate its presence in all layers of society.
                   </p>
-                  <p className="font-nohemi font-light">
+                  <p className="font-nohemi font-light tracking-wide">
                     The characters of the parents in the film are inspired by my parents
                     whose love and wisdom led them to accept my sexuality without
                     any conflict. By highlighting this aspect of acceptance without
                     sensationalizing struggle, the film offers a fresh perspective that
                     redefines queer narratives and fosters hope.
                   </p>
-                  <p className="font-nohemi font-light">
+                  <p className="font-nohemi font-light tracking-wide">
                     I used static frames to capture the stillness and sluggish pace of that
                     time in the village. And although at its core it's a romance drama, it has
                     no background score. I wanted to use layered soundscape to paint the
                     urban and rural spaces to further enhances the tender quality of the
                     film.
                   </p>
-                  <p className="font-nohemi font-light">
+                  <p className="font-nohemi font-light tracking-wide">
                     I shot this film in a small village called Kharshinde, where my mother
                     was born and raised. We filmed several scenes near a man-made lake
                     in the village, created decades ago due to the lack of a natural water
@@ -124,7 +124,7 @@ const AboutSection = () => {
 
         <Section>
           <SectionHeader 
-            title="Cast & Crew"
+            title="Information"
             variant="dark"
           />
           
@@ -136,7 +136,7 @@ const AboutSection = () => {
                   <img 
                     src={posterImages[currentPosterIndex].src}
                     alt={posterImages[currentPosterIndex].alt}
-                    className="w-full h-auto shadow-film object-cover transition-all duration-500 ease-in-out"
+                    className="w-full h-auto object-cover transition-all duration-500 ease-in-out"
                     loading="lazy"
                   />
                   
@@ -158,7 +158,7 @@ const AboutSection = () => {
                   </button>
 
                   {/* Poster Counter */}
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full glass text-white text-sm font-nohemi">
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 bg-black/60 text-white text-sm font-nohemi">
                     {currentPosterIndex + 1} / {posterImages.length}
                   </div>
                 </div>
@@ -181,96 +181,121 @@ const AboutSection = () => {
               </div>
             </div>
 
-            {/* Middle - Synopsis */}
-            <div className="lg:col-span-5">
-              <div className="glass p-8 shadow-film rounded-lg">
-                <h3 className="text-2xl font-cabinet font-bold text-white mb-6">
+            {/* Right Side - Synopsis */}
+            <div className="lg:col-span-8">
+              <div>
+                <h3 className="text-3xl font-cabinet font-bold text-white mb-6">
                   Synopsis
                 </h3>
-                <div className="prose prose-sm max-w-none text-white leading-relaxed space-y-4 text-sm font-nohemi font-medium">
-                  <p>
-                    Anand, a 30-something city dweller compelled to spend a 10-day mourning period for his father in the rugged countryside of western India, tenderly bonds with a local farmer who is struggling to stay unmarried. As the mourning ends, forcing his return, Anand must decide the fate of his relationship born under duress.
-                  </p>
+                <div className="prose prose-sm max-w-none text-white leading-relaxed space-y-4 text-sm font-nohemi font-light tracking-wider">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <p>
+                        Anand (30), a call-center employee in Mumbai, is forced to spend ten days at his ancestral village to mourn the loss of his father at the behest of his mother, Suman (50).
+                      </p>
+                      <p>
+                        As the mourning period begins post-cremation, he faces subtle but relentless badgering from relatives to get married so that at least his mother finds the pleasure of seeing him settled. Anand finds himself stifled, as coming out to extended family could alienate his mother from the relatives when she needs them the most.
+                      </p>
+                      <p>
+                        He finds solace in his childhood friend, Balya (30), as he accompanies him on his daily outings into the mountains to herd goats. Balya has been using the 'educated girls favoring city-dwellers over farmers' as a ruse to stay unmarried as he undergoes similar pressures relating to his sexuality from his family.
+                      </p>
+                    </div>
+                    <div className="space-y-4">
+                      <p>
+                        To escape their pressures, the two men spend time together. Hailing from different worlds but bound by childhood memories, they connect over their common struggle.
+                      </p>
+                      <p>
+                        As the days pass, their intimacy blooms emotionally and physically. With the mourning period ending, will their burgeoning bond survive beyond the ten days?
+                      </p>
+                      <p>
+                        Sabar Bonda (Cactus Pears) explores the delicate bonds that develop under duress and the future of it.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Right Side - Cast & Crew List */}
-            <div className="lg:col-span-3">
-              <div className="glass p-6 shadow-film rounded-lg">
-                <div className="space-y-6">
-                  
-                  {/* Written and Directed */}
-                  <div>
-                    <h4 className="text-sm font-semibold text-copper-500 uppercase tracking-wide mb-2 font-cabinet">
-                      Written & Directed
-                    </h4>
-                    <p className="text-base font-medium text-white font-nohemi">
+          {/* Cast & Crew Section - Full Width Below */}
+          <div className="mt-12">
+            <div>
+              <h3 className="text-2xl font-cabinet font-bold text-white mb-8 text-center">
+                Cast & Crew
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                {/* Written and Directed */}
+                <div>
+                  <h4 className="text-md font-semibold text-copper-500 uppercase tracking-wide mb-3 font-cabinet">
+                    Written & Directed
+                  </h4>
+                  <p className="text-md tracking-wider font-light text-white font-nohemi">
+                    Rohan Parashuram Kanawade
+                  </p>
+                </div>
+
+                {/* Cast */}
+                <div>
+                  <h4 className="text-md font-semibold text-copper-500 uppercase tracking-wide mb-3 font-cabinet">
+                    Cast
+                  </h4>
+                  <div className="space-y-2">
+                    <p className="text-md tracking-wider font-light text-white font-nohemi">
+                      Bhushaan Manoj
+                    </p>
+                    <p className="text-md tracking-wider font-light text-white font-nohemi">
+                      Suraaj Suman
+                    </p>
+                    <p className="text-md tracking-wider font-light text-white font-nohemi">
+                      Jayshri Jagtap
+                    </p>
+                  </div>
+                </div>
+
+                {/* Producers */}
+                <div>
+                  <h4 className="text-md font-semibold text-copper-500 uppercase tracking-wide mb-3 font-cabinet">
+                    Producers
+                  </h4>
+                  <div className="space-y-2">
+                    <p className="text-md tracking-wider font-light text-white font-nohemi">
+                      Lotus Visual Productions (Neeraj Churi)
+                    </p>
+                    <p className="text-md tracking-wider font-light text-white font-nohemi">
+                      Kaushik Ray
+                    </p>
+                    <p className="text-md tracking-wider font-light text-white font-nohemi">
+                      Naren Chandavarkar
+                    </p>
+                    <p className="text-md tracking-wider font-light text-white font-nohemi">
+                      Sidharth Meer
+                    </p>
+                    <p className="text-md tracking-wider font-light text-white font-nohemi">
+                      Hareesh Reddypalli
+                    </p>
+                    <p className="text-md tracking-wider font-light text-white font-nohemi">
                       Rohan Parashuram Kanawade
                     </p>
                   </div>
-
-                  {/* Producers */}
-                  <div>
-                    <h4 className="text-sm font-semibold text-copper-500 uppercase tracking-wide mb-2 font-cabinet">
-                      Producers
-                    </h4>
-                    <div className="space-y-1">
-                      <p className="text-base font-medium text-white font-nohemi">
-                        Lotus Visual Productions (Neeraj Churi)
-                      </p>
-                      <p className="text-base font-medium text-white font-nohemi">
-                        Kaushik Ray
-                      </p>
-                      <p className="text-base font-medium text-white font-nohemi">
-                        Naren Chandavarkar
-                      </p>
-                      <p className="text-base font-medium text-white font-nohemi">
-                        Sidharth Meer
-                      </p>
-                      <p className="text-base font-medium text-white font-nohemi">
-                        Hareesh Reddypalli
-                      </p>
-                      <p className="text-base font-medium text-white font-nohemi">
-                        Rohan Parashuram Kanawade
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Executive Producers */}
-                  <div>
-                    <h4 className="text-sm font-semibold text-copper-500 uppercase tracking-wide mb-2 font-cabinet">
-                      Executive Producers
-                    </h4>
-                    <div className="space-y-1">
-                      <p className="text-base font-medium text-white font-nohemi">
-                        Ilann Girard
-                      </p>
-                      <p className="text-base font-medium text-white font-nohemi">
-                        Kishor Vasant Sawant
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Cast */}
-                  <div>
-                    <h4 className="text-sm font-semibold text-copper-500 uppercase tracking-wide mb-2 font-cabinet">
-                      Cast
-                    </h4>
-                    <div className="space-y-1 font-medium">
-                      <p className="text-md font-medium text-white font-nohemi">
-                        Bhushaan Manoj
-                      </p>
-                      <p className="text-md font-medium text-white font-nohemi">
-                        Suraaj Suman
-                      </p>
-                      <p className="text-md font-medium text-white font-nohemi">
-                        Jayshri Jagtap
-                      </p>
-                    </div>
-                  </div>
-
                 </div>
+
+                {/* Executive Producers */}
+                <div>
+                  <h4 className="text-md font-semibold text-copper-500 uppercase tracking-wide mb-3 font-cabinet">
+                    Executive Producers
+                  </h4>
+                  <div className="space-y-2">
+                    <p className="text-md tracking-wider font-light text-white font-nohemi">
+                      Ilann Girard
+                    </p>
+                    <p className="text-md tracking-wider font-light text-white font-nohemi">
+                      Kishor Vasant Sawant
+                    </p>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>

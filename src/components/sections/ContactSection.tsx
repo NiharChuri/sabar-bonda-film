@@ -59,7 +59,7 @@ const ContactSection = () => {
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {contactPanels.map((panel, index) => (
-              <div key={index} className="glass p-8 shadow-film rounded-lg">
+              <div key={index} className="p-8">
                 <h3 className="text-xl font-cabinet font-semibold text-white mb-4">
                   {panel.title}
                 </h3>

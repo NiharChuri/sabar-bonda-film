@@ -1,39 +1,63 @@
 import { useState, useEffect, useRef } from 'react';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
-import StatBadge from '@/components/ui/StatBadge';
 
 const AccoladesSection = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
-  const [currentX, setCurrentX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [currentTranslate, setCurrentTranslate] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
 
-  // Simple drag functionality
+  // Improved drag functionality
   const handleStart = (clientX: number) => {
+    if (!carouselRef.current) return;
+    
     setIsDragging(true);
     setStartX(clientX);
-    setCurrentX(clientX);
+    setScrollLeft(carouselRef.current.scrollLeft);
     
-    if (carouselRef.current) {
-      carouselRef.current.style.animationPlayState = 'paused';
-    }
+    // Pause animation
+    carouselRef.current.style.animationPlayState = 'paused';
+    carouselRef.current.style.cursor = 'grabbing';
+    carouselRef.current.style.userSelect = 'none';
   };
 
   const handleMove = (clientX: number) => {
     if (!isDragging || !carouselRef.current) return;
     
-    setCurrentX(clientX);
-    const diff = clientX - startX;
-    carouselRef.current.style.transform = `translateX(${diff}px)`;
+    const deltaX = clientX - startX;
+    const newTranslate = deltaX;
+    
+    setCurrentTranslate(newTranslate);
+    carouselRef.current.style.transform = `translateX(${newTranslate}px)`;
   };
 
   const handleEnd = () => {
     if (!carouselRef.current) return;
     
     setIsDragging(false);
-    carouselRef.current.style.transform = '';
-    carouselRef.current.style.animationPlayState = 'running';
+    
+    // Determine direction and snap behavior
+    const threshold = 50; // minimum drag distance to trigger action
+    
+    if (Math.abs(currentTranslate) > threshold) {
+      // If dragged far enough, let it slide briefly then resume
+      setTimeout(() => {
+        if (carouselRef.current) {
+          carouselRef.current.style.transform = '';
+          carouselRef.current.style.animationPlayState = 'running';
+        }
+      }, 300);
+    } else {
+      // Snap back immediately if not dragged far enough
+      carouselRef.current.style.transform = '';
+      carouselRef.current.style.animationPlayState = 'running';
+    }
+    
+    carouselRef.current.style.cursor = 'grab';
+    carouselRef.current.style.userSelect = 'auto';
+    setCurrentTranslate(0);
   };
 
   // Mouse events
@@ -43,8 +67,10 @@ const AccoladesSection = () => {
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    e.preventDefault();
-    handleMove(e.clientX);
+    if (isDragging) {
+      e.preventDefault();
+      handleMove(e.clientX);
+    }
   };
 
   const handleMouseUp = (e: React.MouseEvent) => {
@@ -52,19 +78,25 @@ const AccoladesSection = () => {
     handleEnd();
   };
 
+  const handleMouseLeave = () => {
+    if (isDragging) {
+      handleEnd();
+    }
+  };
+
   // Touch events
   const handleTouchStart = (e: React.TouchEvent) => {
-    e.preventDefault();
     handleStart(e.touches[0].clientX);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    e.preventDefault();
-    handleMove(e.touches[0].clientX);
+    if (isDragging) {
+      e.preventDefault();
+      handleMove(e.touches[0].clientX);
+    }
   };
 
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    e.preventDefault();
+  const handleTouchEnd = () => {
     handleEnd();
   };
 
@@ -91,7 +123,7 @@ const AccoladesSection = () => {
       document.removeEventListener('mousemove', handleGlobalMouseMove);
       document.removeEventListener('mouseup', handleGlobalMouseUp);
     };
-  }, [isDragging, startX]);
+  }, [isDragging]);
 
   return (
     <section id="accolades" className="relative">
@@ -113,113 +145,213 @@ const AccoladesSection = () => {
             variant="dark"
           />
           
-          {/* Auto-scrolling Carousel */}
-          <div className="relative overflow-hidden">
-            <div 
-              ref={carouselRef}
-              className={`flex animate-scroll-infinite space-x-8 pb-4 ${isDragging ? 'dragging' : ''}`}
-              onMouseDown={handleMouseDown}
-              onMouseMove={handleMouseMove}
-              onMouseUp={handleMouseUp}
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-            >
-              {/* Awards */}
-              <div className="flex-shrink-0 w-96 glass p-6 shadow-film border-l-4 border-yellow-500 rounded-lg">
-                <div className="flex items-center gap-3 mb-4">
-                  <StatBadge 
-                    title="Sundance Film Festival"
-                    subtitle="2025"
-                    variant="laurel"
-                  />
+          {/* Critical Quotes Auto-scrolling Carousel */}
+          <div className="mb-16">
+            <h3 className="text-2xl font-cabinet font-semibold text-white mb-8 text-center">
+              Critical Praise
+            </h3>
+            <div className="relative overflow-hidden carousel-container">
+              <div 
+                ref={carouselRef}
+                className={`flex animate-scroll-infinite space-x-8 pb-4 transition-transform duration-300 ease-out ${
+                  isDragging ? 'dragging' : ''
+                }`}
+                style={{ 
+                  cursor: isDragging ? 'grabbing' : 'grab',
+                  userSelect: isDragging ? 'none' : 'auto'
+                }}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseLeave}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+              >
+                {/* Critical Praise Items */}
+                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500">
+                  <div className="mb-3">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-cabinet">
+                      Critical Praise
+                    </span>
+                  </div>
+                  <blockquote className="text-sm italic text-white leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
+                    "A tender and authentic portrayal of queer love in rural India, beautifully crafted with emotional depth and cultural sensitivity."
+                  </blockquote>
+                  <cite className="text-xs text-muted font-medium font-nohemi">— Variety</cite>
                 </div>
-                <h3 className="text-lg font-cabinet font-semibold text-white mb-3 line-clamp-2">
-                  World Cinema Grand Jury Prize: Dramatic
-                </h3>
-                <p className="text-sm text-white leading-relaxed font-nohemi font-medium line-clamp-3">
-                  Prestigious recognition for outstanding dramatic filmmaking in world cinema competition.
-                </p>
+
+                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500">
+                  <div className="mb-3">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-cabinet">
+                      Critical Praise
+                    </span>
+                  </div>
+                  <blockquote className="text-sm italic text-white leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
+                    "Kanawade's direction brings remarkable intimacy to this story of connection amidst grief and societal pressure."
+                  </blockquote>
+                  <cite className="text-xs text-muted font-medium font-nohemi">— The Hollywood Reporter</cite>
+                </div>
+
+                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500">
+                  <div className="mb-3">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-cabinet">
+                      Critical Praise
+                    </span>
+                  </div>
+                  <blockquote className="text-sm italic text-white leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
+                    "A powerful debut that challenges stereotypes while celebrating the universality of human connection."
+                  </blockquote>
+                  <cite className="text-xs text-muted font-medium font-nohemi">— IndieWire</cite>
+                </div>
+
+                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500">
+                  <div className="mb-3">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-cabinet">
+                      Critical Praise
+                    </span>
+                  </div>
+                  <blockquote className="text-sm italic text-white leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
+                    "A groundbreaking work that showcases the beauty and complexity of rural Indian life through a queer lens."
+                  </blockquote>
+                  <cite className="text-xs text-muted font-medium font-nohemi">— Film Companion</cite>
+                </div>
+
+                {/* Duplicate items for seamless loop */}
+                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500">
+                  <div className="mb-3">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-cabinet">
+                      Critical Praise
+                    </span>
+                  </div>
+                  <blockquote className="text-sm italic text-white leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
+                    "A tender and authentic portrayal of queer love in rural India, beautifully crafted with emotional depth and cultural sensitivity."
+                  </blockquote>
+                  <cite className="text-xs text-muted font-medium font-nohemi">— Variety</cite>
+                </div>
+
+                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500">
+                  <div className="mb-3">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-cabinet">
+                      Critical Praise
+                    </span>
+                  </div>
+                  <blockquote className="text-sm italic text-white leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
+                    "Kanawade's direction brings remarkable intimacy to this story of connection amidst grief and societal pressure."
+                  </blockquote>
+                  <cite className="text-xs text-muted font-medium font-nohemi">— The Hollywood Reporter</cite>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Awards Grid - Static Display */}
+          <div>
+            <h3 className="text-2xl font-cabinet font-semibold text-white mb-8 text-center">
+              Festival Awards & Recognition
+            </h3>
+            
+            {/* 3-2 Grid Layout for Awards */}
+            <div className="flex flex-col items-center gap-8">
+              {/* Top row - 3 laurels */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-center max-w-5xl">
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 mb-4">
+                    <img 
+                      src="/images/award_laurels/Sundance Winner_World Cinema Grand Jury Prize-Dramatic_white.png" 
+                      alt="Sundance World Cinema Grand Jury Prize" 
+                      className="w-full h-full object-contain drop-shadow-lg"
+                    />
+                  </div>
+                  <h4 className="text-lg font-cabinet font-semibold text-white mb-2">
+                    Sundance Film Festival 2025
+                  </h4>
+                  <p className="text-copper-500 font-medium mb-2 font-nohemi">
+                    World Cinema Grand Jury Prize: Dramatic
+                  </p>
+                  <p className="text-sm text-white/80 font-nohemi">
+                    Prestigious recognition for outstanding dramatic filmmaking in world cinema competition.
+                  </p>
+                </div>
+
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 mb-4">
+                    <img 
+                      src="/images/award_laurels/SXSW winner laurel.png" 
+                      alt="SXSW Winner" 
+                      className="w-full h-full object-contain drop-shadow-lg"
+                    />
+                  </div>
+                  <h4 className="text-lg font-cabinet font-semibold text-white mb-2">
+                    SXSW 2025
+                  </h4>
+                  <p className="text-copper-500 font-medium mb-2 font-nohemi">
+                    Winner
+                  </p>
+                  <p className="text-sm text-white/80 font-nohemi">
+                    Celebrated at one of the most influential film festivals in the world.
+                  </p>
+                </div>
+
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 mb-4">
+                    <img 
+                      src="/images/award_laurels/Audience - Best Feature IFFLA 2025_white.png" 
+                      alt="IFFLA 2025 Audience Best Feature" 
+                      className="w-full h-full object-contain drop-shadow-lg"
+                    />
+                  </div>
+                  <h4 className="text-lg font-cabinet font-semibold text-white mb-2">
+                    IFFLA 2025
+                  </h4>
+                  <p className="text-copper-500 font-medium mb-2 font-nohemi">
+                    Audience Award - Best Feature
+                  </p>
+                  <p className="text-sm text-white/80 font-nohemi">
+                    Chosen by audiences as the best feature film at the Indian Film Festival of Los Angeles.
+                  </p>
+                </div>
               </div>
 
-              {/* Critical Praise Items */}
-              <div className="flex-shrink-0 w-96 glass p-6 shadow-film border-l-4 border-copper-500 rounded-lg">
-                <div className="mb-3">
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-cabinet">
-                    Critical Praise
-                  </span>
+              {/* Bottom row - 2 laurels */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-center max-w-3xl">
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 mb-4">
+                    <img 
+                      src="/images/award_laurels/IO-Audience-Award-Best-Narrative-Feature_white.png" 
+                      alt="IO Audience Award Best Narrative Feature" 
+                      className="w-full h-full object-contain drop-shadow-lg"
+                    />
+                  </div>
+                  <h4 className="text-lg font-cabinet font-semibold text-white mb-2">
+                    Inside Out Festival
+                  </h4>
+                  <p className="text-copper-500 font-medium mb-2 font-nohemi">
+                    Audience Award - Best Narrative Feature
+                  </p>
+                  <p className="text-sm text-white/80 font-nohemi">
+                    Honored by audiences at Toronto's premier LGBTQ+ film festival.
+                  </p>
                 </div>
-                <blockquote className="text-sm italic text-white leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
-                  "A tender and authentic portrayal of queer love in rural India, beautifully crafted with emotional depth and cultural sensitivity."
-                </blockquote>
-                <cite className="text-xs text-muted font-medium font-nohemi">— Variety</cite>
-              </div>
 
-              <div className="flex-shrink-0 w-96 glass p-6 shadow-film border-l-4 border-copper-500 rounded-lg">
-                <div className="mb-3">
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-cabinet">
-                    Critical Praise
-                  </span>
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 mb-4">
+                    <img 
+                      src="/images/award_laurels/flc_ndnf25_laurels_official_selection_wht.png" 
+                      alt="FLC NDNF25 Official Selection" 
+                      className="w-full h-full object-contain drop-shadow-lg"
+                    />
+                  </div>
+                  <h4 className="text-lg font-cabinet font-semibold text-white mb-2">
+                    New Directors/New Films 2025
+                  </h4>
+                  <p className="text-copper-500 font-medium mb-2 font-nohemi">
+                    Official Selection
+                  </p>
+                  <p className="text-sm text-white/80 font-nohemi">
+                    Selected for the prestigious showcase of emerging filmmaking talent.
+                  </p>
                 </div>
-                <blockquote className="text-sm italic text-white leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
-                  "Kanawade's direction brings remarkable intimacy to this story of connection amidst grief and societal pressure."
-                </blockquote>
-                <cite className="text-xs text-muted font-medium font-nohemi">— The Hollywood Reporter</cite>
-              </div>
-
-              <div className="flex-shrink-0 w-96 glass p-6 shadow-film border-l-4 border-copper-500 rounded-lg">
-                <div className="mb-3">
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-cabinet">
-                  Critical Praise
-                  </span>
-                </div>
-                <blockquote className="text-sm italic text-white leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
-                  "A powerful debut that challenges stereotypes while celebrating the universality of human connection."
-                </blockquote>
-                <cite className="text-xs text-muted font-medium font-nohemi">— IndieWire</cite>
-              </div>
-
-              <div className="flex-shrink-0 w-96 glass p-6 shadow-film border-l-4 border-green-500 rounded-lg">
-                <div className="mb-3">
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700 font-cabinet">
-                    Industry Recognition
-                  </span>
-                </div>
-                <h3 className="text-lg font-cabinet font-semibold text-white mb-3 line-clamp-2">
-                  Official Selection - Mumbai Film Festival
-                </h3>
-                <p className="text-sm text-white leading-relaxed font-nohemi font-medium line-clamp-3">
-                  Selected for the prestigious competition category celebrating innovative Indian cinema.
-                </p>
-              </div>
-
-              {/* Duplicate items for seamless loop */}
-              <div className="flex-shrink-0 w-96 glass p-6 shadow-film border-l-4 border-yellow-500 rounded-lg">
-                <div className="flex items-center gap-3 mb-4">
-                  <StatBadge 
-                    title="Sundance Film Festival"
-                    subtitle="2025"
-                    variant="laurel"
-                  />
-                </div>
-                <h3 className="text-lg font-cabinet font-semibold text-white mb-3 line-clamp-2">
-                  World Cinema Grand Jury Prize: Dramatic
-                </h3>
-                <p className="text-sm text-white leading-relaxed font-nohemi font-medium line-clamp-3">
-                  Prestigious recognition for outstanding dramatic filmmaking in world cinema competition.
-                </p>
-              </div>
-
-              <div className="flex-shrink-0 w-96 glass p-6 shadow-film border-l-4 border-copper-500 rounded-lg">
-                <div className="mb-3">
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-cabinet">
-                    Critical Praise
-                  </span>
-                </div>
-                <blockquote className="text-sm italic text-white leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
-                  "A tender and authentic portrayal of queer love in rural India, beautifully crafted with emotional depth and cultural sensitivity."
-                </blockquote>
-                <cite className="text-xs text-muted font-medium font-nohemi">— Variety</cite>
               </div>
             </div>
           </div>

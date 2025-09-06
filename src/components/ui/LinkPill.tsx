@@ -15,7 +15,7 @@ const LinkPill = ({ href, label, external = false }: LinkPillProps) => {
   return (
     <Component
       {...linkProps}
-      className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-white border border-border text-moss-500 hover:bg-moss-50 hover:border-moss-300 transition-all duration-200 shadow-sm hover:shadow-film"
+      className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-white border border-border text-moss-500 hover:bg-moss-50 hover:border-moss-300 transition-all duration-200"
     >
       {label}
       {external && <ExternalLink size={14} className="ml-2" />}
