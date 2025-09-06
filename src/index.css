@@ -172,6 +172,7 @@
     --moss-600: 64 12% 28%;    /* #50523E */
 
     /* Accent A - Copper */
+    --copper-100: 30 40% 90%;  /* #F0E6D6 */
     --copper-500: 30 59% 46%;  /* #B87333 */
     --copper-600: 30 59% 40%;  /* #9E632C */
     --copper-700: 30 59% 35%;  /* #8B5726 */
@@ -283,6 +284,10 @@
     @apply relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-moss-500 after:transition-all after:duration-200 hover:after:w-full;
   }
 
+  .link-underline-copper {
+    @apply relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-copper-500 after:transition-all after:duration-200 hover:after:w-full;
+  }
+
   /* Card hover effects */
   .card-hover {
     @apply transition-all duration-200 ease-out hover:shadow-film-lg hover:-translate-y-0.5;
@@ -326,6 +331,7 @@
   .dragging {
     animation-play-state: paused !important;
     transition: none !important;
+    cursor: grabbing !important;
   }
 
   .dragging * {
@@ -333,17 +339,23 @@
     user-select: none;
   }
 
-  /* Improve drag experience */
-  .carousel-container {
-    cursor: grab;
+  /* Scrollbar hide utility */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
-  .carousel-container:active {
-    cursor: grabbing;
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 
-  .carousel-container.dragging {
-    cursor: grabbing;
+  /* Scale utilities for interaction feedback */
+  .scale-98 {
+    transform: scale(0.98);
+  }
+
+  .scale-100 {
+    transform: scale(1);
   }
 
   /* Line clamp utilities for text truncation */

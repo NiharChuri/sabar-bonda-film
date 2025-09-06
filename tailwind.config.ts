@@ -78,6 +78,7 @@ export default {
 					600: 'hsl(var(--moss-600))'
 				},
 				copper: {
+					100: 'hsl(var(--copper-100))',
 					500: 'hsl(var(--copper-500))',
 					600: 'hsl(var(--copper-600))',
 					700: 'hsl(var(--copper-700))'

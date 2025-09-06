@@ -1,129 +1,146 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
 
 const AccoladesSection = () => {
+  const scrollRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-  const [currentTranslate, setCurrentTranslate] = useState(0);
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const intervalRef = useRef<NodeJS.Timeout>();
 
-  // Improved drag functionality
-  const handleStart = (clientX: number) => {
-    if (!carouselRef.current) return;
+  const startAutoScroll = useCallback(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
     
+    intervalRef.current = setInterval(() => {
+      const scrollContainer = scrollRef.current;
+      if (!scrollContainer) return;
+
+      scrollContainer.scrollLeft += 1.5;
+      
+      // Reset when we've scrolled past the first set
+      if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
+        scrollContainer.scrollLeft = 0;
+      }
+    }, 20);
+  }, []);
+
+  const stopAutoScroll = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = undefined;
+    }
+  }, []);
+
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
+
     setIsDragging(true);
-    setStartX(clientX);
-    setScrollLeft(carouselRef.current.scrollLeft);
-    
-    // Pause animation
-    carouselRef.current.style.animationPlayState = 'paused';
-    carouselRef.current.style.cursor = 'grabbing';
-    carouselRef.current.style.userSelect = 'none';
-  };
+    setStartX(e.pageX - scrollContainer.offsetLeft);
+    setScrollLeft(scrollContainer.scrollLeft);
+    stopAutoScroll();
+  }, [stopAutoScroll]);
 
-  const handleMove = (clientX: number) => {
-    if (!isDragging || !carouselRef.current) return;
-    
-    const deltaX = clientX - startX;
-    const newTranslate = deltaX;
-    
-    setCurrentTranslate(newTranslate);
-    carouselRef.current.style.transform = `translateX(${newTranslate}px)`;
-  };
-
-  const handleEnd = () => {
-    if (!carouselRef.current) return;
-    
+  const handleMouseUp = useCallback(() => {
     setIsDragging(false);
+    // Resume auto-scroll immediately after release
+    setTimeout(() => {
+      startAutoScroll();
+    }, 100);
+  }, [startAutoScroll]);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!isDragging) return;
+    e.preventDefault();
     
-    // Determine direction and snap behavior
-    const threshold = 50; // minimum drag distance to trigger action
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
+
+    // Stop auto-scroll during drag movement
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = undefined;
+    }
+
+    const x = e.pageX - scrollContainer.offsetLeft;
+    const walk = (x - startX) * 2; // Scroll speed multiplier
+    let newScrollLeft = scrollLeft - walk;
     
-    if (Math.abs(currentTranslate) > threshold) {
-      // If dragged far enough, let it slide briefly then resume
+    // Handle infinite scroll boundaries
+    const maxScroll = scrollContainer.scrollWidth / 2;
+    
+    if (newScrollLeft <= 0) {
+      newScrollLeft = maxScroll + newScrollLeft;
+    } else if (newScrollLeft >= maxScroll) {
+      newScrollLeft = newScrollLeft - maxScroll;
+    }
+    
+    scrollContainer.scrollLeft = newScrollLeft;
+  }, [isDragging, startX, scrollLeft]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (isDragging) {
+      setIsDragging(false);
       setTimeout(() => {
-        if (carouselRef.current) {
-          carouselRef.current.style.transform = '';
-          carouselRef.current.style.animationPlayState = 'running';
-        }
-      }, 300);
-    } else {
-      // Snap back immediately if not dragged far enough
-      carouselRef.current.style.transform = '';
-      carouselRef.current.style.animationPlayState = 'running';
+        startAutoScroll();
+      }, 100);
+    }
+  }, [isDragging, startAutoScroll]);
+
+  // Touch events for mobile
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
+
+    setIsDragging(true);
+    setStartX(e.touches[0].pageX - scrollContainer.offsetLeft);
+    setScrollLeft(scrollContainer.scrollLeft);
+    stopAutoScroll();
+  }, [stopAutoScroll]);
+
+  const handleTouchEnd = useCallback(() => {
+    setIsDragging(false);
+    setTimeout(() => {
+      startAutoScroll();
+    }, 100);
+  }, [startAutoScroll]);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (!isDragging) return;
+    
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
+
+    // Stop auto-scroll during drag movement
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = undefined;
+    }
+
+    const x = e.touches[0].pageX - scrollContainer.offsetLeft;
+    const walk = (x - startX) * 2;
+    let newScrollLeft = scrollLeft - walk;
+    
+    // Handle infinite scroll boundaries
+    const maxScroll = scrollContainer.scrollWidth / 2;
+    
+    if (newScrollLeft <= 0) {
+      newScrollLeft = maxScroll + newScrollLeft;
+    } else if (newScrollLeft >= maxScroll) {
+      newScrollLeft = newScrollLeft - maxScroll;
     }
     
-    carouselRef.current.style.cursor = 'grab';
-    carouselRef.current.style.userSelect = 'auto';
-    setCurrentTranslate(0);
-  };
+    scrollContainer.scrollLeft = newScrollLeft;
+  }, [isDragging, startX, scrollLeft]);
 
-  // Mouse events
-  const handleMouseDown = (e: React.MouseEvent) => {
-    e.preventDefault();
-    handleStart(e.clientX);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (isDragging) {
-      e.preventDefault();
-      handleMove(e.clientX);
-    }
-  };
-
-  const handleMouseUp = (e: React.MouseEvent) => {
-    e.preventDefault();
-    handleEnd();
-  };
-
-  const handleMouseLeave = () => {
-    if (isDragging) {
-      handleEnd();
-    }
-  };
-
-  // Touch events
-  const handleTouchStart = (e: React.TouchEvent) => {
-    handleStart(e.touches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (isDragging) {
-      e.preventDefault();
-      handleMove(e.touches[0].clientX);
-    }
-  };
-
-  const handleTouchEnd = () => {
-    handleEnd();
-  };
-
-  // Global mouse events for dragging outside element
   useEffect(() => {
-    const handleGlobalMouseMove = (e: MouseEvent) => {
-      if (isDragging) {
-        handleMove(e.clientX);
-      }
-    };
-
-    const handleGlobalMouseUp = () => {
-      if (isDragging) {
-        handleEnd();
-      }
-    };
-
-    if (isDragging) {
-      document.addEventListener('mousemove', handleGlobalMouseMove);
-      document.addEventListener('mouseup', handleGlobalMouseUp);
-    }
-
+    startAutoScroll();
+    
     return () => {
-      document.removeEventListener('mousemove', handleGlobalMouseMove);
-      document.removeEventListener('mouseup', handleGlobalMouseUp);
+      stopAutoScroll();
     };
-  }, [isDragging]);
+  }, [startAutoScroll, stopAutoScroll]);
 
   return (
     <section id="accolades" className="relative">
@@ -150,98 +167,83 @@ const AccoladesSection = () => {
             <h3 className="text-2xl font-cabinet font-semibold text-white mb-8 text-center">
               Critical Praise
             </h3>
-            <div className="relative overflow-hidden carousel-container">
+            <div className="relative overflow-hidden">
               <div 
-                ref={carouselRef}
-                className={`flex animate-scroll-infinite space-x-8 pb-4 transition-transform duration-300 ease-out ${
-                  isDragging ? 'dragging' : ''
+                ref={scrollRef}
+                className={`flex overflow-x-hidden overflow-y-hidden scrollbar-hide select-none transition-all duration-300 ${
+                  isDragging ? 'cursor-grabbing scale-98' : 'cursor-grab scale-100'
                 }`}
-                style={{ 
-                  cursor: isDragging ? 'grabbing' : 'grab',
-                  userSelect: isDragging ? 'none' : 'auto'
-                }}
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 onMouseDown={handleMouseDown}
-                onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp}
+                onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
                 onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
+                onTouchMove={handleTouchMove}
               >
-                {/* Critical Praise Items */}
-                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500">
-                  <div className="mb-3">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-cabinet">
-                      Critical Praise
-                    </span>
-                  </div>
-                  <blockquote className="text-sm italic text-white leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
+                {/* Critical Praise Items - First Set */}
+                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500 mx-4">
+                  <blockquote className="text-base text-white/90 leading-relaxed mb-4 font-nohemi tracking-wide font-light italic">
                     "A tender and authentic portrayal of queer love in rural India, beautifully crafted with emotional depth and cultural sensitivity."
                   </blockquote>
-                  <cite className="text-xs text-muted font-medium font-nohemi">— Variety</cite>
+                  <cite className="text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— Variety</cite>
                 </div>
 
-                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500">
-                  <div className="mb-3">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-cabinet">
-                      Critical Praise
-                    </span>
-                  </div>
-                  <blockquote className="text-sm italic text-white leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
+                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500 mx-4">
+                  <blockquote className="text-base text-white/90 leading-relaxed mb-4 font-nohemi tracking-wide font-light italic">
                     "Kanawade's direction brings remarkable intimacy to this story of connection amidst grief and societal pressure."
                   </blockquote>
-                  <cite className="text-xs text-muted font-medium font-nohemi">— The Hollywood Reporter</cite>
+                  <cite className="text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— The Hollywood Reporter</cite>
                 </div>
 
-                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500">
-                  <div className="mb-3">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-cabinet">
-                      Critical Praise
-                    </span>
-                  </div>
-                  <blockquote className="text-sm italic text-white leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
+                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500 mx-4">
+                  <blockquote className="text-base text-white/90 leading-relaxed mb-4 font-nohemi tracking-wide font-light italic">
                     "A powerful debut that challenges stereotypes while celebrating the universality of human connection."
                   </blockquote>
-                  <cite className="text-xs text-muted font-medium font-nohemi">— IndieWire</cite>
+                  <cite className="text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— IndieWire</cite>
                 </div>
 
-                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500">
-                  <div className="mb-3">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-cabinet">
-                      Critical Praise
-                    </span>
-                  </div>
-                  <blockquote className="text-sm italic text-white leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
+                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500 mx-4">
+                  <blockquote className="text-base text-white/90 leading-relaxed mb-4 font-nohemi tracking-wide font-light italic">
                     "A groundbreaking work that showcases the beauty and complexity of rural Indian life through a queer lens."
                   </blockquote>
-                  <cite className="text-xs text-muted font-medium font-nohemi">— Film Companion</cite>
+                  <cite className="text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— Film Companion</cite>
                 </div>
 
-                {/* Duplicate items for seamless loop */}
-                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500">
-                  <div className="mb-3">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-cabinet">
-                      Critical Praise
-                    </span>
-                  </div>
-                  <blockquote className="text-sm italic text-white leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
+                {/* Critical Praise Items - Second Set for seamless loop */}
+                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500 mx-4">
+                  <blockquote className="text-base text-white/90 leading-relaxed mb-4 font-nohemi tracking-wide font-light italic">
                     "A tender and authentic portrayal of queer love in rural India, beautifully crafted with emotional depth and cultural sensitivity."
                   </blockquote>
-                  <cite className="text-xs text-muted font-medium font-nohemi">— Variety</cite>
+                  <cite className="text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— Variety</cite>
                 </div>
 
-                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500">
-                  <div className="mb-3">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-copper-100 text-copper-700 font-cabinet">
-                      Critical Praise
-                    </span>
-                  </div>
-                  <blockquote className="text-sm italic text-white leading-relaxed mb-3 font-nohemi font-medium line-clamp-4">
+                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500 mx-4">
+                  <blockquote className="text-base text-white/90 leading-relaxed mb-4 font-nohemi tracking-wide font-light italic">
                     "Kanawade's direction brings remarkable intimacy to this story of connection amidst grief and societal pressure."
                   </blockquote>
-                  <cite className="text-xs text-muted font-medium font-nohemi">— The Hollywood Reporter</cite>
+                  <cite className="text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— The Hollywood Reporter</cite>
+                </div>
+
+                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500 mx-4">
+                  <blockquote className="text-base text-white/90 leading-relaxed mb-4 font-nohemi tracking-wide font-light italic">
+                    "A powerful debut that challenges stereotypes while celebrating the universality of human connection."
+                  </blockquote>
+                  <cite className="text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— IndieWire</cite>
+                </div>
+
+                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500 mx-4">
+                  <blockquote className="text-base text-white/90 leading-relaxed mb-4 font-nohemi tracking-wide font-light italic">
+                    "A groundbreaking work that showcases the beauty and complexity of rural Indian life through a queer lens."
+                  </blockquote>
+                  <cite className="text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— Film Companion</cite>
                 </div>
               </div>
+              
+              {/* Enhanced gradient overlays for smooth edges */}
+              <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-black/80 via-black/60 to-transparent pointer-events-none z-10" />
+              <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-black/80 via-black/60 to-transparent pointer-events-none z-10" />
             </div>
           </div>
 

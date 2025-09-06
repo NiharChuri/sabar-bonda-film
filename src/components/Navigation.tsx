@@ -45,7 +45,7 @@ const Navigation = () => {
                 key={item.path}
                 href={item.path}
                 onClick={(e) => handleNavClick(e, item.path)}
-                className="relative px-3 py-2 text-sm font-medium transition-colors duration-200 text-white/80 hover:text-white font-nohemi"
+                className="relative px-3 py-2 text-md font-regular transition-colors duration-200 text-white/80 hover:text-white font-nohemi link-underline-copper tracking-wide"
               >
                 {item.label}
               </a>
@@ -71,7 +71,7 @@ const Navigation = () => {
                   key={item.path}
                   href={item.path}
                   onClick={(e) => handleNavClick(e, item.path)}
-                  className="px-3 py-2 text-base font-medium transition-colors duration-200 text-white/80 hover:text-white font-nohemi"
+                  className="px-3 py-2 text-base font-medium transition-colors duration-200 text-white/80 hover:text-white font-nohemi link-underline-copper"
                 >
                   {item.label}
                 </a>

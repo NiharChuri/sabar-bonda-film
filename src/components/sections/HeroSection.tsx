@@ -76,45 +76,45 @@ const HeroSection = () => {
               {/* Right side - Award Laurels Grid */}
               <div className="flex flex-col items-center">
                 {/* 3-2 Grid of Award Laurels - Large and Prominent */}
-                <div className="flex flex-col gap-4 lg:gap-6">
+                <div className="flex flex-col gap-6 lg:gap-8">
                   {/* Top row - 3 laurels */}
-                  <div className="flex gap-4 lg:gap-6 justify-center">
-                    <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32">
+                  <div className="flex gap-4 lg:gap-6 xl:gap-8 justify-center">
+                    <div className="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36">
                       <img 
                         src="/images/award_laurels/Sundance Winner_World Cinema Grand Jury Prize-Dramatic_white.png" 
                         alt="Sundance World Cinema Grand Jury Prize" 
-                        className="w-full h-full object-contain drop-shadow-xl"
+                        className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300"
                       />
                     </div>
-                    <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32">
+                    <div className="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36">
                       <img 
                         src="/images/award_laurels/SXSW winner laurel.png" 
                         alt="SXSW Winner Laurel" 
-                        className="w-full h-full object-contain drop-shadow-xl"
+                        className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300"
                       />
                     </div>
-                    <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32">
+                    <div className="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36">
                       <img 
                         src="/images/award_laurels/Audience - Best Feature IFFLA 2025_white.png" 
                         alt="IFFLA 2025 Audience Best Feature" 
-                        className="w-full h-full object-contain drop-shadow-xl"
+                        className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300"
                       />
                     </div>
                   </div>
                   {/* Bottom row - 2 laurels */}
-                  <div className="flex gap-4 lg:gap-6 justify-center">
-                    <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32">
+                  <div className="flex gap-4 lg:gap-6 xl:gap-8 justify-center">
+                    <div className="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36">
                       <img 
                         src="/images/award_laurels/IO-Audience-Award-Best-Narrative-Feature_white.png" 
                         alt="IO Audience Award Best Narrative Feature" 
-                        className="w-full h-full object-contain drop-shadow-xl"
+                        className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300"
                       />
                     </div>
-                    <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32">
+                    <div className="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36">
                       <img 
                         src="/images/award_laurels/flc_ndnf25_laurels_official_selection_wht.png" 
                         alt="FLC NDNF25 Official Selection" 
-                        className="w-full h-full object-contain drop-shadow-xl"
+                        className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300"
                       />
                     </div>
                   </div>
@@ -135,6 +135,33 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Scroll Down Arrow */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+        <button 
+          onClick={() => {
+            const nextSection = document.querySelector('#about, section:nth-of-type(2), [data-section]:nth-of-type(2)');
+            if (nextSection) {
+              nextSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          }}
+          className="animate-bounce hover:animate-none cursor-pointer"
+        >
+          <svg 
+            className="w-6 h-6 text-white opacity-70 hover:opacity-100 transition-opacity duration-300" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={2} 
+              d="M19 14l-7 7m0 0l-7-7m7 7V3" 
+            />
+          </svg>
+        </button>
       </div>
     </section>
   );

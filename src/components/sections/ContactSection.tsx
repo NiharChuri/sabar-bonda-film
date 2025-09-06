@@ -70,14 +70,14 @@ const ContactSection = () => {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-3 flex-1 min-w-0">
-                      <Mail size={18} className="text-moss-500 flex-shrink-0" />
+                      <Mail size={18} className="text-copper-500 flex-shrink-0" />
                       <span className="text-sm text-white font-mono truncate">
                         {panel.email}
                       </span>
                     </div>
                     <button
                       onClick={() => copyToClipboard(panel.email, `email-${index}`)}
-                      className="flex-shrink-0 p-2 rounded-full text-moss-500 hover:text-moss-600 hover:bg-moss-50 transition-all duration-200"
+                      className="flex-shrink-0 p-2 rounded-full text-copper-500 hover:text-moss-600 hover:bg-moss-50 transition-all duration-200"
                       aria-label={`Copy ${panel.email}`}
                     >
                       {copiedEmail === `email-${index}` ? (
@@ -90,14 +90,14 @@ const ContactSection = () => {
                   
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-3 flex-1 min-w-0">
-                      <Phone size={18} className="text-moss-500 flex-shrink-0" />
+                      <Phone size={18} className="text-copper-500 flex-shrink-0" />
                       <span className="text-sm text-white font-mono">
                         {panel.phone}
                       </span>
                     </div>
                     <button
                       onClick={() => copyToClipboard(panel.phone, `phone-${index}`)}
-                      className="flex-shrink-0 p-2 rounded-full text-moss-500 hover:text-moss-600 hover:bg-moss-50 transition-all duration-200"
+                      className="flex-shrink-0 p-2 rounded-full text-copper-500 hover:text-moss-600 hover:bg-moss-50 transition-all duration-200"
                       aria-label={`Copy ${panel.phone}`}
                     >
                       {copiedEmail === `phone-${index}` ? (
