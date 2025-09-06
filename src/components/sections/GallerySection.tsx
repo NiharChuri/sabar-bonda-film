@@ -75,33 +75,33 @@ const GallerySection = () => {
               {/* Navigation Arrows */}
               <button
                 onClick={prevImage}
-                className="absolute left-4 top-1/2 -translate-y-1/2 p-3 text-white hover:text-white/70 transition-all duration-200"
+                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 text-white hover:text-white/70 transition-all duration-200"
                 aria-label="Previous image"
               >
-                <ChevronLeft size={24} />
+                <ChevronLeft size={20} className="sm:w-6 sm:h-6" />
               </button>
               
               <button
                 onClick={nextImage}
-                className="absolute right-4 top-1/2 -translate-y-1/2 p-3 text-white hover:text-white/70 transition-all duration-200"
+                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 text-white hover:text-white/70 transition-all duration-200"
                 aria-label="Next image"
               >
-                <ChevronRight size={24} />
+                <ChevronRight size={20} className="sm:w-6 sm:h-6" />
               </button>
 
               {/* Image Counter */}
-              <div className="absolute top-4 right-4 px-3 py-1 bg-black/60 text-white text-sm font-nohemi">
+              <div className="absolute top-2 sm:top-4 right-2 sm:right-4 px-2 sm:px-3 py-1 bg-black/60 text-white text-xs sm:text-sm font-nohemi">
                 {currentImageIndex + 1} / {galleryImages.length}
               </div>
             </div>
 
             {/* Thumbnail Navigation */}
-            <div className="mt-6 flex justify-center space-x-3 overflow-x-auto pb-2">
+            <div className="mt-4 sm:mt-6 flex justify-center space-x-2 sm:space-x-3 overflow-x-auto pb-2">
               {galleryImages.map((image, index) => (
                 <button
                   key={index}
                   onClick={() => goToImage(index)}
-                  className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
+                  className={`flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
                     index === currentImageIndex 
                       ? 'border-copper-500 shadow-lg scale-105' 
                       : 'border-white/30 hover:border-white/60'
@@ -119,12 +119,12 @@ const GallerySection = () => {
             </div>
 
             {/* Dot Indicators */}
-            <div className="mt-4 flex justify-center space-x-2">
+            <div className="mt-3 sm:mt-4 flex justify-center space-x-2">
               {galleryImages.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => goToImage(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                  className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-200 ${
                     index === currentImageIndex 
                       ? 'bg-copper-500 scale-125' 
                       : 'bg-white/40 hover:bg-white/60'

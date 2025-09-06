@@ -163,8 +163,8 @@ const AccoladesSection = () => {
           />
           
           {/* Critical Quotes Auto-scrolling Carousel */}
-          <div className="mb-16">
-            <h3 className="text-2xl font-cabinet font-semibold text-white mb-8 text-center">
+          <div className="mb-12 lg:mb-16">
+            <h3 className="text-xl sm:text-2xl font-cabinet font-semibold text-white mb-6 sm:mb-8 text-center">
               Critical Praise
             </h3>
             <div className="relative overflow-hidden">
@@ -183,174 +183,174 @@ const AccoladesSection = () => {
                 onTouchMove={handleTouchMove}
               >
                 {/* Critical Praise Items - First Set */}
-                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500 mx-4">
-                  <blockquote className="text-base text-white/90 leading-relaxed mb-4 font-nohemi tracking-wide font-light italic">
+                <div className="flex-shrink-0 w-80 sm:w-96 p-4 sm:p-6 border-l-4 border-copper-500 mx-2 sm:mx-4">
+                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wide font-light italic">
                     "A tender and authentic portrayal of queer love in rural India, beautifully crafted with emotional depth and cultural sensitivity."
                   </blockquote>
-                  <cite className="text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— Variety</cite>
+                  <cite className="text-xs sm:text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— Variety</cite>
                 </div>
 
-                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500 mx-4">
-                  <blockquote className="text-base text-white/90 leading-relaxed mb-4 font-nohemi tracking-wide font-light italic">
+                <div className="flex-shrink-0 w-80 sm:w-96 p-4 sm:p-6 border-l-4 border-copper-500 mx-2 sm:mx-4">
+                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wide font-light italic">
                     "Kanawade's direction brings remarkable intimacy to this story of connection amidst grief and societal pressure."
                   </blockquote>
-                  <cite className="text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— The Hollywood Reporter</cite>
+                  <cite className="text-xs sm:text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— The Hollywood Reporter</cite>
                 </div>
 
-                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500 mx-4">
-                  <blockquote className="text-base text-white/90 leading-relaxed mb-4 font-nohemi tracking-wide font-light italic">
+                <div className="flex-shrink-0 w-80 sm:w-96 p-4 sm:p-6 border-l-4 border-copper-500 mx-2 sm:mx-4">
+                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wide font-light italic">
                     "A powerful debut that challenges stereotypes while celebrating the universality of human connection."
                   </blockquote>
-                  <cite className="text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— IndieWire</cite>
+                  <cite className="text-xs sm:text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— IndieWire</cite>
                 </div>
 
-                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500 mx-4">
-                  <blockquote className="text-base text-white/90 leading-relaxed mb-4 font-nohemi tracking-wide font-light italic">
+                <div className="flex-shrink-0 w-80 sm:w-96 p-4 sm:p-6 border-l-4 border-copper-500 mx-2 sm:mx-4">
+                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wide font-light italic">
                     "A groundbreaking work that showcases the beauty and complexity of rural Indian life through a queer lens."
                   </blockquote>
-                  <cite className="text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— Film Companion</cite>
+                  <cite className="text-xs sm:text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— Film Companion</cite>
                 </div>
 
-                {/* Critical Praise Items - Second Set for seamless loop */}
-                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500 mx-4">
-                  <blockquote className="text-base text-white/90 leading-relaxed mb-4 font-nohemi tracking-wide font-light italic">
+                {/* Critical Praise Items - Second set for seamless loop */}
+                <div className="flex-shrink-0 w-80 sm:w-96 p-4 sm:p-6 border-l-4 border-copper-500 mx-2 sm:mx-4">
+                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wide font-light italic">
                     "A tender and authentic portrayal of queer love in rural India, beautifully crafted with emotional depth and cultural sensitivity."
                   </blockquote>
-                  <cite className="text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— Variety</cite>
+                  <cite className="text-xs sm:text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— Variety</cite>
                 </div>
 
-                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500 mx-4">
-                  <blockquote className="text-base text-white/90 leading-relaxed mb-4 font-nohemi tracking-wide font-light italic">
+                <div className="flex-shrink-0 w-80 sm:w-96 p-4 sm:p-6 border-l-4 border-copper-500 mx-2 sm:mx-4">
+                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wide font-light italic">
                     "Kanawade's direction brings remarkable intimacy to this story of connection amidst grief and societal pressure."
                   </blockquote>
-                  <cite className="text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— The Hollywood Reporter</cite>
+                  <cite className="text-xs sm:text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— The Hollywood Reporter</cite>
                 </div>
 
-                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500 mx-4">
-                  <blockquote className="text-base text-white/90 leading-relaxed mb-4 font-nohemi tracking-wide font-light italic">
+                <div className="flex-shrink-0 w-80 sm:w-96 p-4 sm:p-6 border-l-4 border-copper-500 mx-2 sm:mx-4">
+                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wide font-light italic">
                     "A powerful debut that challenges stereotypes while celebrating the universality of human connection."
                   </blockquote>
-                  <cite className="text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— IndieWire</cite>
+                  <cite className="text-xs sm:text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— IndieWire</cite>
                 </div>
 
-                <div className="flex-shrink-0 w-96 p-6 border-l-4 border-copper-500 mx-4">
-                  <blockquote className="text-base text-white/90 leading-relaxed mb-4 font-nohemi tracking-wide font-light italic">
+                <div className="flex-shrink-0 w-80 sm:w-96 p-4 sm:p-6 border-l-4 border-copper-500 mx-2 sm:mx-4">
+                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wide font-light italic">
                     "A groundbreaking work that showcases the beauty and complexity of rural Indian life through a queer lens."
                   </blockquote>
-                  <cite className="text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— Film Companion</cite>
+                  <cite className="text-xs sm:text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— Film Companion</cite>
                 </div>
               </div>
               
               {/* Enhanced gradient overlays for smooth edges */}
-              <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-black/80 via-black/60 to-transparent pointer-events-none z-10" />
-              <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-black/80 via-black/60 to-transparent pointer-events-none z-10" />
+              <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-20 bg-gradient-to-r from-black/80 via-black/60 to-transparent pointer-events-none z-10" />
+              <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-20 bg-gradient-to-l from-black/80 via-black/60 to-transparent pointer-events-none z-10" />
             </div>
           </div>
 
           {/* Awards Grid - Static Display */}
           <div>
-            <h3 className="text-2xl font-cabinet font-semibold text-white mb-8 text-center">
+            <h3 className="text-xl sm:text-2xl font-cabinet font-semibold text-white mb-6 sm:mb-8 text-center">
               Festival Awards & Recognition
             </h3>
             
             {/* 3-2 Grid Layout for Awards */}
-            <div className="flex flex-col items-center gap-8">
+            <div className="flex flex-col items-center gap-6 sm:gap-8">
               {/* Top row - 3 laurels */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-center max-w-5xl">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 justify-center max-w-5xl">
                 <div className="flex flex-col items-center text-center">
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 mb-4">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mb-3 sm:mb-4">
                     <img 
                       src="/images/award_laurels/Sundance Winner_World Cinema Grand Jury Prize-Dramatic_white.png" 
                       alt="Sundance World Cinema Grand Jury Prize" 
                       className="w-full h-full object-contain drop-shadow-lg"
                     />
                   </div>
-                  <h4 className="text-lg font-cabinet font-semibold text-white mb-2">
+                  <h4 className="text-base sm:text-lg font-cabinet font-semibold text-white mb-1 sm:mb-2">
                     Sundance Film Festival 2025
                   </h4>
-                  <p className="text-copper-500 font-medium mb-2 font-nohemi">
+                  <p className="text-copper-500 font-medium mb-1 sm:mb-2 font-nohemi text-sm sm:text-base">
                     World Cinema Grand Jury Prize: Dramatic
                   </p>
-                  <p className="text-sm text-white/80 font-nohemi">
+                  <p className="text-xs sm:text-sm text-white/80 font-nohemi">
                     Prestigious recognition for outstanding dramatic filmmaking in world cinema competition.
                   </p>
                 </div>
 
                 <div className="flex flex-col items-center text-center">
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 mb-4">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mb-3 sm:mb-4">
                     <img 
                       src="/images/award_laurels/SXSW winner laurel.png" 
                       alt="SXSW Winner" 
                       className="w-full h-full object-contain drop-shadow-lg"
                     />
                   </div>
-                  <h4 className="text-lg font-cabinet font-semibold text-white mb-2">
+                  <h4 className="text-base sm:text-lg font-cabinet font-semibold text-white mb-1 sm:mb-2">
                     SXSW 2025
                   </h4>
-                  <p className="text-copper-500 font-medium mb-2 font-nohemi">
+                  <p className="text-copper-500 font-medium mb-1 sm:mb-2 font-nohemi text-sm sm:text-base">
                     Winner
                   </p>
-                  <p className="text-sm text-white/80 font-nohemi">
+                  <p className="text-xs sm:text-sm text-white/80 font-nohemi">
                     Celebrated at one of the most influential film festivals in the world.
                   </p>
                 </div>
 
                 <div className="flex flex-col items-center text-center">
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 mb-4">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mb-3 sm:mb-4">
                     <img 
                       src="/images/award_laurels/Audience - Best Feature IFFLA 2025_white.png" 
                       alt="IFFLA 2025 Audience Best Feature" 
                       className="w-full h-full object-contain drop-shadow-lg"
                     />
                   </div>
-                  <h4 className="text-lg font-cabinet font-semibold text-white mb-2">
+                  <h4 className="text-base sm:text-lg font-cabinet font-semibold text-white mb-1 sm:mb-2">
                     IFFLA 2025
                   </h4>
-                  <p className="text-copper-500 font-medium mb-2 font-nohemi">
+                  <p className="text-copper-500 font-medium mb-1 sm:mb-2 font-nohemi text-sm sm:text-base">
                     Audience Award - Best Feature
                   </p>
-                  <p className="text-sm text-white/80 font-nohemi">
+                  <p className="text-xs sm:text-sm text-white/80 font-nohemi">
                     Chosen by audiences as the best feature film at the Indian Film Festival of Los Angeles.
                   </p>
                 </div>
               </div>
 
               {/* Bottom row - 2 laurels */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-center max-w-3xl">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 justify-center max-w-3xl">
                 <div className="flex flex-col items-center text-center">
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 mb-4">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mb-3 sm:mb-4">
                     <img 
                       src="/images/award_laurels/IO-Audience-Award-Best-Narrative-Feature_white.png" 
                       alt="IO Audience Award Best Narrative Feature" 
                       className="w-full h-full object-contain drop-shadow-lg"
                     />
                   </div>
-                  <h4 className="text-lg font-cabinet font-semibold text-white mb-2">
+                  <h4 className="text-base sm:text-lg font-cabinet font-semibold text-white mb-1 sm:mb-2">
                     Inside Out Festival
                   </h4>
-                  <p className="text-copper-500 font-medium mb-2 font-nohemi">
+                  <p className="text-copper-500 font-medium mb-1 sm:mb-2 font-nohemi text-sm sm:text-base">
                     Audience Award - Best Narrative Feature
                   </p>
-                  <p className="text-sm text-white/80 font-nohemi">
+                  <p className="text-xs sm:text-sm text-white/80 font-nohemi">
                     Honored by audiences at Toronto's premier LGBTQ+ film festival.
                   </p>
                 </div>
 
                 <div className="flex flex-col items-center text-center">
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 mb-4">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mb-3 sm:mb-4">
                     <img 
                       src="/images/award_laurels/flc_ndnf25_laurels_official_selection_wht.png" 
                       alt="FLC NDNF25 Official Selection" 
                       className="w-full h-full object-contain drop-shadow-lg"
                     />
                   </div>
-                  <h4 className="text-lg font-cabinet font-semibold text-white mb-2">
+                  <h4 className="text-base sm:text-lg font-cabinet font-semibold text-white mb-1 sm:mb-2">
                     New Directors/New Films 2025
                   </h4>
-                  <p className="text-copper-500 font-medium mb-2 font-nohemi">
+                  <p className="text-copper-500 font-medium mb-1 sm:mb-2 font-nohemi text-sm sm:text-base">
                     Official Selection
                   </p>
-                  <p className="text-sm text-white/80 font-nohemi">
+                  <p className="text-xs sm:text-sm text-white/80 font-nohemi">
                     Selected for the prestigious showcase of emerging filmmaking talent.
                   </p>
                 </div>

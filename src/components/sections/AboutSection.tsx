@@ -1,10 +1,14 @@
-import { useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from 'lucide-react';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const AboutSection = () => {
   const [currentPosterIndex, setCurrentPosterIndex] = useState(0);
+  const [isDirectorStatementExpanded, setIsDirectorStatementExpanded] = useState(false);
+  const isMobile = useIsMobile();
+  const readMoreButtonRef = useRef<HTMLDivElement>(null);
 
   const posterImages = [
     {
@@ -25,6 +29,21 @@ const AboutSection = () => {
     setCurrentPosterIndex((prev) => (prev - 1 + posterImages.length) % posterImages.length);
   };
 
+  const handleReadMoreToggle = () => {
+    const newExpanded = !isDirectorStatementExpanded;
+    setIsDirectorStatementExpanded(newExpanded);
+    
+    // If collapsing (Read Less), scroll to the Read More button area
+    if (!newExpanded && readMoreButtonRef.current) {
+      setTimeout(() => {
+        readMoreButtonRef.current?.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'center' 
+        });
+      }, 100); // Small delay to ensure state update is complete
+    }
+  };
+
   return (
     <section id="about" className="relative">
       {/* Background Image */}
@@ -39,15 +58,15 @@ const AboutSection = () => {
       
       <div className="relative z-10">
         <Section>
-          <h2 className="text-4xl sm:text-5xl font-cabinet font-semibold tracking-tight text-white mb-8">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-cabinet font-semibold tracking-tight text-white mb-6 lg:mb-8">
             Director's Statement
           </h2>
-          <div className="p-8">
-            <div className="flex flex-col lg:flex-row gap-12">
+          <div className="p-4 sm:p-6 lg:p-8">
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
               {/* Left Column */}
               <div className="lg:w-1/2">
                 <div className="prose prose-sm max-w-none text-white leading-relaxed space-y-4">
-                  <p className="font-nohemi font-light tracking-wide">
+                  <p className="font-nohemi font-light tracking-wide text-sm sm:text-base">
                     Sabar Bonda (Cactus Pears) is my deeply personal reimagining of the
                     grieving period I experienced in my ancestral village in 2016. Born
                     and raised in a Mumbai slum by a chauffeur father and a homemaker
@@ -57,52 +76,58 @@ const AboutSection = () => {
                     pressure overshadowed my grief, leaving me longing for an escape I
                     couldn't find at the time.
                   </p>
-                  <p className="font-nohemi font-light tracking-wide">
-                    Through this film, I explore the possibility of solace and freedom by
-                    allowing my protagonist to experience moments of connection and
-                    respite with an estranged childhood friend. These moments gradually
-                    blossom into a tender bond, making this film a journey that begins
-                    with tragedy and moves toward hope and positivity.
-                  </p>
-                  <p className="font-nohemi font-light tracking-wide">
-                    To ensure authenticity, I cast actors from the region where the film
-                    was shot, despite the challenges of finding local talent willing to
-                    portray queer characters due to cultural stigma. After three years of
-                    searching, Bhushaan Manoj and Suraaj Suman were selected for their
-                    backgrounds as trained theater actors and their six-year friendship,
-                    which added depth and realism to the characters' bond and intimacy.
-                    Their grounded and relatable appearances were also crucial to
-                    portraying queer individuals as ordinary people rather than idealized
-                    figures, further humanizing their story.
-                  </p>
+                  
+                  {/* Show only first paragraph on small screens unless expanded */}
+                  <div className={`${isMobile && !isDirectorStatementExpanded ? 'hidden' : 'block'} space-y-4`}>
+                    <p className="font-nohemi font-light tracking-wide text-sm sm:text-base">
+                      Through this film, I explore the possibility of solace and freedom by
+                      allowing my protagonist to experience moments of connection and
+                      respite with an estranged childhood friend. These moments gradually
+                      blossom into a tender bond, making this film a journey that begins
+                      with tragedy and moves toward hope and positivity.
+                    </p>
+                    <p className="font-nohemi font-light tracking-wide text-sm sm:text-base">
+                      To ensure authenticity, I cast actors from the region where the film
+                      was shot, despite the challenges of finding local talent willing to
+                      portray queer characters due to cultural stigma. After three years of
+                      searching, Bhushaan Manoj and Suraaj Suman were selected for their
+                      backgrounds as trained theater actors and their six-year friendship,
+                      which added depth and realism to the characters' bond and intimacy.
+                      Their grounded and relatable appearances were also crucial to
+                      portraying queer individuals as ordinary people rather than idealized
+                      figures, further humanizing their story.
+                    </p>
+                  </div>
                 </div>
               </div>
 
               {/* Right Column */}
               <div className="lg:w-1/2">
-                <div className="prose prose-sm max-w-none text-white leading-relaxed space-y-4">
-                  <p className="font-nohemi font-light tracking-wide">
+                <div className={`prose prose-sm max-w-none text-white leading-relaxed space-y-4 ${
+                  isMobile && !isDirectorStatementExpanded ? 'hidden' : 'block'
+                }`}>
+                  <p className="font-nohemi font-light tracking-wide text-sm sm:text-base">
                     My personal experiences shaped Sabar Bonda to reflect the realities
                     of lower-class queer life in India, challenging the misconception that
                     queer experiences are limited to the upper class. By weaving together
                     urban and rural experiences, the film aims to normalize queerness and
                     celebrate its presence in all layers of society.
                   </p>
-                  <p className="font-nohemi font-light tracking-wide">
+                  <p className="font-nohemi font-light tracking-wide text-sm sm:text-base">
                     The characters of the parents in the film are inspired by my parents
                     whose love and wisdom led them to accept my sexuality without
                     any conflict. By highlighting this aspect of acceptance without
                     sensationalizing struggle, the film offers a fresh perspective that
                     redefines queer narratives and fosters hope.
                   </p>
-                  <p className="font-nohemi font-light tracking-wide">
+                  <p className="font-nohemi font-light tracking-wide text-sm sm:text-base">
                     I used static frames to capture the stillness and sluggish pace of that
                     time in the village. And although at its core it's a romance drama, it has
                     no background score. I wanted to use layered soundscape to paint the
                     urban and rural spaces to further enhances the tender quality of the
                     film.
                   </p>
-                  <p className="font-nohemi font-light tracking-wide">
+                  <p className="font-nohemi font-light tracking-wide text-sm sm:text-base">
                     I shot this film in a small village called Kharshinde, where my mother
                     was born and raised. We filmed several scenes near a man-made lake
                     in the village, created decades ago due to the lack of a natural water
@@ -111,14 +136,36 @@ const AboutSection = () => {
                     part of my mother's personal history made the experience deeply
                     meaningful for me.
                   </p>
-                  <div className="mt-8 pt-4 border-t border-white/30">
-                    <p className="font-cabinet font-semibold text-white text-right text-2xl">
+                  <div className="mt-6 lg:mt-8 pt-4 border-t border-white/30">
+                    <p className="font-cabinet font-semibold text-white text-right text-lg sm:text-xl lg:text-2xl">
                       - Rohan Parashuram Kanawade, Director
                     </p>
                   </div>
                 </div>
               </div>
             </div>
+            
+            {/* Read More/Less button for mobile - placed after both columns */}
+            {isMobile && (
+              <div ref={readMoreButtonRef} className="flex justify-center mt-6">
+                <button
+                  onClick={handleReadMoreToggle}
+                  className="flex items-center gap-2 text-copper-500 hover:text-copper-400 transition-colors duration-200 font-nohemi font-medium text-sm px-4 py-2 rounded-full border border-copper-500/30 hover:border-copper-500/50 backdrop-blur-sm"
+                >
+                  {isDirectorStatementExpanded ? (
+                    <>
+                      <span>Read Less</span>
+                      <ChevronUp size={16} />
+                    </>
+                  ) : (
+                    <>
+                      <span>Read More</span>
+                      <ChevronDown size={16} />
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
           </div>
         </Section>
 
@@ -184,12 +231,12 @@ const AboutSection = () => {
             {/* Right Side - Synopsis */}
             <div className="lg:col-span-8">
               <div>
-                <h3 className="text-3xl font-cabinet font-bold text-white mb-6">
+                <h3 className="text-2xl sm:text-3xl font-cabinet font-bold text-white mb-4 sm:mb-6">
                   Synopsis
                 </h3>
-                <div className="prose prose-sm max-w-none text-white leading-relaxed space-y-4 text-sm font-nohemi font-light tracking-wider">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-4">
+                <div className="prose prose-sm max-w-none text-white leading-relaxed space-y-4 text-xs sm:text-sm lg:text-base font-nohemi font-light tracking-wider">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+                    <div className="space-y-3 sm:space-y-4">
                       <p>
                         Anand (30), a call-center employee in Mumbai, is forced to spend ten days at his ancestral village to mourn the loss of his father at the behest of his mother, Suman (50).
                       </p>
@@ -200,7 +247,7 @@ const AboutSection = () => {
                         He finds solace in his childhood friend, Balya (30), as he accompanies him on his daily outings into the mountains to herd goats. Balya has been using the 'educated girls favoring city-dwellers over farmers' as a ruse to stay unmarried as he undergoes similar pressures relating to his sexuality from his family.
                       </p>
                     </div>
-                    <div className="space-y-4">
+                    <div className="space-y-3 sm:space-y-4">
                       <p>
                         To escape their pressures, the two men spend time together. Hailing from different worlds but bound by childhood memories, they connect over their common struggle.
                       </p>
@@ -218,37 +265,37 @@ const AboutSection = () => {
           </div>
 
           {/* Cast & Crew Section - Full Width Below */}
-          <div className="mt-12">
+          <div className="mt-8 lg:mt-12">
             <div>
-              <h3 className="text-2xl font-cabinet font-bold text-white mb-8 text-center">
+              <h3 className="text-xl sm:text-2xl font-cabinet font-bold text-white mb-6 sm:mb-8 text-center">
                 Cast & Crew
               </h3>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
                 
                 {/* Written and Directed */}
                 <div>
-                  <h4 className="text-md font-semibold text-copper-500 uppercase tracking-wide mb-3 font-cabinet">
+                  <h4 className="text-sm sm:text-base font-semibold text-copper-500 uppercase tracking-wide mb-2 sm:mb-3 font-cabinet">
                     Written & Directed
                   </h4>
-                  <p className="text-md tracking-wider font-light text-white font-nohemi">
+                  <p className="text-sm sm:text-base tracking-wider font-light text-white font-nohemi">
                     Rohan Parashuram Kanawade
                   </p>
                 </div>
 
                 {/* Cast */}
                 <div>
-                  <h4 className="text-md font-semibold text-copper-500 uppercase tracking-wide mb-3 font-cabinet">
+                  <h4 className="text-sm sm:text-base font-semibold text-copper-500 uppercase tracking-wide mb-2 sm:mb-3 font-cabinet">
                     Cast
                   </h4>
-                  <div className="space-y-2">
-                    <p className="text-md tracking-wider font-light text-white font-nohemi">
+                  <div className="space-y-1 sm:space-y-2">
+                    <p className="text-sm sm:text-base tracking-wider font-light text-white font-nohemi">
                       Bhushaan Manoj
                     </p>
-                    <p className="text-md tracking-wider font-light text-white font-nohemi">
+                    <p className="text-sm sm:text-base tracking-wider font-light text-white font-nohemi">
                       Suraaj Suman
                     </p>
-                    <p className="text-md tracking-wider font-light text-white font-nohemi">
+                    <p className="text-sm sm:text-base tracking-wider font-light text-white font-nohemi">
                       Jayshri Jagtap
                     </p>
                   </div>
@@ -256,26 +303,26 @@ const AboutSection = () => {
 
                 {/* Producers */}
                 <div>
-                  <h4 className="text-md font-semibold text-copper-500 uppercase tracking-wide mb-3 font-cabinet">
+                  <h4 className="text-sm sm:text-base font-semibold text-copper-500 uppercase tracking-wide mb-2 sm:mb-3 font-cabinet">
                     Producers
                   </h4>
-                  <div className="space-y-2">
-                    <p className="text-md tracking-wider font-light text-white font-nohemi">
+                  <div className="space-y-1 sm:space-y-2">
+                    <p className="text-xs sm:text-sm lg:text-base tracking-wider font-light text-white font-nohemi">
                       Lotus Visual Productions (Neeraj Churi)
                     </p>
-                    <p className="text-md tracking-wider font-light text-white font-nohemi">
+                    <p className="text-xs sm:text-sm lg:text-base tracking-wider font-light text-white font-nohemi">
                       Kaushik Ray
                     </p>
-                    <p className="text-md tracking-wider font-light text-white font-nohemi">
+                    <p className="text-xs sm:text-sm lg:text-base tracking-wider font-light text-white font-nohemi">
                       Naren Chandavarkar
                     </p>
-                    <p className="text-md tracking-wider font-light text-white font-nohemi">
+                    <p className="text-xs sm:text-sm lg:text-base tracking-wider font-light text-white font-nohemi">
                       Sidharth Meer
                     </p>
-                    <p className="text-md tracking-wider font-light text-white font-nohemi">
+                    <p className="text-xs sm:text-sm lg:text-base tracking-wider font-light text-white font-nohemi">
                       Hareesh Reddypalli
                     </p>
-                    <p className="text-md tracking-wider font-light text-white font-nohemi">
+                    <p className="text-xs sm:text-sm lg:text-base tracking-wider font-light text-white font-nohemi">
                       Rohan Parashuram Kanawade
                     </p>
                   </div>
@@ -283,14 +330,14 @@ const AboutSection = () => {
 
                 {/* Executive Producers */}
                 <div>
-                  <h4 className="text-md font-semibold text-copper-500 uppercase tracking-wide mb-3 font-cabinet">
+                  <h4 className="text-sm sm:text-base font-semibold text-copper-500 uppercase tracking-wide mb-2 sm:mb-3 font-cabinet">
                     Executive Producers
                   </h4>
-                  <div className="space-y-2">
-                    <p className="text-md tracking-wider font-light text-white font-nohemi">
+                  <div className="space-y-1 sm:space-y-2">
+                    <p className="text-sm sm:text-base tracking-wider font-light text-white font-nohemi">
                       Ilann Girard
                     </p>
-                    <p className="text-md tracking-wider font-light text-white font-nohemi">
+                    <p className="text-sm sm:text-base tracking-wider font-light text-white font-nohemi">
                       Kishor Vasant Sawant
                     </p>
                   </div>

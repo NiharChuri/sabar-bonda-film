@@ -33,19 +33,19 @@ const Navigation = () => {
           <a 
             href="#home"
             onClick={(e) => handleNavClick(e, '#home')}
-            className="font-cabinet font-bold text-4xl text-white hover:text-white/80 transition-colors duration-200"
+            className="font-cabinet font-bold text-2xl sm:text-3xl lg:text-4xl text-white hover:text-white/80 transition-colors duration-200"
           >
             Sabar Bonda
           </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden lg:flex space-x-6 xl:space-x-8">
             {navItems.map((item) => (
               <a
                 key={item.path}
                 href={item.path}
                 onClick={(e) => handleNavClick(e, item.path)}
-                className="relative px-3 py-2 text-md font-regular transition-colors duration-200 text-white/80 hover:text-white font-nohemi link-underline-copper tracking-wide"
+                className="relative px-3 py-2 text-sm lg:text-base font-regular transition-colors duration-200 text-white/80 hover:text-white font-nohemi link-underline-copper tracking-wide"
               >
                 {item.label}
               </a>
@@ -55,7 +55,7 @@ const Navigation = () => {
           {/* Mobile menu button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-full text-white hover:text-white/80 hover:bg-white/10 transition-all duration-200"
+            className="lg:hidden p-2 rounded-full text-white hover:text-white/80 hover:bg-white/10 transition-all duration-200"
             aria-label="Toggle navigation menu"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -64,7 +64,7 @@ const Navigation = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden py-4 border-t border-white/20 bg-black/50 backdrop-blur-md">
+          <div className="lg:hidden py-4 border-t border-white/20 bg-black/50 backdrop-blur-md">
             <div className="flex flex-col space-y-2">
               {navItems.map((item) => (
                 <a

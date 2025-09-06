@@ -399,4 +399,55 @@
       transition-duration: 0.01ms !important;
     }
   }
+
+  /* Responsive text utilities */
+  .text-responsive-xs {
+    @apply text-xs sm:text-sm;
+  }
+
+  .text-responsive-sm {
+    @apply text-sm sm:text-base;
+  }
+
+  .text-responsive-base {
+    @apply text-base sm:text-lg;
+  }
+
+  .text-responsive-lg {
+    @apply text-lg sm:text-xl;
+  }
+
+  .text-responsive-xl {
+    @apply text-xl sm:text-2xl;
+  }
+
+  .text-responsive-2xl {
+    @apply text-2xl sm:text-3xl;
+  }
+
+  .text-responsive-3xl {
+    @apply text-2xl sm:text-3xl md:text-4xl;
+  }
+
+  .text-responsive-4xl {
+    @apply text-3xl sm:text-4xl md:text-5xl;
+  }
+
+  /* Responsive spacing utilities */
+  .space-responsive-sm > * + * {
+    @apply mt-2 sm:mt-3;
+  }
+
+  .space-responsive-base > * + * {
+    @apply mt-3 sm:mt-4;
+  }
+
+  .space-responsive-lg > * + * {
+    @apply mt-4 sm:mt-6;
+  }
+
+  /* Better touch targets for mobile */
+  .touch-target {
+    @apply min-w-11 min-h-11 sm:min-w-12 sm:min-h-12;
+  }
 }
