@@ -250,6 +250,143 @@ const AccoladesSection = () => {
             </div>
           </div>
 
+          {/* Article Links Section */}
+          <div className="mb-12 lg:mb-16">
+            <h3 className="text-xl sm:text-2xl font-cabinet font-semibold text-white mb-6 sm:mb-8 text-center">
+              Featured Articles & Reviews
+            </h3>
+            
+            <div className="max-w-4xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                <a 
+                  href="https://festival.sundance.org/blogs/give-me-the-backstory-get-to-know-rohan-parashuram-kanawade-the-writer-director-of-sabar-bonda-cactus-pears/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group p-4 sm:p-6 border border-white/20 rounded-lg hover:border-copper-500/50 transition-all duration-300 hover:bg-white/5"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <h4 className="font-cabinet font-semibold text-white text-sm sm:text-base mb-2 group-hover:text-copper-400 transition-colors">
+                        Get to Know Director Rohan Parashuram Kanawade
+                      </h4>
+                      <p className="text-copper-500 font-medium text-xs sm:text-sm font-nohemi">
+                        Sundance Film Festival
+                      </p>
+                    </div>
+                    <svg className="w-4 h-4 text-white/60 group-hover:text-copper-400 transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </div>
+                </a>
+
+                <a 
+                  href="https://www.labiennale.org/en/news/%E2%80%9Csabar-bonda%E2%80%9D-rohan-parashuram-kanawade-wins-grand-jury-prize-2025-sundance-film-festival"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group p-4 sm:p-6 border border-white/20 rounded-lg hover:border-copper-500/50 transition-all duration-300 hover:bg-white/5"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <h4 className="font-cabinet font-semibold text-white text-sm sm:text-base mb-2 group-hover:text-copper-400 transition-colors">
+                        “Sabar Bonda” by Rohan Parashuram Kanawade wins the Grand Jury Prize at the 2025 Sundance Film Festival
+                      </h4>
+                      <p className="text-copper-500 font-medium text-xs sm:text-sm font-nohemi">
+                        La Biennale di Venezia
+                      </p>
+                    </div>
+                    <svg className="w-4 h-4 text-white/60 group-hover:text-copper-400 transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </div>
+                </a>
+
+                <a 
+                  href="https://variety.com/2025/film/reviews/sabar-bonda-cactus-pears-review-sundance-1236287998/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group p-4 sm:p-6 border border-white/20 rounded-lg hover:border-copper-500/50 transition-all duration-300 hover:bg-white/5"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <h4 className="font-cabinet font-semibold text-white text-sm sm:text-base mb-2 group-hover:text-copper-400 transition-colors">
+                        ‘Sabar Bonda (Cactus Pears)’ Review: A Tender Queer Indian Drama Born of Grief
+                      </h4>
+                      <p className="text-copper-500 font-medium text-xs sm:text-sm font-nohemi">
+                        Variety
+                      </p>
+                    </div>
+                    <svg className="w-4 h-4 text-white/60 group-hover:text-copper-400 transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </div>
+                </a>
+
+                <a 
+                  href="https://www.indiewire.com/criticism/movies/sabar-bonda-review-rohan-parashuram-kanawade-1235087891/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group p-4 sm:p-6 border border-white/20 rounded-lg hover:border-copper-500/50 transition-all duration-300 hover:bg-white/5"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <h4 className="font-cabinet font-semibold text-white text-sm sm:text-base mb-2 group-hover:text-copper-400 transition-colors">
+                        ‘Sabar Bonda’ Review: ‘Special Friends’ Reunite During a Period of Mourning in Poetic Marathi-Language Debut
+                      </h4>
+                      <p className="text-copper-500 font-medium text-xs sm:text-sm font-nohemi">
+                        IndieWire
+                      </p>
+                    </div>
+                    <svg className="w-4 h-4 text-white/60 group-hover:text-copper-400 transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </div>
+                </a>
+
+                <a 
+                  href="https://www.rogerebert.com/festivals/sundance-2025-sabar-bonda-cactus-pears-dj-ahmet-andre-is-an-idiot"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group p-4 sm:p-6 border border-white/20 rounded-lg hover:border-copper-500/50 transition-all duration-300 hover:bg-white/5"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <h4 className="font-cabinet font-semibold text-white text-sm sm:text-base mb-2 group-hover:text-copper-400 transition-colors">
+                        Sundance 2025: Sabar Bonda (Cactus Pears), DJ Ahmet, André Is an Idiot
+                      </h4>
+                      <p className="text-copper-500 font-medium text-xs sm:text-sm font-nohemi">
+                        RogerEbert.com
+                      </p>
+                    </div>
+                    <svg className="w-4 h-4 text-white/60 group-hover:text-copper-400 transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </div>
+                </a>
+
+                <a 
+                  href="https://mashable.com/article/sabar-bonda-cactus-pears-review"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group p-4 sm:p-6 border border-white/20 rounded-lg hover:border-copper-500/50 transition-all duration-300 hover:bg-white/5"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <h4 className="font-cabinet font-semibold text-white text-sm sm:text-base mb-2 group-hover:text-copper-400 transition-colors">
+                        'Cactus Pears' review: An assured debut feature that subverts queer tropes
+                      </h4>
+                      <p className="text-copper-500 font-medium text-xs sm:text-sm font-nohemi">
+                        Mashable
+                      </p>
+                    </div>
+                    <svg className="w-4 h-4 text-white/60 group-hover:text-copper-400 transition-colors flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+
           {/* Awards Grid - Static Display
           <div>
             <h3 className="text-xl sm:text-2xl font-cabinet font-semibold text-white mb-6 sm:mb-8 text-center">
