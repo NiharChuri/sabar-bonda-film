@@ -308,7 +308,7 @@ const AboutSection = () => {
                   </h4>
                   <div className="space-y-1 sm:space-y-2">
                     <p className="text-xs sm:text-sm lg:text-base tracking-wider font-light text-white font-nohemi">
-                      Lotus Visual Productions (Neeraj Churi)
+                      Neeraj Churi (Lotus Visual Productions)
                     </p>
                     <p className="text-xs sm:text-sm lg:text-base tracking-wider font-light text-white font-nohemi">
                       Kaushik Ray

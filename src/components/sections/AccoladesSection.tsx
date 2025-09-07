@@ -184,28 +184,28 @@ const AccoladesSection = () => {
               >
                 {/* Critical Praise Items - First Set */}
                 <div className="flex-shrink-0 w-80 sm:w-96 p-4 sm:p-6 border-l-4 border-copper-500 mx-2 sm:mx-4">
-                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wide font-light italic">
+                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wider font-light italic">
                     "A tender and authentic portrayal of queer love in rural India, beautifully crafted with emotional depth and cultural sensitivity."
                   </blockquote>
                   <cite className="text-xs sm:text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— Variety</cite>
                 </div>
 
                 <div className="flex-shrink-0 w-80 sm:w-96 p-4 sm:p-6 border-l-4 border-copper-500 mx-2 sm:mx-4">
-                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wide font-light italic">
+                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wider font-light italic">
                     "Kanawade's direction brings remarkable intimacy to this story of connection amidst grief and societal pressure."
                   </blockquote>
                   <cite className="text-xs sm:text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— The Hollywood Reporter</cite>
                 </div>
 
                 <div className="flex-shrink-0 w-80 sm:w-96 p-4 sm:p-6 border-l-4 border-copper-500 mx-2 sm:mx-4">
-                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wide font-light italic">
+                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wider font-light italic">
                     "A powerful debut that challenges stereotypes while celebrating the universality of human connection."
                   </blockquote>
                   <cite className="text-xs sm:text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— IndieWire</cite>
                 </div>
 
                 <div className="flex-shrink-0 w-80 sm:w-96 p-4 sm:p-6 border-l-4 border-copper-500 mx-2 sm:mx-4">
-                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wide font-light italic">
+                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wider font-light italic">
                     "A groundbreaking work that showcases the beauty and complexity of rural Indian life through a queer lens."
                   </blockquote>
                   <cite className="text-xs sm:text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— Film Companion</cite>
@@ -213,28 +213,28 @@ const AccoladesSection = () => {
 
                 {/* Critical Praise Items - Second set for seamless loop */}
                 <div className="flex-shrink-0 w-80 sm:w-96 p-4 sm:p-6 border-l-4 border-copper-500 mx-2 sm:mx-4">
-                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wide font-light italic">
+                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wider font-light italic">
                     "A tender and authentic portrayal of queer love in rural India, beautifully crafted with emotional depth and cultural sensitivity."
                   </blockquote>
                   <cite className="text-xs sm:text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— Variety</cite>
                 </div>
 
                 <div className="flex-shrink-0 w-80 sm:w-96 p-4 sm:p-6 border-l-4 border-copper-500 mx-2 sm:mx-4">
-                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wide font-light italic">
+                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wider font-light italic">
                     "Kanawade's direction brings remarkable intimacy to this story of connection amidst grief and societal pressure."
                   </blockquote>
                   <cite className="text-xs sm:text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— The Hollywood Reporter</cite>
                 </div>
 
                 <div className="flex-shrink-0 w-80 sm:w-96 p-4 sm:p-6 border-l-4 border-copper-500 mx-2 sm:mx-4">
-                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wide font-light italic">
+                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wider font-light italic">
                     "A powerful debut that challenges stereotypes while celebrating the universality of human connection."
                   </blockquote>
                   <cite className="text-xs sm:text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— IndieWire</cite>
                 </div>
 
                 <div className="flex-shrink-0 w-80 sm:w-96 p-4 sm:p-6 border-l-4 border-copper-500 mx-2 sm:mx-4">
-                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wide font-light italic">
+                  <blockquote className="text-sm sm:text-base text-white/90 leading-relaxed mb-3 sm:mb-4 font-nohemi tracking-wider font-light italic">
                     "A groundbreaking work that showcases the beauty and complexity of rural Indian life through a queer lens."
                   </blockquote>
                   <cite className="text-xs sm:text-sm text-yellow-600 font-semibold font-cabinet tracking-wide uppercase">— Film Companion</cite>
