@@ -156,17 +156,20 @@ const AccoladesSection = () => {
       
       <div className="relative z-10">
         <Section className="bg-black/30 backdrop-blur-sm">
-          <SectionHeader 
-            title="Awards & Recognition"
-            subtitle="Critical acclaim and festival honors"
-            variant="dark"
-          />
+          <header className="mb-8 sm:mb-10 lg:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-cabinet font-bold tracking-tight text-white mb-3 sm:mb-4">
+              Reviews & Recognition
+            </h2>
+            {/* <p className="text-base sm:text-lg leading-relaxed text-white/80 max-w-3xl font-nohemi font-medium">
+              Critical acclaim and festival honors
+            </p> */}
+          </header>
           
           {/* Critical Quotes Auto-scrolling Carousel */}
           <div className="mb-12 lg:mb-16">
-            <h3 className="text-xl sm:text-2xl font-cabinet font-semibold text-white mb-6 sm:mb-8 text-center">
+            {/* <h3 className="text-xl sm:text-2xl font-cabinet font-semibold text-white mb-6 sm:mb-8 text-center">
               Critical Praise
-            </h3>
+            </h3> */}
             <div className="relative overflow-hidden">
               <div 
                 ref={scrollRef}
@@ -247,15 +250,13 @@ const AccoladesSection = () => {
             </div>
           </div>
 
-          {/* Awards Grid - Static Display */}
+          {/* Awards Grid - Static Display
           <div>
             <h3 className="text-xl sm:text-2xl font-cabinet font-semibold text-white mb-6 sm:mb-8 text-center">
               Festival Awards & Recognition
             </h3>
             
-            {/* 3-2 Grid Layout for Awards */}
             <div className="flex flex-col items-center gap-6 sm:gap-8">
-              {/* Top row - 3 laurels */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 justify-center max-w-5xl">
                 <div className="flex flex-col items-center text-center">
                   <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mb-3 sm:mb-4">
@@ -315,7 +316,6 @@ const AccoladesSection = () => {
                 </div>
               </div>
 
-              {/* Bottom row - 2 laurels */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 justify-center max-w-3xl">
                 <div className="flex flex-col items-center text-center">
                   <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mb-3 sm:mb-4">
@@ -356,7 +356,7 @@ const AccoladesSection = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </Section>
       </div>
     </section>

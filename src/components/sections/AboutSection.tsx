@@ -7,8 +7,15 @@ import { useIsMobile } from '@/hooks/use-mobile';
 const AboutSection = () => {
   const [currentPosterIndex, setCurrentPosterIndex] = useState(0);
   const [isDirectorStatementExpanded, setIsDirectorStatementExpanded] = useState(false);
+  const [isFullCrewExpanded, setIsFullCrewExpanded] = useState(false);
   const isMobile = useIsMobile();
   const readMoreButtonRef = useRef<HTMLDivElement>(null);
+  const fullCrewButtonRef = useRef<HTMLDivElement>(null);
+  
+  // Touch/swipe handling for poster carousel
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+  const isDragging = useRef(false);
 
   const posterImages = [
     {
@@ -44,6 +51,89 @@ const AboutSection = () => {
     }
   };
 
+  const handleFullCrewToggle = () => {
+    const newExpanded = !isFullCrewExpanded;
+    setIsFullCrewExpanded(newExpanded);
+    
+    // If collapsing (View Less), scroll to the button area
+    if (!newExpanded && fullCrewButtonRef.current) {
+      setTimeout(() => {
+        fullCrewButtonRef.current?.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'center' 
+        });
+      }, 100);
+    }
+  };
+
+  // Touch/swipe handlers for poster carousel
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    isDragging.current = false;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStartX.current !== null) {
+      isDragging.current = true;
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!touchStartX.current || !isDragging.current) return;
+    
+    touchEndX.current = e.changedTouches[0].clientX;
+    const swipeDistance = touchStartX.current - touchEndX.current;
+    const minSwipeDistance = 50;
+
+    if (Math.abs(swipeDistance) > minSwipeDistance) {
+      if (swipeDistance > 0) {
+        // Swipe left - next poster
+        nextPoster();
+      } else {
+        // Swipe right - previous poster
+        prevPoster();
+      }
+    }
+
+    touchStartX.current = null;
+    touchEndX.current = null;
+    isDragging.current = false;
+  };
+
+  // Mouse drag handlers for desktop
+  const handleMouseDown = (e: React.MouseEvent) => {
+    touchStartX.current = e.clientX;
+    isDragging.current = false;
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (touchStartX.current !== null) {
+      isDragging.current = true;
+    }
+  };
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    if (!touchStartX.current || !isDragging.current) return;
+    
+    touchEndX.current = e.clientX;
+    const swipeDistance = touchStartX.current - touchEndX.current;
+    const minSwipeDistance = 50;
+
+    if (Math.abs(swipeDistance) > minSwipeDistance) {
+      if (swipeDistance > 0) {
+        // Drag left - next poster
+        nextPoster();
+      } else {
+        // Drag right - previous poster
+        prevPoster();
+      }
+    }
+
+    touchStartX.current = null;
+    touchEndX.current = null;
+    isDragging.current = false;
+  };
+
   return (
     <section id="about" className="relative">
       {/* Background Image */}
@@ -57,13 +147,14 @@ const AboutSection = () => {
       </div>
       
       <div className="relative z-10">
-        <Section>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-cabinet font-semibold tracking-tight text-white mb-6 lg:mb-8">
-            Director's Statement
-          </h2>
+        {/* <Section className="bg-black/30 backdrop-blur-sm">
+          <header className="mb-8 sm:mb-10 lg:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-cabinet font-bold tracking-tight text-white mb-3 sm:mb-4">
+              Director's Statement
+            </h2>
+          </header>
           <div className="p-4 sm:p-6 lg:p-8">
             <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
-              {/* Left Column */}
               <div className="lg:w-1/2">
                 <div className="prose prose-sm max-w-none text-white leading-relaxed space-y-4">
                   <p className="font-nohemi font-light tracking-wide text-sm sm:text-base">
@@ -77,7 +168,6 @@ const AboutSection = () => {
                     couldn't find at the time.
                   </p>
                   
-                  {/* Show only first paragraph on small screens unless expanded */}
                   <div className={`${isMobile && !isDirectorStatementExpanded ? 'hidden' : 'block'} space-y-4`}>
                     <p className="font-nohemi font-light tracking-wide text-sm sm:text-base">
                       Through this film, I explore the possibility of solace and freedom by
@@ -101,7 +191,6 @@ const AboutSection = () => {
                 </div>
               </div>
 
-              {/* Right Column */}
               <div className="lg:w-1/2">
                 <div className={`prose prose-sm max-w-none text-white leading-relaxed space-y-4 ${
                   isMobile && !isDirectorStatementExpanded ? 'hidden' : 'block'
@@ -145,7 +234,6 @@ const AboutSection = () => {
               </div>
             </div>
             
-            {/* Read More/Less button for mobile - placed after both columns */}
             {isMobile && (
               <div ref={readMoreButtonRef} className="flex justify-center mt-6">
                 <button
@@ -167,13 +255,17 @@ const AboutSection = () => {
               </div>
             )}
           </div>
-        </Section>
+        </Section> */}
 
-        <Section>
-          <SectionHeader 
-            title="Information"
-            variant="dark"
-          />
+        <Section className="bg-black/30 backdrop-blur-sm">
+          <header className="mb-8 sm:mb-10 lg:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-cabinet font-bold tracking-tight text-white mb-3 sm:mb-4">
+              Synopsis
+            </h2>
+            {/* <p className="text-base sm:text-lg leading-relaxed text-white/80 max-w-3xl font-nohemi font-medium">
+              A tender story of connection and belonging
+            </p> */}
+          </header>
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             {/* Left Side - Movie Poster Carousel */}
@@ -183,8 +275,15 @@ const AboutSection = () => {
                   <img 
                     src={posterImages[currentPosterIndex].src}
                     alt={posterImages[currentPosterIndex].alt}
-                    className="w-full h-auto object-cover transition-all duration-500 ease-in-out"
+                    className="w-full h-auto object-cover transition-all duration-500 ease-in-out cursor-grab active:cursor-grabbing select-none"
                     loading="lazy"
+                    onTouchStart={handleTouchStart}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={handleTouchEnd}
+                    onMouseDown={handleMouseDown}
+                    onMouseMove={handleMouseMove}
+                    onMouseUp={handleMouseUp}
+                    onDragStart={(e) => e.preventDefault()}
                   />
                   
                   {/* Navigation Arrows */}
@@ -231,9 +330,9 @@ const AboutSection = () => {
             {/* Right Side - Synopsis */}
             <div className="lg:col-span-8">
               <div>
-                <h3 className="text-2xl sm:text-3xl font-cabinet font-bold text-white mb-4 sm:mb-6">
+                {/* <h3 className="text-2xl sm:text-3xl font-cabinet font-bold text-white mb-4 sm:mb-6">
                   Synopsis
-                </h3>
+                </h3> */}
                 <div className="prose prose-sm max-w-none text-white leading-relaxed space-y-4 text-xs sm:text-sm lg:text-base font-nohemi font-light tracking-wider">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                     <div className="space-y-3 sm:space-y-4">
@@ -266,83 +365,122 @@ const AboutSection = () => {
 
           {/* Cast & Crew Section - Full Width Below */}
           <div className="mt-8 lg:mt-12">
-            <div>
-              <h3 className="text-xl sm:text-2xl font-cabinet font-bold text-white mb-6 sm:mb-8 text-center">
+            <header className="mb-8 sm:mb-10 lg:mb-12">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-cabinet font-bold tracking-tight text-white mb-3 sm:mb-4">
                 Cast & Crew
-              </h3>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+              </h2>
+            </header>
+            
+            <div className="flex justify-center">
+              {/* Film Information Single Column List */}
+              <div className="w-full max-w-4xl">
+                <div className="space-y-4 max-w-4xl">
+                  <div className="flex justify-between items-start gap-8">
+                    <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Director & Screenplay</span>
+                    <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Rohan Parashuram Kanawade</span>
+                  </div>
+                  
+                  <div className="flex justify-between items-start gap-8">
+                    <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Cast</span>
+                    <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Bhushaan Manoj, Suraaj Suman, Jayshri Jagtap</span>
+                  </div>
+                  
+                  <div className="flex justify-between items-start gap-8">
+                    <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">EP & Presenters</span>
+                    <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Nagraj Popatrao Manjule, Nikhil Advani, Sai Tamhankar, Vikramaditya Motwane</span>
+                  </div>
+                  
+                  <div className="flex justify-between items-start gap-8">
+                    <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Producers</span>
+                    <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Neeraj Churi, Mohamed Khaki, Kaushik Ray, Naren Chandavarkar, Sidharth Meer, Hareesh Reddypalli, Rohan Parashuram Kanawade</span>
+                  </div>
+                  <div className="flex justify-between items-start gap-8">
+                    <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Co-Producers</span>
+                    <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Jim Sarbh, Rajesh Parwatkar, Neha Kaul</span>
+                  </div>
+                  
+                  <div className="flex justify-between items-start gap-8">
+                    <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Associate Producers</span>
+                    <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Avigyan Dasgupta, Deepthi Pendurty, Parag Pradhan</span>
+                  </div>
+                  
+                  
+                  {/* Show remaining crew only on larger screens or when expanded */}
+                  <div className={`${isMobile && !isFullCrewExpanded ? 'hidden' : 'block'} space-y-4`}>
+                    <div className="flex justify-between items-start gap-8">
+                      <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Executive Producers</span>
+                    < span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Ilann Girard, Kishor Vasant Sawant</span>
+                    </div>
+                    
+                    
+                    <div className="flex justify-between items-start gap-8">
+                      <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Cinematographer</span>
+                      <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Vikas Urs</span>
+                    </div>
+                    
+                    <div className="flex justify-between items-start gap-8">
+                      <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Editor</span>
+                      <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Anadi Athaley</span>
+                    </div>
+                    
+                    <div className="flex justify-between items-start gap-8">
+                      <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Production Designer</span>
+                      <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Tejashree Kapadane</span>
+                    </div>
+                    
+                    <div className="flex justify-between items-start gap-8">
+                      <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Costume Designer</span>
+                      <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Sachin Lovalekar</span>
+                    </div>
+                    
+                    <div className="flex justify-between items-start gap-8">
+                      <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Sound Designers</span>
+                      <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Anirban Borthakur, Naren Chandavarkar</span>
+                    </div>
+                    
+                    <div className="flex justify-between items-start gap-8">
+                      <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Re-Recording Mixers</span>
+                      <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Boloy Kumar Doloi, Rahul Karpe</span>
+                    </div>
+                    
+                    <div className="flex justify-between items-start gap-8">
+                      <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Colorist</span>
+                      <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Himanshu Kamble</span>
+                    </div>
+                    
+                    <div className="flex justify-between items-start gap-8">
+                      <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">VFX</span>
+                      <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Nitin Kale (Cactus Pears VFX)</span>
+                    </div>
+                    
+                    <div className="flex justify-between items-start gap-8">
+                      <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Casting</span>
+                      <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Yugandhar Deshpande</span>
+                    </div>
+                  </div>
+                </div>
                 
-                {/* Written and Directed */}
-                <div>
-                  <h4 className="text-sm sm:text-base font-semibold text-copper-500 uppercase tracking-wide mb-2 sm:mb-3 font-cabinet">
-                    Written & Directed
-                  </h4>
-                  <p className="text-sm sm:text-base tracking-wider font-light text-white font-nohemi">
-                    Rohan Parashuram Kanawade
-                  </p>
-                </div>
-
-                {/* Cast */}
-                <div>
-                  <h4 className="text-sm sm:text-base font-semibold text-copper-500 uppercase tracking-wide mb-2 sm:mb-3 font-cabinet">
-                    Cast
-                  </h4>
-                  <div className="space-y-1 sm:space-y-2">
-                    <p className="text-sm sm:text-base tracking-wider font-light text-white font-nohemi">
-                      Bhushaan Manoj
-                    </p>
-                    <p className="text-sm sm:text-base tracking-wider font-light text-white font-nohemi">
-                      Suraaj Suman
-                    </p>
-                    <p className="text-sm sm:text-base tracking-wider font-light text-white font-nohemi">
-                      Jayshri Jagtap
-                    </p>
+                {/* View More/Less button for mobile */}
+                {isMobile && (
+                  <div ref={fullCrewButtonRef} className="flex justify-center mt-6">
+                    <button
+                      onClick={handleFullCrewToggle}
+                      className="flex items-center gap-2 text-copper-500 hover:text-copper-400 transition-colors duration-200 font-nohemi font-medium text-sm px-4 py-2 rounded-full border border-copper-500/30 hover:border-copper-500/50 backdrop-blur-sm"
+                    >
+                      {isFullCrewExpanded ? (
+                        <>
+                          <span>View Less</span>
+                          <ChevronUp size={16} />
+                        </>
+                      ) : (
+                        <>
+                          <span>View Full Credits</span>
+                          <ChevronDown size={16} />
+                        </>
+                      )}
+                    </button>
                   </div>
-                </div>
-
-                {/* Producers */}
-                <div>
-                  <h4 className="text-sm sm:text-base font-semibold text-copper-500 uppercase tracking-wide mb-2 sm:mb-3 font-cabinet">
-                    Producers
-                  </h4>
-                  <div className="space-y-1 sm:space-y-2">
-                    <p className="text-xs sm:text-sm lg:text-base tracking-wider font-light text-white font-nohemi">
-                      Neeraj Churi (Lotus Visual Productions)
-                    </p>
-                    <p className="text-xs sm:text-sm lg:text-base tracking-wider font-light text-white font-nohemi">
-                      Kaushik Ray
-                    </p>
-                    <p className="text-xs sm:text-sm lg:text-base tracking-wider font-light text-white font-nohemi">
-                      Naren Chandavarkar
-                    </p>
-                    <p className="text-xs sm:text-sm lg:text-base tracking-wider font-light text-white font-nohemi">
-                      Sidharth Meer
-                    </p>
-                    <p className="text-xs sm:text-sm lg:text-base tracking-wider font-light text-white font-nohemi">
-                      Hareesh Reddypalli
-                    </p>
-                    <p className="text-xs sm:text-sm lg:text-base tracking-wider font-light text-white font-nohemi">
-                      Rohan Parashuram Kanawade
-                    </p>
-                  </div>
-                </div>
-
-                {/* Executive Producers */}
-                <div>
-                  <h4 className="text-sm sm:text-base font-semibold text-copper-500 uppercase tracking-wide mb-2 sm:mb-3 font-cabinet">
-                    Executive Producers
-                  </h4>
-                  <div className="space-y-1 sm:space-y-2">
-                    <p className="text-sm sm:text-base tracking-wider font-light text-white font-nohemi">
-                      Ilann Girard
-                    </p>
-                    <p className="text-sm sm:text-base tracking-wider font-light text-white font-nohemi">
-                      Kishor Vasant Sawant
-                    </p>
-                  </div>
-                </div>
-
+                )}
               </div>
             </div>
           </div>

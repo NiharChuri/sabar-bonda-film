@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
 
 const GallerySection = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+  const isDragging = useRef(false);
 
   const galleryImages = [
     {
@@ -41,6 +44,74 @@ const GallerySection = () => {
     setCurrentImageIndex(index);
   };
 
+  // Touch/swipe handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    isDragging.current = false;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStartX.current !== null) {
+      isDragging.current = true;
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!touchStartX.current || !isDragging.current) return;
+    
+    touchEndX.current = e.changedTouches[0].clientX;
+    const swipeDistance = touchStartX.current - touchEndX.current;
+    const minSwipeDistance = 50;
+
+    if (Math.abs(swipeDistance) > minSwipeDistance) {
+      if (swipeDistance > 0) {
+        // Swipe left - next image
+        nextImage();
+      } else {
+        // Swipe right - previous image
+        prevImage();
+      }
+    }
+
+    touchStartX.current = null;
+    touchEndX.current = null;
+    isDragging.current = false;
+  };
+
+  // Mouse drag handlers for desktop
+  const handleMouseDown = (e: React.MouseEvent) => {
+    touchStartX.current = e.clientX;
+    isDragging.current = false;
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (touchStartX.current !== null) {
+      isDragging.current = true;
+    }
+  };
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    if (!touchStartX.current || !isDragging.current) return;
+    
+    touchEndX.current = e.clientX;
+    const swipeDistance = touchStartX.current - touchEndX.current;
+    const minSwipeDistance = 50;
+
+    if (Math.abs(swipeDistance) > minSwipeDistance) {
+      if (swipeDistance > 0) {
+        // Drag left - next image
+        nextImage();
+      } else {
+        // Drag right - previous image
+        prevImage();
+      }
+    }
+
+    touchStartX.current = null;
+    touchEndX.current = null;
+    isDragging.current = false;
+  };
+
   return (
     <section id="bts" className="relative">
       {/* Background Image */}
@@ -55,11 +126,14 @@ const GallerySection = () => {
       
       <div className="relative z-10">
         <Section className="bg-black/30 backdrop-blur-sm">
-          <SectionHeader 
-            title="Gallery"
-            subtitle="Behind the scenes moments and production stills"
-            variant="dark"
-          />
+          <header className="mb-8 sm:mb-10 lg:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-cabinet font-bold tracking-tight text-white mb-3 sm:mb-4">
+              Gallery
+            </h2>
+            {/* <p className="text-base sm:text-lg leading-relaxed text-white/80 max-w-3xl font-nohemi font-medium">
+              Behind the scenes moments and production stills
+            </p> */}
+          </header>
           
           {/* Image Carousel */}
           <div className="relative max-w-4xl mx-auto">
@@ -68,8 +142,15 @@ const GallerySection = () => {
               <img 
                 src={galleryImages[currentImageIndex].src}
                 alt={galleryImages[currentImageIndex].alt}
-                className="w-full h-full object-cover transition-all duration-500 ease-in-out"
+                className="w-full h-full object-cover transition-all duration-500 ease-in-out cursor-grab active:cursor-grabbing select-none"
                 loading="lazy"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onDragStart={(e) => e.preventDefault()}
               />
               
               {/* Navigation Arrows */}

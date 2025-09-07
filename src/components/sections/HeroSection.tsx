@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { Instagram } from 'lucide-react';
 
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -78,43 +79,43 @@ const HeroSection = () => {
                 {/* 3-2 Grid of Award Laurels - Large and Prominent */}
                 <div className="flex flex-col gap-4 sm:gap-6 lg:gap-8">
                   {/* Top row - 3 laurels */}
-                  <div className="flex gap-2 sm:gap-4 lg:gap-6 xl:gap-8 justify-center">
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 xl:w-32 xl:h-32 2xl:w-36 2xl:h-36">
+                  <div className="flex gap-3 sm:gap-4 lg:gap-6 xl:gap-8 justify-center">
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-28 lg:h-28 xl:w-32 xl:h-32 2xl:w-36 2xl:h-36">
                       <img 
                         src="/images/award_laurels/Sundance Winner_World Cinema Grand Jury Prize-Dramatic_white.png" 
                         alt="Sundance World Cinema Grand Jury Prize" 
-                        className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300 brightness-110"
                       />
                     </div>
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 xl:w-32 xl:h-32 2xl:w-36 2xl:h-36">
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-28 lg:h-28 xl:w-32 xl:h-32 2xl:w-36 2xl:h-36">
                       <img 
                         src="/images/award_laurels/SXSW winner laurel.png" 
                         alt="SXSW Winner Laurel" 
-                        className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300 brightness-110"
                       />
                     </div>
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 xl:w-32 xl:h-32 2xl:w-36 2xl:h-36">
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-28 lg:h-28 xl:w-32 xl:h-32 2xl:w-36 2xl:h-36">
                       <img 
                         src="/images/award_laurels/Audience - Best Feature IFFLA 2025_white.png" 
                         alt="IFFLA 2025 Audience Best Feature" 
-                        className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300 brightness-110"
                       />
                     </div>
                   </div>
                   {/* Bottom row - 2 laurels */}
-                  <div className="flex gap-2 sm:gap-4 lg:gap-6 xl:gap-8 justify-center">
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 xl:w-32 xl:h-32 2xl:w-36 2xl:h-36">
+                  <div className="flex gap-3 sm:gap-4 lg:gap-6 xl:gap-8 justify-center">
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-28 lg:h-28 xl:w-32 xl:h-32 2xl:w-36 2xl:h-36">
                       <img 
                         src="/images/award_laurels/IO-Audience-Award-Best-Narrative-Feature_white.png" 
                         alt="IO Audience Award Best Narrative Feature" 
-                        className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300 brightness-110"
                       />
                     </div>
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 xl:w-32 xl:h-32 2xl:w-36 2xl:h-36">
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-28 lg:h-28 xl:w-32 xl:h-32 2xl:w-36 2xl:h-36">
                       <img 
                         src="/images/award_laurels/flc_ndnf25_laurels_official_selection_wht.png" 
                         alt="FLC NDNF25 Official Selection" 
-                        className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300 brightness-110"
                       />
                     </div>
                   </div>
@@ -122,16 +123,31 @@ const HeroSection = () => {
               </div>
             </div>
 
-            {/* Watch Trailer Button - Centered */}
-            <div className="flex justify-center mt-6 lg:mt-8">
-              <a 
-                href="https://www.youtube.com/watch?v=7Z38Q_XT4Ow" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="px-4 py-2 sm:px-6 sm:py-3 border-2 border-white rounded-full font-nohemi font-bold text-white text-xs sm:text-sm tracking-wider uppercase hover:bg-white hover:text-black transition-all duration-300 ease-in-out transform hover:scale-105 drop-shadow-lg"
-              >
-                WATCH TRAILER
-              </a>
+            {/* Action Buttons - Symmetrically Positioned */}
+            <div className="flex items-center justify-center mt-6 lg:mt-8">
+              <div className="flex items-center gap-4 sm:gap-6">
+                <a 
+                  href="https://www.youtube.com/watch?v=7Z38Q_XT4Ow" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center px-4 py-2 sm:px-6 sm:py-3 border-2 border-white rounded-full font-nohemi font-bold text-white text-xs sm:text-sm tracking-wider uppercase hover:bg-white hover:text-black transition-all duration-300 ease-in-out transform hover:scale-105 drop-shadow-lg"
+                  style={{ transform: 'translateX(-6px)' }}
+                >
+                  WATCH TRAILER
+                </a>
+                
+                <a
+                  href="https://www.instagram.com/cactuspearsfilm/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-1.5 sm:gap-2 px-4 py-2 sm:px-6 sm:py-3 border-2 border-white/70 rounded-full font-nohemi font-bold text-white text-xs sm:text-sm tracking-wider uppercase hover:bg-white hover:text-black transition-all duration-300 ease-in-out transform hover:scale-105 drop-shadow-lg"
+                  aria-label="Follow us on Instagram"
+                  style={{ transform: 'translateX(6px)' }}
+                >
+                  <Instagram size={12} className="sm:w-4 sm:h-4" />
+                  <span>FOLLOW US</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
