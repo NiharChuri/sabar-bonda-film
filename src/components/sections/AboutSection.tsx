@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from 'lucide-react'
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useStaggeredAnimation } from '@/hooks/useScrollAnimation';
 
 const AboutSection = () => {
   const [currentPosterIndex, setCurrentPosterIndex] = useState(0);
@@ -11,6 +12,19 @@ const AboutSection = () => {
   const isMobile = useIsMobile();
   const readMoreButtonRef = useRef<HTMLDivElement>(null);
   const fullCrewButtonRef = useRef<HTMLDivElement>(null);
+  
+  // Staggered animations for different content areas
+  const { ref: posterRef, isVisible: posterVisible } = useStaggeredAnimation<HTMLDivElement>({
+    delay: 200
+  });
+  const { ref: synopsisRef, isVisible: synopsisVisible } = useStaggeredAnimation<HTMLDivElement>({
+    delay: 400
+  });
+  const { ref: crewRef, isVisible: crewVisible, isItemVisible } = useStaggeredAnimation<HTMLDivElement>({
+    delay: 600,
+    staggerDelay: 100,
+    childSelector: '.crew-item'
+  });
   
   // Touch/swipe handling for poster carousel
   const touchStartX = useRef<number | null>(null);
@@ -147,135 +161,26 @@ const AboutSection = () => {
       </div>
       
       <div className="relative z-10">
-        {/* <Section className="bg-black/30 backdrop-blur-sm">
-          <header className="mb-8 sm:mb-10 lg:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-cabinet font-bold tracking-tight text-white mb-3 sm:mb-4">
-              Director's Statement
-            </h2>
-          </header>
-          <div className="p-4 sm:p-6 lg:p-8">
-            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
-              <div className="lg:w-1/2">
-                <div className="prose prose-sm max-w-none text-white leading-relaxed space-y-4">
-                  <p className="font-nohemi font-light tracking-wide text-sm sm:text-base">
-                    Sabar Bonda (Cactus Pears) is my deeply personal reimagining of the
-                    grieving period I experienced in my ancestral village in 2016. Born
-                    and raised in a Mumbai slum by a chauffeur father and a homemaker
-                    mother, my parents accepted my sexuality, but my extended family
-                    in the village was unaware. During this grieving period, they began
-                    pressuring me to marry within a year, as per custom. This constant
-                    pressure overshadowed my grief, leaving me longing for an escape I
-                    couldn't find at the time.
-                  </p>
-                  
-                  <div className={`${isMobile && !isDirectorStatementExpanded ? 'hidden' : 'block'} space-y-4`}>
-                    <p className="font-nohemi font-light tracking-wide text-sm sm:text-base">
-                      Through this film, I explore the possibility of solace and freedom by
-                      allowing my protagonist to experience moments of connection and
-                      respite with an estranged childhood friend. These moments gradually
-                      blossom into a tender bond, making this film a journey that begins
-                      with tragedy and moves toward hope and positivity.
-                    </p>
-                    <p className="font-nohemi font-light tracking-wide text-sm sm:text-base">
-                      To ensure authenticity, I cast actors from the region where the film
-                      was shot, despite the challenges of finding local talent willing to
-                      portray queer characters due to cultural stigma. After three years of
-                      searching, Bhushaan Manoj and Suraaj Suman were selected for their
-                      backgrounds as trained theater actors and their six-year friendship,
-                      which added depth and realism to the characters' bond and intimacy.
-                      Their grounded and relatable appearances were also crucial to
-                      portraying queer individuals as ordinary people rather than idealized
-                      figures, further humanizing their story.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="lg:w-1/2">
-                <div className={`prose prose-sm max-w-none text-white leading-relaxed space-y-4 ${
-                  isMobile && !isDirectorStatementExpanded ? 'hidden' : 'block'
-                }`}>
-                  <p className="font-nohemi font-light tracking-wide text-sm sm:text-base">
-                    My personal experiences shaped Sabar Bonda to reflect the realities
-                    of lower-class queer life in India, challenging the misconception that
-                    queer experiences are limited to the upper class. By weaving together
-                    urban and rural experiences, the film aims to normalize queerness and
-                    celebrate its presence in all layers of society.
-                  </p>
-                  <p className="font-nohemi font-light tracking-wide text-sm sm:text-base">
-                    The characters of the parents in the film are inspired by my parents
-                    whose love and wisdom led them to accept my sexuality without
-                    any conflict. By highlighting this aspect of acceptance without
-                    sensationalizing struggle, the film offers a fresh perspective that
-                    redefines queer narratives and fosters hope.
-                  </p>
-                  <p className="font-nohemi font-light tracking-wide text-sm sm:text-base">
-                    I used static frames to capture the stillness and sluggish pace of that
-                    time in the village. And although at its core it's a romance drama, it has
-                    no background score. I wanted to use layered soundscape to paint the
-                    urban and rural spaces to further enhances the tender quality of the
-                    film.
-                  </p>
-                  <p className="font-nohemi font-light tracking-wide text-sm sm:text-base">
-                    I shot this film in a small village called Kharshinde, where my mother
-                    was born and raised. We filmed several scenes near a man-made lake
-                    in the village, created decades ago due to the lack of a natural water
-                    source. When the lake was being dug, my mother, then a teenager,
-                    worked as one of the laborers. Knowing that this landscape holds a
-                    part of my mother's personal history made the experience deeply
-                    meaningful for me.
-                  </p>
-                  <div className="mt-6 lg:mt-8 pt-4 border-t border-white/30">
-                    <p className="font-cabinet font-semibold text-white text-right text-lg sm:text-xl lg:text-2xl">
-                      - Rohan Parashuram Kanawade, Director
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {isMobile && (
-              <div ref={readMoreButtonRef} className="flex justify-center mt-6">
-                <button
-                  onClick={handleReadMoreToggle}
-                  className="flex items-center gap-2 text-copper-500 hover:text-copper-400 transition-colors duration-200 font-nohemi font-medium text-sm px-4 py-2 rounded-full border border-copper-500/30 hover:border-copper-500/50 backdrop-blur-sm"
-                >
-                  {isDirectorStatementExpanded ? (
-                    <>
-                      <span>Read Less</span>
-                      <ChevronUp size={16} />
-                    </>
-                  ) : (
-                    <>
-                      <span>Read More</span>
-                      <ChevronDown size={16} />
-                    </>
-                  )}
-                </button>
-              </div>
-            )}
-          </div>
-        </Section> */}
-
-        <Section className="bg-black/30 backdrop-blur-sm">
-          <header className="mb-8 sm:mb-10 lg:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-cabinet font-bold tracking-tight text-white mb-3 sm:mb-4">
-              Synopsis
-            </h2>
-            {/* <p className="text-base sm:text-lg leading-relaxed text-white/80 max-w-3xl font-nohemi font-medium">
-              A tender story of connection and belonging
-            </p> */}
-          </header>
+        <Section className="bg-black/30 backdrop-blur-sm" enableParallax>
+          <SectionHeader 
+            title="Synopsis" 
+            variant="dark"
+          />
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             {/* Left Side - Movie Poster Carousel */}
-            <div className="lg:col-span-4">
+            <div 
+              ref={posterRef}
+              className={`lg:col-span-4 transition-all duration-800 ease-out ${
+                posterVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
+              }`}
+            >
               <div className="w-full max-w-md mx-auto lg:mx-0">
-                <div className="relative">
+                <div className="relative card-hover-subtle">
                   <img 
                     src={posterImages[currentPosterIndex].src}
                     alt={posterImages[currentPosterIndex].alt}
-                    className="w-full h-auto object-cover transition-all duration-500 ease-in-out cursor-grab active:cursor-grabbing select-none"
+                    className="w-full h-auto object-cover transition-all duration-500 ease-in-out cursor-grab active:cursor-grabbing select-none shadow-film-lg"
                     loading="lazy"
                     onTouchStart={handleTouchStart}
                     onTouchMove={handleTouchMove}
@@ -289,7 +194,7 @@ const AboutSection = () => {
                   {/* Navigation Arrows */}
                   <button
                     onClick={prevPoster}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 p-2 text-white hover:text-white/70 transition-all duration-200"
+                    className="absolute left-2 top-1/2 -translate-y-1/2 p-2 text-white hover:text-white/70 transition-all duration-200 btn-hover touch-target"
                     aria-label="Previous poster"
                   >
                     <ChevronLeft size={20} />
@@ -297,14 +202,14 @@ const AboutSection = () => {
                   
                   <button
                     onClick={nextPoster}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-white hover:text-white/70 transition-all duration-200"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-white hover:text-white/70 transition-all duration-200 btn-hover touch-target"
                     aria-label="Next poster"
                   >
                     <ChevronRight size={20} />
                   </button>
 
                   {/* Poster Counter */}
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 bg-black/60 text-white text-sm font-nohemi">
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 glass-dark text-white text-sm font-nohemi">
                     {currentPosterIndex + 1} / {posterImages.length}
                   </div>
                 </div>
@@ -315,7 +220,7 @@ const AboutSection = () => {
                     <button
                       key={index}
                       onClick={() => setCurrentPosterIndex(index)}
-                      className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                      className={`w-3 h-3 rounded-full transition-all duration-300 btn-hover ${
                         index === currentPosterIndex 
                           ? 'bg-copper-500 scale-125' 
                           : 'bg-white/40 hover:bg-white/60'
@@ -328,32 +233,34 @@ const AboutSection = () => {
             </div>
 
             {/* Right Side - Synopsis */}
-            <div className="lg:col-span-8">
+            <div 
+              ref={synopsisRef}
+              className={`lg:col-span-8 transition-all duration-800 ease-out ${
+                synopsisVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
+              }`}
+            >
               <div>
-                {/* <h3 className="text-2xl sm:text-3xl font-cabinet font-bold text-white mb-4 sm:mb-6">
-                  Synopsis
-                </h3> */}
                 <div className="prose prose-sm max-w-none text-white leading-relaxed space-y-4 text-xs sm:text-sm lg:text-base font-nohemi font-light tracking-wider">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                     <div className="space-y-3 sm:space-y-4">
-                      <p>
+                      <p className="transition-all duration-700 ease-out animate-delay-200">
                         Anand (30), a call-center employee in Mumbai, is forced to spend ten days at his ancestral village to mourn the loss of his father at the behest of his mother, Suman (50).
                       </p>
-                      <p>
+                      <p className="transition-all duration-700 ease-out animate-delay-300">
                         As the mourning period begins post-cremation, he faces subtle but relentless badgering from relatives to get married so that at least his mother finds the pleasure of seeing him settled. Anand finds himself stifled, as coming out to extended family could alienate his mother from the relatives when she needs them the most.
                       </p>
-                      <p>
+                      <p className="transition-all duration-700 ease-out animate-delay-500">
                         He finds solace in his childhood friend, Balya (30), as he accompanies him on his daily outings into the mountains to herd goats. Balya has been using the 'educated girls favoring city-dwellers over farmers' as a ruse to stay unmarried as he undergoes similar pressures relating to his sexuality from his family.
                       </p>
                     </div>
                     <div className="space-y-3 sm:space-y-4">
-                      <p>
+                      <p className="transition-all duration-700 ease-out animate-delay-700">
                         To escape their pressures, the two men spend time together. Hailing from different worlds but bound by childhood memories, they connect over their common struggle.
                       </p>
-                      <p>
+                      <p className="transition-all duration-700 ease-out animate-delay-1000">
                         As the days pass, their intimacy blooms emotionally and physically. With the mourning period ending, will their burgeoning bond survive beyond the ten days?
                       </p>
-                      <p>
+                      <p className="transition-all duration-700 ease-out animate-delay-1000">
                         Sabar Bonda (Cactus Pears) explores the delicate bonds that develop under duress and the future of it.
                       </p>
                     </div>
@@ -365,98 +272,61 @@ const AboutSection = () => {
 
           {/* Cast & Crew Section - Full Width Below */}
           <div className="mt-8 lg:mt-12">
-            <header className="mb-8 sm:mb-10 lg:mb-12">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-cabinet font-bold tracking-tight text-white mb-3 sm:mb-4">
-                Cast & Crew
-              </h2>
-            </header>
+            <SectionHeader 
+              title="Cast & Crew" 
+              variant="dark"
+              animationDelay={800}
+            />
             
             <div className="flex justify-center">
-              {/* Film Information Single Column List */}
-              <div className="w-full max-w-4xl">
-                <div className="space-y-4 max-w-4xl">
-                  <div className="flex justify-between items-start gap-8">
-                    <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Director & Screenplay</span>
-                    <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Rohan Parashuram Kanawade</span>
-                  </div>
-                  
-                  <div className="flex justify-between items-start gap-8">
-                    <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Cast</span>
-                    <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Bhushaan Manoj, Suraaj Suman, Jayshri Jagtap</span>
-                  </div>
-                  
-                  <div className="flex justify-between items-start gap-8">
-                    <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">EP & Presenters</span>
-                    <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Nagraj Popatrao Manjule, Nikhil Advani, Sai Tamhankar, Vikramaditya Motwane</span>
-                  </div>
-                  
-                  <div className="flex justify-between items-start gap-8">
-                    <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Producers</span>
-                    <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Neeraj Churi, Mohamed Khaki, Kaushik Ray, Naren Chandavarkar, Sidharth Meer, Hareesh Reddypalli, Rohan Parashuram Kanawade</span>
-                  </div>
-                  <div className="flex justify-between items-start gap-8">
-                    <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Co-Producers</span>
-                    <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Jim Sarbh, Rajesh Parwatkar, Neha Kaul</span>
-                  </div>
-                  
-                  <div className="flex justify-between items-start gap-8">
-                    <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Associate Producers</span>
-                    <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Avigyan Dasgupta, Deepthi Pendurty, Parag Pradhan</span>
-                  </div>
-                  
+              {/* Film Information Single Column List - Centered Gap Layout */}
+              <div ref={crewRef} className="w-full max-w-6xl">
+                <div className="space-y-4">
+                  {[
+                    { label: 'Director & Screenplay', value: 'Rohan Parashuram Kanawade' },
+                    { label: 'Cast', value: 'Bhushaan Manoj, Suraaj Suman, Jayshri Jagtap' },
+                    { label: 'EP & Presenters', value: 'Nagraj Popatrao Manjule, Nikhil Advani, Sai Tamhankar, Vikramaditya Motwane' },
+                    { label: 'Producers', value: 'Neeraj Churi, Mohamed Khaki, Kaushik Ray, Naren Chandavarkar, Sidharth Meer, Hareesh Reddypalli, Rohan Parashuram Kanawade' },
+                    { label: 'Co-Producers', value: 'Jim Sarbh, Rajesh Parwatkar, Neha Kaul' },
+                    { label: 'Associate Producers', value: 'Avigyan Dasgupta, Deepthi Pendurty, Parag Pradhan' }
+                  ].map((item, index) => (
+                    <div 
+                      key={index}
+                      className={`crew-item grid grid-cols-1 md:grid-cols-[2fr_auto_3fr] gap-4 md:gap-8 items-start transition-all duration-700 ease-out ${
+                        isItemVisible(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                      }`}
+                    >
+                      <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right order-1 md:order-1">{item.label}</span>
+                      <div className="hidden md:block w-px bg-copper-500/30 justify-self-center order-2" style={{height: '1.5em'}}></div>
+                      <span className="font-nohemi font-light text-white/90 text-left md:text-left tracking-wider order-2 md:order-3">{item.value}</span>
+                    </div>
+                  ))}
                   
                   {/* Show remaining crew only on larger screens or when expanded */}
                   <div className={`${isMobile && !isFullCrewExpanded ? 'hidden' : 'block'} space-y-4`}>
-                    <div className="flex justify-between items-start gap-8">
-                      <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Executive Producers</span>
-                    < span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Ilann Girard, Kishor Vasant Sawant</span>
-                    </div>
-                    
-                    
-                    <div className="flex justify-between items-start gap-8">
-                      <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Cinematographer</span>
-                      <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Vikas Urs</span>
-                    </div>
-                    
-                    <div className="flex justify-between items-start gap-8">
-                      <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Editor</span>
-                      <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Anadi Athaley</span>
-                    </div>
-                    
-                    <div className="flex justify-between items-start gap-8">
-                      <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Production Designer</span>
-                      <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Tejashree Kapadane</span>
-                    </div>
-                    
-                    <div className="flex justify-between items-start gap-8">
-                      <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Costume Designer</span>
-                      <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Sachin Lovalekar</span>
-                    </div>
-                    
-                    <div className="flex justify-between items-start gap-8">
-                      <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Sound Designers</span>
-                      <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Anirban Borthakur, Naren Chandavarkar</span>
-                    </div>
-                    
-                    <div className="flex justify-between items-start gap-8">
-                      <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Re-Recording Mixers</span>
-                      <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Boloy Kumar Doloi, Rahul Karpe</span>
-                    </div>
-                    
-                    <div className="flex justify-between items-start gap-8">
-                      <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Colorist</span>
-                      <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Himanshu Kamble</span>
-                    </div>
-                    
-                    <div className="flex justify-between items-start gap-8">
-                      <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">VFX</span>
-                      <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Nitin Kale (Cactus Pears VFX)</span>
-                    </div>
-                    
-                    <div className="flex justify-between items-start gap-8">
-                      <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right min-w-[160px] sm:min-w-[200px]">Casting</span>
-                      <span className="font-nohemi font-light text-white/90 text-left tracking-wider flex-1">Yugandhar Deshpande</span>
-                    </div>
+                    {[
+                      { label: 'Executive Producers', value: 'Ilann Girard, Kishor Vasant Sawant' },
+                      { label: 'Cinematographer', value: 'Vikas Urs' },
+                      { label: 'Editor', value: 'Anadi Athaley' },
+                      { label: 'Production Designer', value: 'Tejashree Kapadane' },
+                      { label: 'Costume Designer', value: 'Sachin Lovalekar' },
+                      { label: 'Sound Designers', value: 'Anirban Borthakur, Naren Chandavarkar' },
+                      { label: 'Re-Recording Mixers', value: 'Boloy Kumar Doloi, Rahul Karpe' },
+                      { label: 'Colorist', value: 'Himanshu Kamble' },
+                      { label: 'VFX', value: 'Nitin Kale (Cactus Pears VFX)' },
+                      { label: 'Casting', value: 'Yugandhar Deshpande' }
+                    ].map((item, index) => (
+                      <div 
+                        key={index + 6}
+                        className={`crew-item grid grid-cols-1 md:grid-cols-[2fr_auto_3fr] gap-4 md:gap-8 items-start transition-all duration-700 ease-out ${
+                          isItemVisible(index + 6) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                        }`}
+                      >
+                        <span className="font-cabinet font-black text-copper-500 text-base sm:text-lg text-right order-1 md:order-1">{item.label}</span>
+                        <div className="hidden md:block w-px bg-copper-500/30 justify-self-center order-2" style={{height: '1.5em'}}></div>
+                        <span className="font-nohemi font-light text-white/90 text-left md:text-left tracking-wider order-2 md:order-3">{item.value}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
                 
@@ -465,7 +335,7 @@ const AboutSection = () => {
                   <div ref={fullCrewButtonRef} className="flex justify-center mt-6">
                     <button
                       onClick={handleFullCrewToggle}
-                      className="flex items-center gap-2 text-copper-500 hover:text-copper-400 transition-colors duration-200 font-nohemi font-medium text-sm px-4 py-2 rounded-full border border-copper-500/30 hover:border-copper-500/50 backdrop-blur-sm"
+                      className="flex items-center gap-2 text-copper-500 hover:text-copper-400 transition-all duration-300 font-nohemi font-medium text-sm px-4 py-2 rounded-full border border-copper-500/30 hover:border-copper-500/50 glass-dark btn-hover"
                     >
                       {isFullCrewExpanded ? (
                         <>

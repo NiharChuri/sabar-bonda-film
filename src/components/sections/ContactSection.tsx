@@ -2,9 +2,17 @@ import { useState } from 'react';
 import { Mail, Copy, Check } from 'lucide-react';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
+import { useStaggeredAnimation } from '@/hooks/useScrollAnimation';
 
 const ContactSection = () => {
   const [copiedEmail, setCopiedEmail] = useState('');
+
+  // Animation hooks
+  const { ref: contactRef, isVisible: contactVisible, isItemVisible } = useStaggeredAnimation<HTMLDivElement>({
+    delay: 200,
+    staggerDelay: 200,
+    childSelector: '.contact-panel'
+  });
 
   const contactPanels = [
     {
@@ -47,19 +55,27 @@ const ContactSection = () => {
       </div>
       
       <div className="relative z-10">
-        <Section>
-          <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-cabinet font-semibold tracking-tight text-white mb-4 sm:mb-6">
-              Get In Touch
-            </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-white/80 font-nohemi max-w-2xl mx-auto">
-              Choose the appropriate contact for your inquiry
-            </p>
-          </div>
+        <Section className="bg-black/30 backdrop-blur-sm" enableParallax>
+          <SectionHeader 
+            title="Get In Touch" 
+            subtitle="Choose the appropriate contact for your inquiry"
+            variant="dark"
+            centered
+          />
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          <div 
+            ref={contactRef}
+            className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 transition-all duration-1000 ease-out ${
+              contactVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             {contactPanels.map((panel, index) => (
-              <div key={index} className="p-4 sm:p-6 lg:p-8">
+              <div 
+                key={index} 
+                className={`contact-panel p-4 sm:p-6 lg:p-8 glass-dark rounded-lg border border-white/10 hover:border-copper-500/30 transition-all duration-500 hover:shadow-lg hover:shadow-copper-500/10 btn-hover transform-gpu ${
+                  isItemVisible(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+                }`}
+              >
                 <h3 className="text-lg sm:text-xl font-cabinet font-semibold text-white mb-3 sm:mb-4">
                   {panel.title}
                 </h3>

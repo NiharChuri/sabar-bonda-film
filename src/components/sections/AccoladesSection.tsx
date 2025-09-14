@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
+import { useScrollAnimation, useStaggeredAnimation } from '@/hooks/useScrollAnimation';
 
 const AccoladesSection = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -8,6 +9,16 @@ const AccoladesSection = () => {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout>();
+
+  // Animation hooks
+  const { ref: carouselRef, isVisible: carouselVisible } = useScrollAnimation<HTMLDivElement>({
+    threshold: 0.2
+  });
+  const { ref: articlesRef, isVisible: articlesVisible, isItemVisible } = useStaggeredAnimation<HTMLDivElement>({
+    delay: 300,
+    staggerDelay: 100,
+    childSelector: '.article-item'
+  });
 
   const startAutoScroll = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
@@ -155,18 +166,19 @@ const AccoladesSection = () => {
       </div>
       
       <div className="relative z-10">
-        <Section className="bg-black/30 backdrop-blur-sm">
-          <header className="mb-8 sm:mb-10 lg:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-cabinet font-bold tracking-tight text-white mb-3 sm:mb-4">
-              Reviews & Recognition
-            </h2>
-            {/* <p className="text-base sm:text-lg leading-relaxed text-white/80 max-w-3xl font-nohemi font-medium">
-              Critical acclaim and festival honors
-            </p> */}
-          </header>
+        <Section className="bg-black/30 backdrop-blur-sm" enableParallax>
+          <SectionHeader 
+            title="Reviews & Recognition" 
+            variant="dark"
+          />
           
           {/* Critical Quotes Auto-scrolling Carousel */}
-          <div className="mb-12 lg:mb-16">
+          <div 
+            ref={carouselRef}
+            className={`mb-12 lg:mb-16 transition-all duration-1000 ease-out ${
+              carouselVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             {/* <h3 className="text-xl sm:text-2xl font-cabinet font-semibold text-white mb-6 sm:mb-8 text-center">
               Critical Praise
             </h3> */}
@@ -251,7 +263,12 @@ const AccoladesSection = () => {
           </div>
 
           {/* Article Links Section */}
-          <div className="mb-12 lg:mb-16">
+          <div 
+            ref={articlesRef}
+            className={`mb-12 lg:mb-16 transition-all duration-1000 ease-out ${
+              articlesVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             <h3 className="text-xl sm:text-2xl font-cabinet font-semibold text-white mb-6 sm:mb-8 text-center">
               Featured Articles & Reviews
             </h3>
@@ -262,7 +279,9 @@ const AccoladesSection = () => {
                   href="https://festival.sundance.org/blogs/give-me-the-backstory-get-to-know-rohan-parashuram-kanawade-the-writer-director-of-sabar-bonda-cactus-pears/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group p-4 sm:p-6 border border-white/20 rounded-lg hover:border-copper-500/50 transition-all duration-300 hover:bg-white/5"
+                  className={`article-item group p-4 sm:p-6 border border-white/20 rounded-lg hover:border-copper-500/50 transition-all duration-500 hover:bg-white/5 glass-subtle btn-hover transform-gpu ${
+                    isItemVisible(0) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                  }`}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>
@@ -283,7 +302,9 @@ const AccoladesSection = () => {
                   href="https://www.labiennale.org/en/news/%E2%80%9Csabar-bonda%E2%80%9D-rohan-parashuram-kanawade-wins-grand-jury-prize-2025-sundance-film-festival"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group p-4 sm:p-6 border border-white/20 rounded-lg hover:border-copper-500/50 transition-all duration-300 hover:bg-white/5"
+                  className={`article-item group p-4 sm:p-6 border border-white/20 rounded-lg hover:border-copper-500/50 transition-all duration-500 hover:bg-white/5 glass-subtle btn-hover transform-gpu ${
+                    isItemVisible(1) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                  }`}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>
@@ -304,7 +325,9 @@ const AccoladesSection = () => {
                   href="https://variety.com/2025/film/reviews/sabar-bonda-cactus-pears-review-sundance-1236287998/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group p-4 sm:p-6 border border-white/20 rounded-lg hover:border-copper-500/50 transition-all duration-300 hover:bg-white/5"
+                  className={`article-item group p-4 sm:p-6 border border-white/20 rounded-lg hover:border-copper-500/50 transition-all duration-500 hover:bg-white/5 glass-subtle btn-hover transform-gpu ${
+                    isItemVisible(2) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                  }`}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>
@@ -325,7 +348,9 @@ const AccoladesSection = () => {
                   href="https://www.indiewire.com/criticism/movies/sabar-bonda-review-rohan-parashuram-kanawade-1235087891/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group p-4 sm:p-6 border border-white/20 rounded-lg hover:border-copper-500/50 transition-all duration-300 hover:bg-white/5"
+                  className={`article-item group p-4 sm:p-6 border border-white/20 rounded-lg hover:border-copper-500/50 transition-all duration-500 hover:bg-white/5 glass-subtle btn-hover transform-gpu ${
+                    isItemVisible(3) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                  }`}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>
@@ -346,7 +371,9 @@ const AccoladesSection = () => {
                   href="https://www.rogerebert.com/festivals/sundance-2025-sabar-bonda-cactus-pears-dj-ahmet-andre-is-an-idiot"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group p-4 sm:p-6 border border-white/20 rounded-lg hover:border-copper-500/50 transition-all duration-300 hover:bg-white/5"
+                  className={`article-item group p-4 sm:p-6 border border-white/20 rounded-lg hover:border-copper-500/50 transition-all duration-500 hover:bg-white/5 glass-subtle btn-hover transform-gpu ${
+                    isItemVisible(4) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                  }`}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>
@@ -367,7 +394,9 @@ const AccoladesSection = () => {
                   href="https://mashable.com/article/sabar-bonda-cactus-pears-review"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group p-4 sm:p-6 border border-white/20 rounded-lg hover:border-copper-500/50 transition-all duration-300 hover:bg-white/5"
+                  className={`article-item group p-4 sm:p-6 border border-white/20 rounded-lg hover:border-copper-500/50 transition-all duration-500 hover:bg-white/5 glass-subtle btn-hover transform-gpu ${
+                    isItemVisible(5) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                  }`}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>

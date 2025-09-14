@@ -2,12 +2,20 @@ import { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const GallerySection = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
   const isDragging = useRef(false);
+
+  // Animation for the gallery container
+  const { ref: galleryRef, isVisible } = useScrollAnimation<HTMLDivElement>({
+    threshold: 0.2,
+    delay: 200
+  });
 
   const galleryImages = [
     {
@@ -31,6 +39,14 @@ const GallerySection = () => {
       caption: 'Cast and crew preparing for the final scenes'
     }
   ];
+
+  useEffect(() => {
+    // Preload current image
+    const img = new Image();
+    img.onload = () => setImageLoaded(true);
+    img.src = galleryImages[currentImageIndex].src;
+    setImageLoaded(false);
+  }, [currentImageIndex, galleryImages]);
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % galleryImages.length);
@@ -115,8 +131,7 @@ const GallerySection = () => {
   return (
     <section id="bts" className="relative">
       {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: 'url(/images/filmstill1_small.jpg)',
         }}
@@ -125,38 +140,49 @@ const GallerySection = () => {
       </div>
       
       <div className="relative z-10">
-        <Section className="bg-black/30 backdrop-blur-sm">
-          <header className="mb-8 sm:mb-10 lg:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-cabinet font-bold tracking-tight text-white mb-3 sm:mb-4">
-              Gallery
-            </h2>
-            {/* <p className="text-base sm:text-lg leading-relaxed text-white/80 max-w-3xl font-nohemi font-medium">
-              Behind the scenes moments and production stills
-            </p> */}
-          </header>
+        <Section className="bg-black/30 backdrop-blur-sm" enableParallax>
+          <SectionHeader 
+            title="Gallery" 
+            variant="dark"
+          />
           
           {/* Image Carousel */}
-          <div className="relative max-w-4xl mx-auto">
+          <div 
+            ref={galleryRef}
+            className={`relative max-w-4xl mx-auto transition-all duration-800 ease-out ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             {/* Main Image Display */}
-            <div className="relative aspect-video overflow-hidden">
-              <img 
-                src={galleryImages[currentImageIndex].src}
-                alt={galleryImages[currentImageIndex].alt}
-                className="w-full h-full object-cover transition-all duration-500 ease-in-out cursor-grab active:cursor-grabbing select-none"
-                loading="lazy"
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
-                onMouseDown={handleMouseDown}
-                onMouseMove={handleMouseMove}
-                onMouseUp={handleMouseUp}
-                onDragStart={(e) => e.preventDefault()}
-              />
+            <div className="relative aspect-video overflow-hidden card-hover-subtle">
+              <div className={`absolute inset-0 transition-opacity duration-300 ${
+                imageLoaded ? 'opacity-100' : 'opacity-0'
+              }`}>
+                <img 
+                  src={galleryImages[currentImageIndex].src}
+                  alt={galleryImages[currentImageIndex].alt}
+                  className="w-full h-full object-cover transition-all duration-500 ease-in-out cursor-grab active:cursor-grabbing select-none shadow-film-lg"
+                  loading="lazy"
+                  onTouchStart={handleTouchStart}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
+                  onMouseDown={handleMouseDown}
+                  onMouseMove={handleMouseMove}
+                  onMouseUp={handleMouseUp}
+                  onDragStart={(e) => e.preventDefault()}
+                />
+              </div>
+              
+              {!imageLoaded && (
+                <div className="absolute inset-0 bg-gray-800 animate-pulse flex items-center justify-center">
+                  <div className="loading-shimmer absolute inset-0" />
+                </div>
+              )}
               
               {/* Navigation Arrows */}
               <button
                 onClick={prevImage}
-                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 text-white hover:text-white/70 transition-all duration-200"
+                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 text-white hover:text-white/70 transition-all duration-300 btn-hover glass-dark rounded-full touch-target"
                 aria-label="Previous image"
               >
                 <ChevronLeft size={20} className="sm:w-6 sm:h-6" />
@@ -164,15 +190,22 @@ const GallerySection = () => {
               
               <button
                 onClick={nextImage}
-                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 text-white hover:text-white/70 transition-all duration-200"
+                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 text-white hover:text-white/70 transition-all duration-300 btn-hover glass-dark rounded-full touch-target"
                 aria-label="Next image"
               >
                 <ChevronRight size={20} className="sm:w-6 sm:h-6" />
               </button>
 
               {/* Image Counter */}
-              <div className="absolute top-2 sm:top-4 right-2 sm:right-4 px-2 sm:px-3 py-1 bg-black/60 text-white text-xs sm:text-sm font-nohemi">
+              <div className="absolute top-2 sm:top-4 right-2 sm:right-4 px-2 sm:px-3 py-1 glass-dark text-white text-xs sm:text-sm font-nohemi">
                 {currentImageIndex + 1} / {galleryImages.length}
+              </div>
+
+              {/* Caption overlay */}
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                <p className="text-white text-sm font-nohemi font-light">
+                  {galleryImages[currentImageIndex].caption}
+                </p>
               </div>
             </div>
 
@@ -182,17 +215,20 @@ const GallerySection = () => {
                 <button
                   key={index}
                   onClick={() => goToImage(index)}
-                  className={`flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
+                  className={`flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden border-2 transition-all duration-300 card-hover-subtle ${
                     index === currentImageIndex 
-                      ? 'border-copper-500 shadow-lg scale-105' 
+                      ? 'border-copper-500 shadow-lg scale-105 shadow-copper-500/25' 
                       : 'border-white/30 hover:border-white/60'
                   }`}
                   aria-label={`View image ${index + 1}`}
+                  style={{
+                    animationDelay: `${index * 100}ms`
+                  }}
                 >
                   <img 
                     src={image.src}
                     alt={image.alt}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-300"
                     loading="lazy"
                   />
                 </button>
@@ -205,7 +241,7 @@ const GallerySection = () => {
                 <button
                   key={index}
                   onClick={() => goToImage(index)}
-                  className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-200 ${
+                  className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all duration-300 btn-hover ${
                     index === currentImageIndex 
                       ? 'bg-copper-500 scale-125' 
                       : 'bg-white/40 hover:bg-white/60'

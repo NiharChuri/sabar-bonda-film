@@ -3,11 +3,19 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useStaggeredAnimation } from '@/hooks/useScrollAnimation';
 
 const ScreeningsSection = () => {
   const [isAllFestivalsExpanded, setIsAllFestivalsExpanded] = useState(false);
   const isMobile = useIsMobile();
   const allFestivalsButtonRef = useRef<HTMLDivElement>(null);
+
+  // Animation hooks
+  const { ref: screeningsRef, isVisible: screeningsVisible, isItemVisible } = useStaggeredAnimation<HTMLDivElement>({
+    delay: 200,
+    staggerDelay: 150,
+    childSelector: '.screening-item'
+  });
 
   const handleAllFestivalsToggle = () => {
     const newExpanded = !isAllFestivalsExpanded;
@@ -188,7 +196,12 @@ const ScreeningsSection = () => {
   ];
 
   const renderScreeningItem = (screening: any, index: number) => (
-    <div key={index} className="relative flex gap-2 sm:gap-3 md:gap-4">
+    <div 
+      key={index} 
+      className={`screening-item relative flex gap-2 sm:gap-3 md:gap-4 transition-all duration-700 ease-out ${
+        isItemVisible(index) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+      }`}
+    >
       {/* Timeline dot */}
       <div className="flex-shrink-0 w-4 sm:w-6 md:w-8 flex justify-center pt-1 sm:pt-1.5">
         <div className={`w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 rounded-full border-2 border-white shadow-sm relative z-10 ${
@@ -230,17 +243,18 @@ const ScreeningsSection = () => {
       </div>
       
       <div className="relative z-10">
-        <Section className="bg-black/30 backdrop-blur-sm">
-          <header className="mb-8 sm:mb-10 lg:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-cabinet font-bold tracking-tight text-white mb-3 sm:mb-4">
-              Awards & Festivals
-            </h2>
-            {/* <p className="text-base sm:text-lg leading-relaxed text-white/80 max-w-3xl font-nohemi font-medium">
-              Awards and international recognition
-            </p> */}
-          </header>
+        <Section className="bg-black/30 backdrop-blur-sm" enableParallax>
+          <SectionHeader 
+            title="Awards & Festivals" 
+            variant="dark"
+          />
           
-          <div className="relative max-w-4xl mx-auto">
+          <div 
+            ref={screeningsRef}
+            className={`relative max-w-4xl mx-auto transition-all duration-1000 ease-out ${
+              screeningsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             {/* Timeline line */}
             <div className="absolute left-2 sm:left-3 md:left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-copper-500 via-copper-400 to-copper-500"></div>
             
@@ -259,7 +273,7 @@ const ScreeningsSection = () => {
               <div ref={allFestivalsButtonRef} className="flex justify-center mt-6">
                 <button
                   onClick={handleAllFestivalsToggle}
-                  className="flex items-center gap-2 text-copper-500 hover:text-copper-400 transition-colors duration-200 font-nohemi font-medium text-sm px-4 py-2 rounded-full border border-copper-500/30 hover:border-copper-500/50 backdrop-blur-sm"
+                  className="flex items-center gap-2 text-copper-500 hover:text-copper-400 transition-all duration-300 font-nohemi font-medium text-sm px-4 py-2 rounded-full border border-copper-500/30 hover:border-copper-500/50 glass-dark btn-hover"
                 >
                   {isAllFestivalsExpanded ? (
                     <>
