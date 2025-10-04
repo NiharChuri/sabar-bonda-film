@@ -124,27 +124,36 @@ const HeroSection = () => {
             </div>
 
             {/* Action Buttons - Symmetrically Positioned */}
-            <div className="flex items-center justify-center mt-6 lg:mt-8">
-              <div className="flex items-center gap-4 sm:gap-6">
-                <a 
-                  href="https://www.youtube.com/watch?v=7Z38Q_XT4Ow" 
-                  target="_blank" 
+            <div className="flex items-center justify-center mt-4 lg:mt-6">
+              {/* Cleaned spacing: stack on xs, row on sm+. Smaller buttons with tighter gaps. */}
+              <div className="flex flex-col sm:flex-row items-center w-full sm:w-auto gap-2 sm:gap-4 px-2 sm:px-0">
+                <a
+                  href="https://www.youtube.com/watch?v=7Z38Q_XT4Ow"
+                  target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center px-4 py-2 sm:px-6 sm:py-3 border-2 border-white rounded-full font-nohemi font-bold text-white text-xs sm:text-sm tracking-wider uppercase hover:bg-white hover:text-black transition-all duration-300 ease-in-out transform hover:scale-105 drop-shadow-lg"
-                  style={{ transform: 'translateX(-6px)' }}
+                  className="flex items-center justify-center w-full sm:w-auto px-3 py-2 sm:px-5 sm:py-2 border-2 border-white rounded-full font-nohemi font-bold text-white text-xs sm:text-sm tracking-wider uppercase hover:bg-white hover:text-black transition-colors duration-200 drop-shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
                 >
                   WATCH TRAILER
                 </a>
-                
+
+                <a
+                  href="https://in.bookmyshow.com/movies/sabar-bonda/ET00461143"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center w-full sm:w-auto px-3 py-2 sm:px-5 sm:py-2 border-2 border-white rounded-full font-nohemi font-bold text-white text-xs sm:text-sm tracking-wider uppercase hover:bg-white hover:text-black transition-colors duration-200 drop-shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                  aria-label="View showtimes"
+                >
+                  VIEW SHOWTIMES
+                </a>
+
                 <a
                   href="https://www.instagram.com/cactuspearsfilm/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-1.5 sm:gap-2 px-4 py-2 sm:px-6 sm:py-3 border-2 border-white/70 rounded-full font-nohemi font-bold text-white text-xs sm:text-sm tracking-wider uppercase hover:bg-white hover:text-black transition-all duration-300 ease-in-out transform hover:scale-105 drop-shadow-lg"
+                  className="flex items-center justify-center gap-2 w-full sm:w-auto px-3 py-2 sm:px-5 sm:py-2 border-2 border-white rounded-full font-nohemi font-bold text-white text-xs sm:text-sm tracking-wider uppercase hover:bg-white hover:text-black transition-colors duration-200 drop-shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
                   aria-label="Follow us on Instagram"
-                  style={{ transform: 'translateX(6px)' }}
                 >
-                  <Instagram size={12} className="sm:w-4 sm:h-4" />
+                  <Instagram size={12} strokeWidth={2} className="w-4 h-4" />
                   <span>FOLLOW US</span>
                 </a>
               </div>
@@ -154,7 +163,7 @@ const HeroSection = () => {
       </div>
 
       {/* Scroll Down Arrow */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+  <div className="absolute left-1/2 transform -translate-x-1/2 z-10 bottom-4 sm:bottom-8">
         <button 
           onClick={() => {
             const nextSection = document.querySelector('#about, section:nth-of-type(2), [data-section]:nth-of-type(2)');
