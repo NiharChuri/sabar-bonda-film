@@ -60,10 +60,10 @@ const ContactSection = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {contactPanels.map((panel, index) => (
               <div key={index} className="p-4 sm:p-6 lg:p-8">
-                <h3 className="text-lg sm:text-xl font-cabinet font-semibold text-white mb-3 sm:mb-4">
+                <h3 className="text-lg sm:text-xl font-cabinet font-extrabold text-white mb-3 sm:mb-4">
                   {panel.title}
                 </h3>
-                <p className="text-white leading-relaxed mb-4 sm:mb-6 font-nohemi font-medium text-sm sm:text-base">
+                <p className="text-white leading-relaxed mb-4 sm:mb-6 font-nohemi font-regular text-sm sm:text-base tracking-wide">
                   {panel.description}
                 </p>
                 
