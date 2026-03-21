@@ -19,11 +19,11 @@ const AboutSection = () => {
 
   const posterImages = [
     {
-      src: '/images/posters/postermain.jpg',
+      src: '/images/posters/postermain.webp',
       alt: 'Sabar Bonda Main Poster'
     },
     {
-      src: '/images/posters/postermarathi.jpg',
+      src: '/images/posters/postermarathi.webp',
       alt: 'Sabar Bonda Vertical Poster'
     }
   ];

@@ -11,22 +11,22 @@ const GallerySection = () => {
 
   const galleryImages = [
     {
-      src: '/images/gallery/bts1.jpg',
+      src: '/images/gallery/bts1.webp',
       alt: 'Behind the scenes - Production still 1',
       caption: 'Director and cast during filming in the mountain village setting'
     },
     {
-      src: '/images/gallery/bts2.jpg',
+      src: '/images/gallery/bts2.webp',
       alt: 'Behind the scenes - Production still 2',
       caption: 'Capturing intimate moments between the lead characters'
     },
     {
-      src: '/images/gallery/bts3.jpg',
+      src: '/images/gallery/bts3.webp',
       alt: 'Behind the scenes - Production still 3',
       caption: 'On location filming the emotional climax sequence'
     },
     {
-      src: '/images/gallery/bts4.jpg',
+      src: '/images/gallery/bts4.webp',
       alt: 'Behind the scenes - Production still 4',
       caption: 'Cast and crew preparing for the final scenes'
     }
