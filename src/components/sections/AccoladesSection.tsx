@@ -256,7 +256,7 @@ const AccoladesSection = () => {
               Featured Articles & Reviews
             </h3>
             
-            <div className="max-w-4xl mx-auto">
+            <div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 <a 
                   href="https://festival.sundance.org/blogs/give-me-the-backstory-get-to-know-rohan-parashuram-kanawade-the-writer-director-of-sabar-bonda-cactus-pears/"

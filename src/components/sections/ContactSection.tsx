@@ -74,8 +74,9 @@ const ContactSection = () => {
                       <a 
                         href={`mailto:${panel.email}`}
                         className="text-xs sm:text-sm lg:text-base text-white font-mono truncate hover:text-copper-300 transition-colors duration-200"
+                        aria-label={panel.title === 'Producer' ? 'Email Us' : panel.email}
                       >
-                        {panel.email}
+                        {panel.title === 'Producer' ? 'Email Us' : panel.email}
                       </a>
                     </div>
                     <button

@@ -2,12 +2,11 @@ import { useState, useRef } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 const ScreeningsSection = () => {
   const [isAllFestivalsExpanded, setIsAllFestivalsExpanded] = useState(false);
-  const isMobile = useIsMobile();
   const allFestivalsButtonRef = useRef<HTMLDivElement>(null);
+  const initialExtendedVisibleCount = 3;
 
   const handleAllFestivalsToggle = () => {
     const newExpanded = !isAllFestivalsExpanded;
@@ -188,17 +187,17 @@ const ScreeningsSection = () => {
   ];
 
   const renderScreeningItem = (screening: any, index: number) => (
-    <div key={index} className="relative flex gap-2 sm:gap-3 md:gap-4">
+    <div key={index} className="relative flex items-start gap-2 sm:gap-3 md:gap-4">
       {/* Timeline dot */}
-      <div className="flex-shrink-0 w-4 sm:w-6 md:w-8 flex justify-center pt-1 sm:pt-1.5">
-        <div className={`w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 rounded-full border-2 border-white shadow-sm relative z-10 ${
-          screening.isAward ? 'bg-copper-500' : 'bg-copper-300'
+      <div className="flex-shrink-0 w-4 sm:w-6 md:w-8 flex justify-center pt-[6px] sm:pt-[7px] md:pt-[8px]">
+        <div className={`w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 rounded-full shadow-sm relative z-10 ${
+          screening.isAward ? 'bg-copper-500 border-2 border-white' : 'bg-white'
         }`}></div>
       </div>
       
       {/* Content */}
       <div className="flex-1 pb-1 md:pb-2 min-w-0">
-        <div className="py-1 md:py-2 px-0">
+        <div className="pt-0 pb-1 md:pb-2 px-0">
           <h3 className="text-xs sm:text-sm md:text-base lg:text-lg font-cabinet font-semibold text-white mb-1 leading-tight">
             {screening.festival}
           </h3>
@@ -242,20 +241,23 @@ const ScreeningsSection = () => {
           
           <div className="relative max-w-4xl mx-auto">
             {/* Timeline line */}
-            <div className="absolute left-2 sm:left-3 md:left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-copper-500 via-copper-400 to-copper-500"></div>
+            <div className="absolute left-[7px] sm:left-[11px] md:left-[15px] top-0 bottom-0 w-0.5 bg-gradient-to-b from-copper-500 via-copper-400 to-copper-500"></div>
             
             <div className="space-y-1 sm:space-y-2 md:space-y-3">
               {/* Key screenings - always visible */}
               {keyScreenings.map((screening, index) => renderScreeningItem(screening, index))}
               
-              {/* Extended screenings - collapsible on mobile */}
-              <div className={`${isMobile && !isAllFestivalsExpanded ? 'hidden' : 'block'}`}>
-                {extendedScreenings.map((screening, index) => renderScreeningItem(screening, keyScreenings.length + index))}
+              {/* Extended screenings - collapsible on all screen sizes */}
+              <div>
+                {(isAllFestivalsExpanded
+                  ? extendedScreenings
+                  : extendedScreenings.slice(0, initialExtendedVisibleCount)
+                ).map((screening, index) => renderScreeningItem(screening, keyScreenings.length + index))}
               </div>
             </div>
 
-            {/* View All Festivals button for mobile */}
-            {isMobile && (
+            {/* Show More / View Less button */}
+            {extendedScreenings.length > initialExtendedVisibleCount && (
               <div ref={allFestivalsButtonRef} className="flex justify-center mt-6">
                 <button
                   onClick={handleAllFestivalsToggle}
